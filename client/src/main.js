@@ -4,7 +4,12 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import '@/assets/css/tailwind.css'
+
+import VueAxios from './plugins/axios'
+
 Vue.config.productionTip = false
+Vue.use(VueAxios)
 
 new Vue({
   router,
