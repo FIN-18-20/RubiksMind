@@ -1,0 +1,13 @@
+FROM node:lts-alpine
+
+RUN apk add --update --no-cache vim
+
+WORKDIR /home/node/app
+
+COPY package.json package-lock.json /home/node/app/
+RUN npm install
+COPY . /home/node/app
+
+EXPOSE 8080
+
+USER node

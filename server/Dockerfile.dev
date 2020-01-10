@@ -1,0 +1,17 @@
+FROM node:lts-alpine
+
+RUN apk add --update --no-cache vim
+
+COPY wait-for /wait-for
+
+RUN chmod +x /wait-for
+
+WORKDIR /home/node/app
+
+COPY package.json /home/node/app/
+RUN npm install -g @adonisjs/cli && npm install
+COPY . /home/node/app/
+
+EXPOSE 3333
+
+USER node

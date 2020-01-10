@@ -1,16 +1,11 @@
 # Node modules
 node_modules
-package-lock.json
 
 # Adonis directory for storing tmp files
 tmp
 
-# Environment variables, never commit this file
-.env
+# Environment variables are in the docker-compose file but Adonis still need an .env file to startup. We can commit it and keep it blank.
+#.env
 
 # The development sqlite file
 database/*.sqlite
-
-# VSCode & Webstorm history directories
-.history
-.idea

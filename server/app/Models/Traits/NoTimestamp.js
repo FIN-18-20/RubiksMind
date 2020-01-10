@@ -8,7 +8,7 @@ class NoTimestamp {
       },
       updatedAtColumn: {
         get: () => null,
-      },
+      }
     })
   }
 }
