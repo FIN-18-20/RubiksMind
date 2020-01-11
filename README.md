@@ -24,14 +24,17 @@ Best Rubik's cube website to track your pbs
 
 ```bash
 > cd server
-> chmod +x ./wait-for
+> chmod +x ./wait-for.sh
 > cd ..
 > docker-compose up
 ```
 
 * **On Windows:**
 
-WIP
+Verify that your wait-for.sh script is formatted in **LF** in the server folder.
+```bash
+> docker-compose up
+```
 
 ### Test the setup
 
