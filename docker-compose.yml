@@ -48,7 +48,6 @@ services:
    - rubiks-mysql
   networks: 
    - rubiks-network
-  command: sh -c './wait-for rubiks-mysql:3306 -- adonis migration:run && npm run start-dev'
  rubiks-mysql:
   image: mysql:5.7
   container_name: rubiks-mysql
