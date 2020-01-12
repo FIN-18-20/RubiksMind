@@ -5,7 +5,10 @@ RUN apk add --update --no-cache vim
 WORKDIR /home/node/app
 
 COPY package.json package-lock.json /home/node/app/
-RUN npm install
+
+RUN npm install && \
+    chown -R node:node node_modules/
+
 COPY . /home/node/app
 
 EXPOSE 8080
