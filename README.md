@@ -15,26 +15,14 @@ Best Rubik's cube website to track your pbs
 
 ### Initial configuration
 
+
+
 ```bash
 > git clone https://github.com/FIN-18-20/RubiksMind.git
 > cd RubiksMind
-```
-
-* **On Linux:**
-
-```bash
-> cd server
-> chmod +x ./wait-for.sh
-> cd ..
 > docker-compose up
 ```
-
-* **On Windows:**
-
-Verify that your wait-for.sh script is formatted in **LF** in the server folder.
-```bash
-> docker-compose up
-```
+If you're on Windows, check that the wait-for.sh script in the server's folder is formatted in **LF**.
 
 ### Test the setup
 
