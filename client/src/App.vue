@@ -1,19 +1,32 @@
 <template>
-  <div id="app" class="mx-auto container font-sans">
-    <div class="flex justify-between">
-      <router-link :to="{ name: 'play' }">Play (logo here)</router-link>
-      <div>
-        <router-link :to="{ name: 'login' }">Login</router-link>
-        <span class="mx-2">|</span>
-        <router-link :to="{ name: 'register' }">Register</router-link>
-      </div>
+  <div class="app min-h-screen text-white font-sans">
+    <div class="container mx-auto">
+      <nav class="flex justify-between items-center py-6">
+        <router-link :to="{ name: 'play' }">
+          <img class="w-48" src="@/assets/img/logo.svg" alt="logo" />
+        </router-link>
+        <div class="leading-relaxed text-center">
+          <router-link
+            :to="{ name: 'login' }"
+            class="inline-block w-24 py-2 border border-blue-300 rounded-md"
+          >Login</router-link>
+          <router-link
+            :to="{ name: 'register' }"
+            class="ml-5 inline-block w-24 py-2 bg-blue-900 border border-blue-300 rounded-md"
+          >Register</router-link>
+        </div>
+      </nav>
+      <router-view />
     </div>
-    <router-view />
   </div>
 </template>
 
 <style>
+.app {
+  background-image: linear-gradient(180deg, #2c5282 0%, #00224e 100%);
+}
+
 a.router-link-exact-active {
-  color: #42b983;
+  /* color: #63b3ed; */
 }
 </style>
