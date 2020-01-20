@@ -7,7 +7,7 @@
     <div class="icon-left transition-transform ease-in-out duration-200">
       <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
     </div>
-    <div class="mx-5">{{ this.state === 'started' ? 'Stop Timer' : 'Get Started' }}</div>
+    <div class="mx-5">{{ state === 'started' ? 'Stop Timer' : 'Get Started' }}</div>
     <div class="icon-right transition-transform ease-in-out duration-200">
       <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
     </div>
@@ -77,7 +77,7 @@ export default {
           this.state = 'ready'
         }
       }, 100)
-    });
+    })
     window.addEventListener('keyup', (e) => {
       if (e.keyCode !== 32) {
         return
@@ -91,7 +91,7 @@ export default {
       }
       this.timeDown = 0
       clearInterval(this.timer)
-    });
+    })
   },
 }
 </script>
