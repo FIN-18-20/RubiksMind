@@ -27,8 +27,6 @@ export default {
       authProvider: 'local',
       authProviderList: [
           'local',
-          'facebook',
-          'google',
           'github'
       ]
     };

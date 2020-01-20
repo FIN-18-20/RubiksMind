@@ -3,7 +3,7 @@
 class UserController {
     async login({ ally, auth, request, response }) {
         const { username, password, provider } = request.all();
-        if (provider !== null) {
+        if (provider !== null && provider !== 'local') {
             try {
                 let url = await ally.driver(provider).getRedirectUrl();
 
@@ -12,6 +12,9 @@ class UserController {
             catch (e) {
                 return response.badRequest(e.message);
             }
+        }
+        else {
+            // Local auth
         }
     }
 
