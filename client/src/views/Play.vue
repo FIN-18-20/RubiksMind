@@ -4,8 +4,8 @@
     <Scramble>
       <ScramblePopUp />
     </Scramble>
-    <Timer />
-    <PlayButton />
+    <Timer :time="resolutionTime" />
+    <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
   </div>
 </template>
 
@@ -20,6 +20,26 @@ export default {
     ScramblePopUp,
     Scramble,
     Timer
+  },
+
+  data() {
+    return {
+      resolutionTime: 0,
+      interval: null,
+    }
+  },
+
+  methods: {
+    startTimer() {
+      this.resolutionTime = 0
+      
+      this.interval = setInterval(() => {
+        this.resolutionTime += 10
+      }, 10)
+    },
+    stopTimer() {
+      clearInterval(this.interval)
+    }
   }
 }
 </script>
