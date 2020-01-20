@@ -38,8 +38,8 @@ services:
   container_name: rubiks-client
   labels:
    - "traefik.enable=true"
-   - "traefik.http.routers.adonis-client.rule=Host(`localhost`)"
-   - "traefik.http.routers.adonis-client.entrypoints=web"
+   - "traefik.http.routers.rubiks-client.rule=Host(`localhost`)"
+   - "traefik.http.routers.rubiks-client.entrypoints=web"
   environment:
    - CHOKIDAR_USEPOLLING=true
   restart: always
@@ -59,10 +59,10 @@ services:
   container_name: rubiks-server
   labels:
    - "traefik.enable=true"
-   - "traefik.http.routers.adonis-server.rule=Host(`localhost`) && PathPrefix(`/api`)"
-   - "traefik.http.routers.adonis-server.middlewares=adonis-server-stripprefix"
-   - "traefik.http.middlewares.adonis-server-stripprefix.stripprefix.prefixes=/api"
-   - "traefik.http.routers.adonis-server.entrypoints=web"
+   - "traefik.http.routers.rubiks-server.rule=Host(`localhost`) && PathPrefix(`/api`)"
+   - "traefik.http.routers.rubiks-server.middlewares=rubiks-server-stripprefix"
+   - "traefik.http.middlewares.rubiks-server-stripprefix.stripprefix.prefixes=/api"
+   - "traefik.http.routers.rubiks-server.entrypoints=web"
   environment:
    - HOST=0.0.0.0
    - PORT=3333
