@@ -21,6 +21,9 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
+Route.post('/login', 'UserController.login')
+Route.get('/oauth-connect-successfull?provider=:providers', 'UserController.callback')
+
 Route.get('/test', async () => {
 
   const example = new User()
