@@ -6,9 +6,9 @@
             <hr style="width:68px;" class="border-blue-200">
         </div>
         <div class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md" style="width:220px;height:280px;">
-            <div class="box-styles rounded-md" style="width:200px;height:260px;">
+            <div class="overflow-y-scroll box-styles rounded-md" style="width:200px;height:260px;">
                 <div v-if="hasData">
-                  <div class="relative flex items-center justify-between" v-for="(time, index) in times" :key="`time-${index}`"
+                  <div class="relative flex items-center justify-between" v-for="(time, index) in times" :key="time.try"
                     :class="[index % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0  ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']">
                     <div class="flex">
                       <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{time.try}}.</span>
@@ -32,6 +32,11 @@
     .box-styles{
         background: linear-gradient(181.21deg, #2A4365 0.81%, #1F3451 89.6%);
         box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+        scrollbar-width: none; 
+    }
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
     }
 </style>
 
@@ -49,6 +54,7 @@ export default {
         { try: 3, time: '00:58.24', personalBest: false },
         { try: 2, time: '00:58.24', personalBest: false },
         { try: 1, time: '00:58.24', personalBest: false },
+        { try: 30, time: '00:58.24', personalBest: false },
       ]
     }
   },
