@@ -5,7 +5,13 @@ class UserController {
         const { username, password, provider } = request.all();
         if (provider !== null && provider !== 'local') {
             try {
-                let url = await ally.driver(provider).getRedirectUrl();
+                let url;
+                if (provider === 'github') {
+                    url = await ally.driver(provider).scope(['user:email']).getRedirectUrl();
+                }
+                else {
+                    url = await ally.driver(provider).getRedirectUrl();
+                }
 
                 return response.created(url);
             }
