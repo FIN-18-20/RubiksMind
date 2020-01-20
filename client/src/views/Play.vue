@@ -2,7 +2,7 @@
   <div>
     <h1>Pipou</h1>
     <Scramble>
-      <ScramblePopUp />
+      <ScrambleTooltip />
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
@@ -11,13 +11,13 @@
 
 <script>
 import PlayButton from '@/components/Play/PlayButton.vue'
-import ScramblePopUp from '@/components/Play/ScramblePopUp.vue'
+import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
 import Timer from '@/components/Play/Timer.vue'
 export default {
   components: {
     PlayButton,
-    ScramblePopUp,
+    ScrambleTooltip,
     Scramble,
     Timer
   },
