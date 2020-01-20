@@ -1,9 +1,14 @@
 <template>
     <div>
-        <div class="flex">
+        <div class="flex" v-if="isLocal">
             <img src="@/assets/img/bolt.svg" alt="bolt-left">
-                <h3 class="text-blue-200 font-semibold mx-1">LOCAL MODE</h3>
+                <h3 class="mx-1 font-semibold text-blue-200">LOCAL MODE</h3>
             <img src="@/assets/img/bolt.svg" style="transform:scaleX(-1);" alt="bolt-right">    
+        </div>
+        <div class="flex" v-else>
+            <img src="@/assets/img/online.svg" alt="online-left">
+                <h3 class="mx-1 font-semibold text-blue-200">ONLINE MODE</h3>
+            <img src="@/assets/img/online.svg" alt="online-right">    
         </div>
         <div class="flex">
             <play-times></play-times>
@@ -26,6 +31,11 @@ export default {
     PlayTimes,
     PlayStats,
     PlayGraph
-  }
+  },
+  data() {
+    return {
+      isLocal: true
+    }
+  },
 }
 </script>
