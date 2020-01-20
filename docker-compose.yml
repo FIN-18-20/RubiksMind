@@ -35,7 +35,7 @@ services:
    - CACHE_VIEWS=false
    - APP_KEY=dPivoSpeQpBSbC1qPmwQKMZQYvrdDQjw
    - DB_CONNECTION=mysql
-   - DB_HOST=rubiks-mysql
+   - DB_HOST=rubiks-maria
    - DB_PORT=3306
    - DB_USER=rubiks-user
    - DB_PASSWORD=root
@@ -45,15 +45,15 @@ services:
   ports:
    - 3333:3333
   depends_on: 
-   - rubiks-mysql
+   - rubiks-maria
   networks: 
    - rubiks-network
- rubiks-mysql:
-  image: mysql:5.7
-  container_name: rubiks-mysql
+ rubiks-maria:
+  image: mariadb:10.4-bionic
+  container_name: rubiks-maria
   restart: always
   volumes:
-   - rubiksmysqldata:/var/lib/mysql
+   - rubiksmariadata:/var/lib/mysql
   environment:
    MYSQL_DATABASE: rubiksmind
    MYSQL_ROOT_PASSWORD: root
@@ -67,6 +67,6 @@ networks:
  rubiks-network:
   driver: bridge
 volumes:
- rubiksmysqldata:
+ rubiksmariadata:
  rubiksnodemoduleserver:
  rubiksnodemoduleclient:
