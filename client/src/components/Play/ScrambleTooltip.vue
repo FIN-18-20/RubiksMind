@@ -1,14 +1,14 @@
 <template>
-  <div class="mb-3 ml-64 flex justify-center">
+  <div class="tooltipPos mb-3 inline-block absolute hidden">
     <div class="tooltip relative bg-blue-1000 tri-right rounded-lg">
       <div class="p-2">
         <div class="flex items-center">
           <img
             src="@/assets/img/question-circle-regular.svg"
             alt="question mark in circle"
-            class="h-4 italic"
+            class="h-3 italic"
           />
-          <div class="ml-2 text-blue-300 italic">Click to rescramble</div>
+          <div class="ml-1 text-xxs text-blue-300 italic">Click to rescramble</div>
         </div>
       </div>
     </div>
@@ -20,15 +20,19 @@ export default {}
 </script>
 
 <style scoped>
+.tooltipPos {
+  top: -40px;
+  right: 75px;
+}
 .tooltip:after {
   content: " ";
   position: absolute;
   width: 0;
   height: 0;
-  left: 38px;
+  left: 18px;
   right: auto;
   top: auto;
-  bottom: -14px;
+  bottom: -9px;
   border: 10px solid;
   border-color: #1f3451 transparent transparent #1f3451;
 }
