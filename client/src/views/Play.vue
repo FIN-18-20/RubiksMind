@@ -65,14 +65,14 @@ export default {
       this.resolutionTime = 0
 
       const doWork = () => {
-        this.resolutionTime += 100
+        this.resolutionTime += 10
       }
 
       const doError = () => {
         alert('[ALPHA] RUBIKSMIND - Error in timer')
       }
 
-      this.ticker = new this.AdjustingInterval(doWork, 100, doError)
+      this.ticker = new this.AdjustingInterval(doWork, 10, doError)
 
       this.ticker.start()
       console.time('timer')
