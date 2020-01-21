@@ -37,11 +37,11 @@
                 @click="removeTime(times.length - 1 - index)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
-                <img
-                  src="@/assets/img/cross-delete-score.svg"
-                  class="w-auto h-3 cursor-pointer"
-                  alt="deleteScore"
-                />
+                <svg
+                  class="w-auto h-3 cursor-pointer text-blue-400 hover:text-blue-300"
+                >
+                  <use xlink:href="#cross-delete" />
+                </svg>
               </div>
             </div>
           </transition-group>
