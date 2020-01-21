@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <h1>Pipou</h1>
-    <Scramble>
-      <ScrambleTooltip />
+  <div class="mt-12 text-center">
+    <Scramble class="group">
+      <ScrambleTooltip class="group-hover:inline-block"/>
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />

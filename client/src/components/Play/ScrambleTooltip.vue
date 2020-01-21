@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3 ml-64 flex justify-center">
+  <div class="tooltipPos mb-3 inline-block absolute hidden">
     <div class="tooltip relative bg-blue-1000 tri-right rounded-lg">
       <div class="p-2">
         <div class="flex items-center">
@@ -20,6 +20,10 @@ export default {}
 </script>
 
 <style scoped>
+.tooltipPos {
+  top: -40px;
+  right: 75px;
+}
 .tooltip:after {
   content: " ";
   position: absolute;
