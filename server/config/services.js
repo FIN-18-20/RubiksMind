@@ -44,7 +44,7 @@ module.exports = {
     google: {
       clientId: Env.get('GOOGLE_CLIENT_ID'),
       clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-      redirectUri: `http://localhost/oauth-connection-successfull?provider=google`
+      redirectUri: `http://localhost/api/oauth-connection-successfull/google`
     },
 
     /*
@@ -59,7 +59,7 @@ module.exports = {
     github: {
       clientId: Env.get('GITHUB_CLIENT_ID'),
       clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
-      redirectUri: `http://localhost/oauth-connection-successfull?provider=github`
+      redirectUri: `http://localhost/api/oauth-connection-successfull/github`
     },
 
     /*

@@ -21,8 +21,9 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.post('/login', 'UserController.login')
-Route.get('/oauth-connect-successfull?provider=:providers', 'UserController.callback')
+Route.post('/login/:provider?', 'AuthController.login')
+Route.post('register', 'AuthController.register')
+Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
 
 Route.get('/test', async () => {
 
