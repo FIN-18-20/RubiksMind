@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12 text-center">
     <Scramble class="group">
-      <ScrambleTooltip class="group-hover:inline-block"/>
+      <ScrambleTooltip class="group-hover:inline-block" />
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
@@ -27,20 +27,55 @@ export default {
   data() {
     return {
       resolutionTime: 0,
-      interval: null,
+      ticker: null,
     }
   },
 
   methods: {
+    AdjustingInterval(workFunc, interval, errorFunc) {
+      let expected, timeout
+
+      this.start = () => {
+        expected = Date.now() + interval
+        timeout = setTimeout(step, interval)
+      }
+
+      this.stop = () => {
+        clearTimeout(timeout)
+      }
+
+      const step = () => {
+        let drift = Date.now() - expected
+        if (drift > interval) {
+          if (errorFunc) {
+            errorFunc()
+          }
+        }
+        workFunc()
+        expected += interval
+
+        timeout = setTimeout(step, Math.max(0, interval - drift))
+      }
+    },
     startTimer() {
       this.resolutionTime = 0
-      
-      this.interval = setInterval(() => {
-        this.resolutionTime += 10
-      }, 10)
+
+      const doWork = () => {
+        this.resolutionTime += 100
+      }
+
+      const doError = () => {
+        alert('[ALPHA] RUBIKSMIND - Error in timer')
+      }
+
+      this.ticker = new this.AdjustingInterval(doWork, 100, doError)
+
+      this.ticker.start()
+      console.time('timer')
     },
     stopTimer() {
-      clearInterval(this.interval)
+      this.ticker.stop()
+      console.timeEnd('timer')
     }
   }
 }
