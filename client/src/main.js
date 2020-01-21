@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import '@/assets/css/tailwind.css'
+import '@/assets/css/base.css'
 
 import VueAxios from './plugins/axios'
 
