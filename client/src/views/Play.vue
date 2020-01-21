@@ -6,7 +6,7 @@
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
-    <play-infos class="flex flex-col items-center justify-center text-xl"></play-infos>
+    <play-infos class="mt-4 flex flex-col items-center justify-center text-xl"></play-infos>
   </div>
 </template>
 

@@ -15,27 +15,27 @@
         <div v-if="hasData">
           <transition-group name="times" tag="div">
             <div
-              class="relative flex items-center justify-between"
               v-for="(time, index) in times.slice().reverse()"
               :key="time.try"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index  === 0  ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
+              class="relative flex items-center justify-between"
+              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
               <div class="flex">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{time.try}}.</span>
+                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
                 <img
+                  v-if="time.personalBest"
                   src="@/assets/img/trophy.svg"
                   class="ml-3"
                   alt="trophy"
-                  v-if="time.personalBest"
                 />
               </div>
               <span
-                class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
                 @click="addTime"
-              >{{time.time}}</span>
+                class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
+              >{{ time.time }}</span>
               <div
-                class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
                 @click="removeTime(times.length - 1 - index)"
+                class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
                 <img
                   src="@/assets/img/cross-delete-score.svg"
