@@ -6,9 +6,9 @@
           <img
             src="@/assets/img/question-circle-regular.svg"
             alt="question mark in circle"
-            class="h-4 italic"
+            class="h-3 italic"
           />
-          <div class="ml-2 text-blue-300 italic">Click to rescramble</div>
+          <div class="ml-1 text-xxs text-blue-300 italic">Click to rescramble</div>
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@ export default {}
   position: absolute;
   width: 0;
   height: 0;
-  left: 38px;
+  left: 18px;
   right: auto;
   top: auto;
-  bottom: -14px;
+  bottom: -9px;
   border: 10px solid;
   border-color: #1f3451 transparent transparent #1f3451;
 }
