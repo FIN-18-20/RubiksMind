@@ -25,23 +25,25 @@ export default {
     PlayInfos,
     ScrambleTooltip,
     Scramble,
-    Timer,
+    Timer
   },
 
   data() {
     return {
       resolutionTime: 0,
       ticker: null,
+      startTime: null,
     }
   },
 
   methods: {
-    AdjustingInterval(workFunc, interval, errorFunc) {
-      let expected, timeout
+    AdjustingInterval(workFunc, interval, errorFunc, resetFunc, granularity) {
+      let expected, timeout, resetStep
 
       this.start = () => {
         expected = Date.now() + interval
         timeout = setTimeout(step, interval)
+        resetStep = 0
       }
 
       this.stop = () => {
@@ -57,29 +59,40 @@ export default {
         }
         workFunc()
         expected += interval
+        resetStep++
+        if (resetStep >= granularity) {
+          resetFunc()
+          resetStep = 0
+          expected = Date.now()
+        }
 
         timeout = setTimeout(step, Math.max(0, interval - drift))
       }
     },
     startTimer() {
       this.resolutionTime = 0
+      this.startTime = Date.now()
 
       const doWork = () => {
-        this.resolutionTime += 10
+        this.resolutionTime += 25
       }
 
-      const doError = (drift) => {
-        console.log('[ALPHA] Drift in timer', drift)
+      const doError = drift => {
+        console.log('Drift in timer', drift)
       }
 
-      this.ticker = new this.AdjustingInterval(doWork, 10, doError)
+      const fixTimerDrift = () => {
+        this.resolutionTime = Date.now() - this.startTime
+      }
+
+      this.ticker = new this.AdjustingInterval(doWork, 25, doError, fixTimerDrift, 10)
 
       this.ticker.start()
       console.time('timer')
     },
     stopTimer() {
       this.ticker.stop()
-      console.timeEnd('timer')
+      console.timeEnd('timer') 
     }
   }
 }
