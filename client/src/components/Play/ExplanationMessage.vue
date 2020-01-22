@@ -3,7 +3,7 @@
     <div class="relative inline-flex items-center pl-3 pr-8 py-2 border border-blue-800 rounded-lg">
       <svg
         @click="hideMessage"
-        class="absolute right-0 top-0 mr-2 mt-2 w-2.5 h-2.5 text-blue-400 cursor-pointer hover:text-blue-300"
+        class="absolute right-0 top-0 mr-2 mt-2 w-2-5 h-2-5 text-blue-400 cursor-pointer hover:text-blue-300"
       >
         <use xlink:href="#cross-delete" />
       </svg>
