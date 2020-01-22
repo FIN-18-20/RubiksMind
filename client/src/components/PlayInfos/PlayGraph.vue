@@ -7,10 +7,10 @@
     </div>
     <div class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md" style="width:207px;height:113px;">
       <div class="box-styles rounded-md" style="width:195px;height:101px;">
-        <div v-if="hasData">
-
+        <div v-if="hasData" class="flex items-center justify-center w-full h-full">
+          <progress-line :data="data" :width="190" :height="85" class="flex items-center justify-center w-full h-full"></progress-line>
         </div>
-        <div v-else class="flex flex-col items-center justify-center w-full h-full">
+        <div v-else>
           <svg width="47" height="36">
             <use xlink:href="#stats" />
           </svg>
@@ -28,10 +28,30 @@
 </style>
 
 <script>
+import ProgressLine from './ProgressLine.js'
+
 export default {
+  components: {
+    ProgressLine
+  },
   data() {
     return {
-      hasData: false
+      hasData: true,
+      data:
+        [
+          58.24,
+          53.24,
+          43.24,
+          58.24,
+          3.47,
+          58.24,
+          420.23,
+          58.24,
+          74.24,
+          54.23,
+          4.45,
+          23.32
+        ]
     }
   },
 }
