@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h1>Pipou</h1>
-    <Scramble>
-      <ScrambleTooltip />
+  <div class="mt-12 text-center">
+    <Scramble class="group">
+      <ScrambleTooltip class="group-hover:inline-block" />
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+    <ExplanationMessage class="mt-4" />
     <play-infos class="mt-4 flex flex-col items-center justify-center text-xl"></play-infos>
   </div>
 </template>
@@ -15,33 +15,84 @@ import PlayButton from '@/components/Play/PlayButton.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
 import Timer from '@/components/Play/Timer.vue'
-import PlayInfos from '@/components/Play/PlayInfos'
+import PlayInfos from '@/components/Play/PlayInfos.vue'
+import ExplanationMessage from '@/components/Play/ExplanationMessage.vue'
+
 export default {
   components: {
+    ExplanationMessage,
     PlayButton,
+    PlayInfos,
     ScrambleTooltip,
     Scramble,
-    Timer,
-    PlayInfos,
+    Timer
   },
 
   data() {
     return {
       resolutionTime: 0,
-      interval: null,
+      ticker: null,
+      startTime: null,
     }
   },
 
   methods: {
+    AdjustingInterval(workFunc, interval, errorFunc, resetFunc, granularity) {
+      let expected, timeout, resetStep
+
+      this.start = () => {
+        expected = Date.now() + interval
+        timeout = setTimeout(step, interval)
+        resetStep = 0
+      }
+
+      this.stop = () => {
+        clearTimeout(timeout)
+      }
+
+      const step = () => {
+        let drift = Date.now() - expected
+        if (drift > interval) {
+          if (errorFunc) {
+            errorFunc(drift)
+          }
+        }
+        workFunc()
+        expected += interval
+        resetStep++
+        if (resetStep >= granularity) {
+          resetFunc()
+          resetStep = 0
+          expected = Date.now()
+        }
+
+        timeout = setTimeout(step, Math.max(0, interval - drift))
+      }
+    },
     startTimer() {
       this.resolutionTime = 0
-      
-      this.interval = setInterval(() => {
-        this.resolutionTime += 10
-      }, 10)
+      this.startTime = Date.now()
+
+      const doWork = () => {
+        this.resolutionTime += 25
+      }
+
+      const doError = drift => {
+        console.log('Drift in timer', drift)
+      }
+
+      const fixTimerDrift = () => {
+        this.resolutionTime = Date.now() - this.startTime
+      }
+
+      this.ticker = new this.AdjustingInterval(doWork, 25, doError, fixTimerDrift, 10)
+
+      this.ticker.start()
+      console.time('timer')
     },
     stopTimer() {
-      clearInterval(this.interval)
+      this.ticker.stop()
+      console.timeEnd('timer') 
     }
   }
 }
