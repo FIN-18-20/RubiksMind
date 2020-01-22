@@ -1,44 +1,85 @@
 <template>
-  <div>
-    <h1>Pipou</h1>
-    <Scramble>
-      <ScramblePopUp />
+  <div class="mt-12 text-center">
+    <Scramble class="group">
+      <ScrambleTooltip class="group-hover:inline-block" />
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+    <ExplanationMessage class="mt-4" />
+    <play-infos class="mt-4 flex flex-col items-center justify-center text-xl"></play-infos>
   </div>
 </template>
 
 <script>
 import PlayButton from '@/components/Play/PlayButton.vue'
-import ScramblePopUp from '@/components/Play/ScramblePopUp.vue'
+import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
 import Timer from '@/components/Play/Timer.vue'
+import PlayInfos from '@/components/Play/PlayInfos.vue'
+import ExplanationMessage from '@/components/Play/ExplanationMessage.vue'
+
 export default {
   components: {
+    ExplanationMessage,
     PlayButton,
-    ScramblePopUp,
+    PlayInfos,
+    ScrambleTooltip,
     Scramble,
-    Timer
+    Timer,
   },
 
   data() {
     return {
       resolutionTime: 0,
-      interval: null,
+      ticker: null,
     }
   },
 
   methods: {
+    AdjustingInterval(workFunc, interval, errorFunc) {
+      let expected, timeout
+
+      this.start = () => {
+        expected = Date.now() + interval
+        timeout = setTimeout(step, interval)
+      }
+
+      this.stop = () => {
+        clearTimeout(timeout)
+      }
+
+      const step = () => {
+        let drift = Date.now() - expected
+        if (drift > interval) {
+          if (errorFunc) {
+            errorFunc()
+          }
+        }
+        workFunc()
+        expected += interval
+
+        timeout = setTimeout(step, Math.max(0, interval - drift))
+      }
+    },
     startTimer() {
       this.resolutionTime = 0
-      
-      this.interval = setInterval(() => {
+
+      const doWork = () => {
         this.resolutionTime += 10
-      }, 10)
+      }
+
+      const doError = () => {
+        alert('[ALPHA] RUBIKSMIND - Error in timer')
+      }
+
+      this.ticker = new this.AdjustingInterval(doWork, 10, doError)
+
+      this.ticker.start()
+      console.time('timer')
     },
     stopTimer() {
-      clearInterval(this.interval)
+      this.ticker.stop()
+      console.timeEnd('timer')
     }
   }
 }
