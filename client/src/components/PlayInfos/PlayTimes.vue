@@ -12,7 +12,7 @@
       style="width:220px;height:280px;"
     >
       <div class="overflow-y-scroll box-styles rounded-md" style="width:200px;height:260px;">
-        <div v-if="hasData">
+        <div v-if="hasData && times.length > 0">
           <transition-group name="times" tag="div">
             <div
               v-for="(time, index) in times.slice().reverse()"
@@ -20,14 +20,11 @@
               class="relative flex items-center justify-between"
               :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
-              <div class="flex">
+              <div class="flex items-center justify-center">
                 <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <img
-                  v-if="time.personalBest"
-                  src="@/assets/img/trophy.svg"
-                  class="ml-3"
-                  alt="trophy"
-                />
+                <svg v-if="time.personalBest" width="13" height="12" class="ml-3">
+                  <use xlink:href="#trophy" />
+                </svg>
               </div>
               <span
                 @click="addTime"
@@ -38,7 +35,7 @@
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
                 <svg
-                  class="w-auto h-3 cursor-pointer text-blue-400 hover:text-blue-300"
+                  class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300"
                 >
                   <use xlink:href="#cross-delete" />
                 </svg>
@@ -47,7 +44,9 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <img src="@/assets/img/timer.svg" alt="timer" />
+          <svg width="58" height="71">
+            <use xlink:href="#timer" />
+          </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
         </div>
       </div>

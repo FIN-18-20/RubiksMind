@@ -11,7 +11,9 @@
 
         </div>
         <div v-else class="flex flex-col items-center justify-center w-full h-full">
-          <img src="@/assets/img/stats.svg" alt="stats">
+          <svg width="47" height="36">
+            <use xlink:href="#stats" />
+          </svg>
         </div>
       </div>
     </div>
