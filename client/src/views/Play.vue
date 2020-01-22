@@ -52,7 +52,7 @@ export default {
         let drift = Date.now() - expected
         if (drift > interval) {
           if (errorFunc) {
-            errorFunc()
+            errorFunc(drift)
           }
         }
         workFunc()
@@ -68,8 +68,8 @@ export default {
         this.resolutionTime += 10
       }
 
-      const doError = () => {
-        alert('[ALPHA] RUBIKSMIND - Error in timer')
+      const doError = (drift) => {
+        console.log('[ALPHA] Drift in timer', drift)
       }
 
       this.ticker = new this.AdjustingInterval(doWork, 10, doError)
