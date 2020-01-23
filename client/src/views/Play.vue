@@ -1,6 +1,6 @@
 <template>
   <div class="mt-12 text-center">
-    <Scramble class="group">
+    <Scramble class="group select-none">
       <ScrambleTooltip class="group-hover:inline-block" />
     </Scramble>
     <Timer :time="resolutionTime" />
