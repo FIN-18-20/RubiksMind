@@ -1,5 +1,7 @@
 <template>
   <button
+    @mousedown="startWaiting"
+    @mouseup="stopWaiting"
     :class="btnClasses"
     :style="btnStyle"
     class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed"
@@ -60,28 +62,40 @@ export default {
 
   mounted() {
     window.addEventListener('keydown', (e) => {
-      if (e.keyCode !== 32 || this.state === 'pressed' || this.state === 'ready') {
+      if (e.keyCode !== 32) {
         return
       }
-      // Stop timer
+      this.startWaiting()
+    })
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode !== 32) {
+        return
+      }
+      this.stopWaiting()
+    })
+  },
+
+  methods: {
+    startWaiting() {
+      if (this.state === 'pressed' || this.state === 'ready') {
+        return
+      }
+      // Stop timer if started
       if (this.state === 'started') {
         this.state = 'none'
         this.$emit('stopTimer')
         return
       }
       this.state = 'pressed'
-      this.timeDown += 100
+      this.timeDown = 100
       this.timer = setInterval(() => {
         this.timeDown += 100
         if (this.timeDown >= 1000) {
           this.state = 'ready'
         }
       }, 100)
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
-        return
-      }
+    },
+    stopWaiting() {
       // Start timer
       if (this.timeDown >= 1000) {
         this.state = 'started'
@@ -91,8 +105,8 @@ export default {
       }
       this.timeDown = 0
       clearInterval(this.timer)
-    })
-  },
+    },
+  }
 }
 </script>
 
