@@ -22,8 +22,9 @@ Route.get('/', () => {
 })
 
 Route.post('/login/:provider?', 'AuthController.login')
-Route.post('register', 'AuthController.register')
+Route.post('/register', 'AuthController.register')
 Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
+Route.get('/refresh', 'AuthController.refresh')
 
 Route.get('/test', async () => {
 

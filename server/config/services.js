@@ -19,21 +19,6 @@ module.exports = {
   ally: {
     /*
     |--------------------------------------------------------------------------
-    | Facebook Configuration
-    |--------------------------------------------------------------------------
-    |
-    | You can access your application credentials from the facebook developers
-    | console. https://developers.facebook.com/apps
-    |
-    */
-    facebook: {
-      clientId: Env.get('FB_CLIENT_ID'),
-      clientSecret: Env.get('FB_CLIENT_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}/authenticated/facebook`
-    },
-
-    /*
-    |--------------------------------------------------------------------------
     | Google Configuration
     |--------------------------------------------------------------------------
     |
@@ -60,36 +45,6 @@ module.exports = {
       clientId: Env.get('GITHUB_CLIENT_ID'),
       clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
       redirectUri: `http://localhost/api/oauth-connection-successfull/github`
-    },
-
-    /*
-     |--------------------------------------------------------------------------
-     | Instagram Configuration
-     |--------------------------------------------------------------------------
-     |
-     | You can access your application credentials from the instagram developers
-     | console. https://www.instagram.com/developer/
-     |
-     */
-    instagram: {
-      clientId: Env.get('INSTAGRAM_CLIENT_ID'),
-      clientSecret: Env.get('INSTAGRAM_CLIENT_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}/authenticated/instagram`
-    },
-
-    /*
-     |--------------------------------------------------------------------------
-     | Foursquare Configuration
-     |--------------------------------------------------------------------------
-     |
-     | You can access your application credentials from the Foursquare developers
-     | console. https://developer.foursquare.com/
-     |
-     */
-    foursquare: {
-      clientId: Env.get('FOURSQUARE_ID'),
-      clientSecret: Env.get('FOURSQUARE_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}/authenticated/foursquare`
     }
   }
 }

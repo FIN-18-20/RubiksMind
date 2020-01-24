@@ -10,6 +10,7 @@
           type="text"
           name="username"
           id="username"
+          required
         />
       </div>
       <div class="w-128 flex flex-row justify-between px-12 my-2">
@@ -20,8 +21,22 @@
           type="password"
           name="password"
           id="password"
+          required
         />
       </div>
+      <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
+        <label for="password">Confirm Password</label>
+        <input
+          class="text-black ml-4 rounded"
+          v-model="confirmPassword"
+          @blur="verifyPasswords"
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          required
+        />
+      </div>
+        <p class="w-128 text-red-600 text-sm px-24 text-right">Passwords don't match !</p>
       <button
         class="w-64 mx-auto bg-blue-500 rounded my-2 p-1"
         type="submit"
@@ -39,6 +54,7 @@ export default {
     return {
       username: "",
       password: "",
+      confirmPassword: "",
       authProvider: "local",
       actionsRoutes: {
         login: this.loginRoute,
@@ -50,7 +66,7 @@ export default {
     action: {
       type: String,
       required: true,
-      validator: function(value) {
+      validator: function (value) {
         return ["login", "register"].indexOf(value) !== -1;
       }
     },
@@ -63,33 +79,51 @@ export default {
       default: "register"
     }
   },
-  computed: {},
+  computed: {
+    passwordIsValid: function() {
+      if(this.action === 'register') {
+        return this.password === this.confirmPassword;
+      }
+      return true;
+    }
+  },
   methods: {
     async postAction() {
       if (this.authProvider === "local") {
-        this.$axios
-          .post(this.actionsRoutes[this.action], {
-            username: this.username,
-            password: this.password
-          })
-          .then(response => {
-            if (response.status === 201) {
-              window.location.href = response.data;
-            }
-          });
+        if (this.passwordIsValid) {
+          this.$axios
+            .post(this.actionsRoutes[this.action], {
+              username: this.username,
+              password: this.password
+            })
+            .then(response => {
+              if (response.status === 201) {
+                const { refreshToken, token } = response.data;
+                localStorage.setItem('jwt', token);
+                localStorage.setItem('refreshToken', refreshToken);
+              }
+            });
+        } else {
+          console.log('Passwords don\'t match');
+        }
       } else {
         this.$axios
-          .post(this.actionsRoutes[this.action] + this.authProvider)
+          .post(this.actionsRoutes[this.action] + '/' + this.authProvider)
           .then(response => {
             if (response.status === 201) {
               window.location.href = response.data;
             }
           });
       }
-    }
+    },
+    verifyPasswords() {
+      /*if (this.password !== this.confirmPassword) {
+
+      }*/
+    },
   },
   filters: {
-    capitalize: function(value) {
+    capitalize: function (value) {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
