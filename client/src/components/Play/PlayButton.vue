@@ -65,12 +65,7 @@ export default {
 
   mounted() {
     window.addEventListener('mouseup', () => {
-      if (this.state === 'ready') {
-        this.stopWaiting()
-      } else {
-        this.state = 'none'
-        this.resetTimer()
-      }
+      this.stopWaiting()
     })
     window.addEventListener('keydown', (e) => {
       if (e.keyCode !== 32) {
@@ -89,10 +84,6 @@ export default {
   },
 
   methods: {
-    resetTimer() {
-      this.timeDown = 0
-      clearInterval(this.timer)
-    },
     startWaiting() {
       if (this.state === 'pressed' || this.state === 'ready') {
         return
@@ -120,7 +111,8 @@ export default {
       } else {
         this.state = 'none'
       }
-      this.resetTimer()
+      this.timeDown = 0
+      clearInterval(this.timer)
     },
   }
 }
