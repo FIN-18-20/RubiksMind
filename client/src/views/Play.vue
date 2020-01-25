@@ -6,7 +6,7 @@
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
     <ExplanationMessage class="mt-4" />
-    <play-infos class="mt-4 flex flex-col items-center justify-center text-xl"></play-infos>
+    <play-infos></play-infos>
   </div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
     },
     stopTimer() {
       this.ticker.stop()
-      console.timeEnd('timer') 
+      console.timeEnd('timer')
     }
   }
 }
