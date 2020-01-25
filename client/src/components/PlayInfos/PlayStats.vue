@@ -15,46 +15,46 @@
         <div v-if="hasData" class="flex items-center justify-around">
           <div class="my-2 stats-left">
             <div class="best">
-              <p class="text-xs text-blue-100">Best</p>
+              <p class="text-xs text-left text-blue-100">Best</p>
               <p
-                class="mb-1 text-sm italic font-medium leading-none text-blue-300"
+                class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[0] }}</p>
             </div>
             <div class="worst">
-              <p class="text-xs text-blue-100">Worst</p>
+              <p class="text-xs text-left text-blue-100">Worst</p>
               <p
-                class="mb-1 text-sm italic font-medium leading-none text-blue-300"
+                class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[1] }}</p>
             </div>
             <div class="last">
-              <p class="text-xs text-blue-100">Last</p>
+              <p class="text-xs text-left text-blue-100">Last</p>
               <p
-                class="text-sm italic font-medium leading-none text-blue-300"
+                class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[2] }}</p>
             </div>
           </div>
           <div class="my-2 stats-right">
             <div class="average">
-              <p class="text-xs text-blue-100">Average</p>
+              <p class="text-xs text-left text-blue-100">Average</p>
               <p
-                class="mb-1 text-sm italic font-medium leading-none text-blue-300"
+                class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[0] }}</p>
             </div>
             <div class="avg5">
-              <p class="text-xs text-blue-100">Avg 5</p>
+              <p class="text-xs text-left text-blue-100">Avg 5</p>
               <p
-                class="mb-1 text-sm italic font-medium leading-none text-blue-300"
+                class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[1] }}</p>
             </div>
             <div class="avg12">
-              <p class="text-xs text-blue-100">Avg 12</p>
+              <p class="text-xs text-left text-blue-100">Avg 12</p>
               <p
-                class="text-sm italic font-medium leading-none text-blue-300"
+                class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
               >{{ stats[2] }}</p>
             </div>

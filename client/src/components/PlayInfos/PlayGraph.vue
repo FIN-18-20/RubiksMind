@@ -8,7 +8,7 @@
     <div class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md" style="width:207px;height:113px;">
       <div class="box-styles rounded-md" style="width:195px;height:101px;">
         <div v-if="hasData" class="flex items-center justify-center w-full h-full">
-          <progress-line :data="data" :width="190" :height="85" class="flex items-center justify-center w-full h-full"></progress-line>
+          <progress-line :data="data" :width="190" :height="90" class="flex items-center justify-center w-full h-full"></progress-line>
         </div>
         <div v-else>
           <svg width="47" height="36">
@@ -39,18 +39,22 @@ export default {
       hasData: true,
       data:
         [
-          58.24,
-          53.24,
-          43.24,
-          58.24,
-          3.47,
-          58.24,
-          420.23,
-          58.24,
-          74.24,
-          54.23,
-          4.45,
-          23.32
+          39.45,
+          23.45,
+          40.45,
+          50.45,
+          34.45,
+          20.45,
+          44.45,
+          30.45,
+          44.45,
+          45,
+          32.45,
+          33.45,
+          20.45,
+          28.45,
+          23.45,
+          20.45,
         ]
     }
   },
