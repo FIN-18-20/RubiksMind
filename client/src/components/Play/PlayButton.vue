@@ -1,7 +1,6 @@
 <template>
   <button
     @mousedown="startWaiting"
-    @mouseup="stopWaiting"
     :class="btnClasses"
     :style="btnStyle"
     class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed select-none"
