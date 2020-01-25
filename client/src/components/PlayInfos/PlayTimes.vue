@@ -16,20 +16,20 @@
           <transition-group name="times" tag="div">
             <div
               v-for="(time, index) in times.slice().reverse()"
-              :key="time.try"
+              :key="index"
               class="relative flex items-center justify-between"
               :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
               <div class="flex items-center justify-center">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <svg v-if="time.personalBest" width="13" height="12" class="ml-3">
+                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ times.length - index }}.</span>
+                <svg v-if="time === bestTime" width="13" height="12" class="ml-3">
                   <use xlink:href="#trophy" />
                 </svg>
               </div>
               <span
                 @click="addTime"
                 class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
-              >{{ time.time }}</span>
+              >{{ displayTime(time.time) }}</span>
               <div
                 @click="removeTime(times.length - 1 - index)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
@@ -95,27 +95,87 @@
 export default {
   data() {
     return {
-      hasData: true,
-      times: [
-        { try: 1, time: '00:58.24', personalBest: false },
-        { try: 2, time: '00:58.24', personalBest: false },
-        { try: 3, time: '00:58.24', personalBest: false },
-        { try: 4, time: '00:58.24', personalBest: false },
-        { try: 8, time: '00:03.47', personalBest: true },
-        { try: 9, time: '00:58.24', personalBest: false },
-        { try: 10, time: '59:59.10', personalBest: false },
-        { try: 30, time: '00:58.24', personalBest: false },
-        { try: 101, time: '01:17.24', personalBest: false },
-      ]
+      isLocal: this.$store.state.localMode,
+      hasData: null,
+      dummyData: [
+        { date: 1579980220571, time: 42671.85595703125, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:42.67
+        { date: 1579980220571, time: 3316.85498046875, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:03.31
+        { date: 1579980220571, time: 20211.68896484375, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:20.21
+        { date: 1579980220571, time: 42671.85595703125, },
+        { date: 1579980220571, time: 3216.85498046875, },
+        { date: 1579980220571, time: 20211.68896484375, },
+        { date: 1579980220571, time: 42671.85595703125, },
+        { date: 1579980220571, time: 3316.85498046875, },
+        { date: 1579980220571, time: 20211.68896484375, },
+        { date: 1579980220571, time: 42671.85595703125, },
+        { date: 1579980220571, time: 3316.85498046875, },
+      ],
+      times: [],
+      bestTime: {}
     }
   },
+  created() {
+    this.loadData(this.isLocal)
+  },
   methods: {
+    displayTime(msTime) {
+      let min = parseInt(msTime / 60000)
+      let sec = parseInt((msTime - (min * 60000)) / 1000)
+      let hundredth = msTime % 1000
+
+      if (hundredth > 99) {
+        hundredth = Math.floor(hundredth / 10)
+      }
+
+      min = min.toString()
+      sec = sec.toString()
+      hundredth = hundredth.toString()
+
+      if (min.length < 2) {
+        min = '0' + min
+      }
+
+      if (sec.length < 2) {
+        sec = '0' + sec
+      }
+
+      if (hundredth.length < 2) {
+        hundredth = '0' + hundredth
+      }
+      return min + ':' + sec + '.' + hundredth
+    },
+    getBestTime() {
+      const timesSorted = [...this.times].sort((first, next) => first.time - next.time)
+      this.bestTime = timesSorted[0]
+    },
     addTime() {
-      this.times.push({ try: this.times.length + 20, time: '00:00.00', personalBest: false })
+      this.times.push({ date: Date.now() + 20, time: 2211.58896484375 })
+      localStorage.times = JSON.stringify(this.times)
+      this.getBestTime()
     },
     removeTime(index) {
       this.times.splice(index, 1)
+      localStorage.times = JSON.stringify(this.times)
+      this.getBestTime()
+    },
+    loadData(isLocal) {
+      if (isLocal) {
+        if (!localStorage.times) {
+          // return this.hasData = false
+          localStorage.times = JSON.stringify(this.dummyData)
+        }
+        this.times = JSON.parse(localStorage.times)
+        if (this.times.length === 0) {
+          return this.hasData = false
+        }
+
+        this.getBestTime()
+
+        this.hasData = true
+      } else {
+        // Call API
+      }
     }
-  }
+  },
 }
 </script>
