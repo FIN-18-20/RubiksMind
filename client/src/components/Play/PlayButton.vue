@@ -1,15 +1,21 @@
 <template>
   <button
+    @mousedown="startWaiting"
+    @mouseup="stopWaiting"
     :class="btnClasses"
     :style="btnStyle"
-    class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed"
+    class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed select-none"
   >
     <div class="icon-left transition-transform ease-in-out duration-200">
-      <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
+      <svg class="w-4 h-4 text-blue-100">
+        <use xlink:href="#rubiks-icon" />
+      </svg>
     </div>
     <div class="mx-5">{{ state === 'started' ? 'Stop Timer' : 'Get Started' }}</div>
     <div class="icon-right transition-transform ease-in-out duration-200">
-      <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
+      <svg class="w-4 h-4 text-blue-100">
+        <use xlink:href="#rubiks-icon" />
+      </svg>
     </div>
   </button>
 </template>
@@ -59,40 +65,65 @@ export default {
   },
 
   mounted() {
+    window.addEventListener('mouseup', () => {
+      if (this.state === 'ready') {
+        this.stopWaiting()
+      } else {
+        this.state = 'none'
+        this.resetTimer()
+      }
+    })
     window.addEventListener('keydown', (e) => {
-      if (e.keyCode !== 32 || this.state === 'pressed' || this.state === 'ready') {
+      if (e.keyCode !== 32) {
         return
       }
-      // Stop timer
+      // Prevent space from scrolling the page
+      e.preventDefault()
+      this.startWaiting()
+    })
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode !== 32) {
+        return
+      }
+      this.stopWaiting()
+    })
+  },
+
+  methods: {
+    resetTimer() {
+      this.timeDown = 0
+      clearInterval(this.timer)
+    },
+    startWaiting() {
+      if (this.state === 'pressed' || this.state === 'ready') {
+        return
+      }
+      // Stop timer if started
       if (this.state === 'started') {
         this.state = 'none'
         this.$emit('stopTimer')
         return
       }
       this.state = 'pressed'
-      this.timeDown += 100
+      this.timeDown = 100
       this.timer = setInterval(() => {
         this.timeDown += 100
         if (this.timeDown >= 1000) {
           this.state = 'ready'
         }
       }, 100)
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
-        return
-      }
+    },
+    stopWaiting() {
       // Start timer
-      if (this.timeDown >= 1000) {
+      if (this.state === 'ready') {
         this.state = 'started'
         this.$emit('startTimer')
       } else {
         this.state = 'none'
       }
-      this.timeDown = 0
-      clearInterval(this.timer)
-    })
-  },
+      this.resetTimer()
+    },
+  }
 }
 </script>
 

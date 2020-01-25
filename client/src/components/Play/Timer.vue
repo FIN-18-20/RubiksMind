@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-10xl text-center text-blue-100 italic font-extrabold flex items-baseline justify-center"
+    class="text-10xl text-center text-blue-100 italic font-extrabold flex items-baseline justify-center select-none"
   >
     <div class="w-20">{{ displayTime.min[0] }}</div>
     <div class="w-20">{{ displayTime.min[1] }}</div>
