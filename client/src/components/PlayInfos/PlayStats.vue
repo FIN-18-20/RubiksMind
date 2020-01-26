@@ -19,21 +19,21 @@
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[0] }}</p>
+              >{{ displayTime(stats[0]) }}</p>
             </div>
             <div class="worst">
               <p class="text-xs text-left text-blue-100">Worst</p>
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[1] }}</p>
+              >{{ displayTime(stats[1]) }}</p>
             </div>
             <div class="last">
               <p class="text-xs text-left text-blue-100">Last</p>
               <p
                 class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[2] }}</p>
+              >{{ displayTime(stats[2]) }}</p>
             </div>
           </div>
           <div class="my-2 stats-right">
@@ -42,21 +42,21 @@
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[0] }}</p>
+              >{{ displayTime(stats[3]) }}</p>
             </div>
             <div class="avg5">
               <p class="text-xs text-left text-blue-100">Avg 5</p>
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[1] }}</p>
+              >{{ displayTime(stats[4]) }}</p>
             </div>
             <div class="avg12">
               <p class="text-xs text-left text-blue-100">Avg 12</p>
               <p
                 class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ stats[2] }}</p>
+              >{{ displayTime(stats[5]) }}</p>
             </div>
           </div>
         </div>
@@ -81,8 +81,57 @@
 export default {
   data() {
     return {
-      hasData: true,
-      stats: ['00:03.47', '59:59.10', '01:17.24', '00:03.47', '00:58.24', '01:01.24']
+      isLocal: this.$store.state.localMode,
+      hasData: null,
+      dummyData: [3216.85498046875, 42671.85595703125, 3316.85498046875, 42671.85595703125, 42671.85595703125, 42671.85595703125],
+      stats: []
+    }
+  },
+  created() {
+    this.loadData(this.isLocal)
+  },
+  methods: {
+    displayTime(msTime) {
+      let min = parseInt(msTime / 60000)
+      let sec = parseInt((msTime - (min * 60000)) / 1000)
+      let hundredth = msTime % 1000
+
+      if (hundredth > 99) {
+        hundredth = Math.floor(hundredth / 10)
+      }
+
+      min = min.toString()
+      sec = sec.toString()
+      hundredth = hundredth.toString()
+
+      if (min.length < 2) {
+        min = '0' + min
+      }
+
+      if (sec.length < 2) {
+        sec = '0' + sec
+      }
+
+      if (hundredth.length < 2) {
+        hundredth = '0' + hundredth
+      }
+      return min + ':' + sec + '.' + hundredth
+    },
+    loadData(isLocal) {
+      if (isLocal) {
+        if (!localStorage.stats) {
+          // return this.hasData = false
+          localStorage.stats = JSON.stringify(this.dummyData)
+        }
+        this.stats = JSON.parse(localStorage.stats)
+
+        if (this.stats.length === 0) {
+          return this.hasData = false
+        }
+        this.hasData = true
+      } else {
+        // Call API
+      }
     }
   },
 }
