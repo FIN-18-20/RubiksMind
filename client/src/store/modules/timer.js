@@ -12,7 +12,7 @@ const mutations = {
     state.timers = timers
   },
   REMOVE_TIMER(state, timerId) {
-    state.timers.filter(timer => timer.id !== timerId)
+    state.timers = state.timers.filter(timer => timer.id !== timerId)
   }
 }
 
