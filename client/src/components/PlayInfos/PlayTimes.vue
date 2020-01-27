@@ -12,31 +12,30 @@
       style="width:220px;height:280px;"
     >
       <div class="overflow-y-scroll box-styles rounded-md" style="width:200px;height:260px;">
-        <div v-if="hasData && times.length > 0">
-          <transition-group name="times" tag="div">
+        <div v-if="timers.length > 0">
+          <transition-group name="timers" tag="div">
             <div
-              v-for="(time, index) in times.slice().reverse()"
+              v-for="(time, index) in timers.slice().reverse()"
               :key="index"
               class="relative flex items-center justify-between"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
+              :class="[(timers.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === timers.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
               <div class="flex items-center justify-center">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ times.length - index }}.</span>
+                <span
+                  class="w-6 ml-1 text-xs font-medium text-right text-blue-200"
+                >{{ timers.length - index }}.</span>
                 <svg v-if="time === bestTime" width="13" height="12" class="ml-3">
                   <use xlink:href="#trophy" />
                 </svg>
               </div>
               <span
-                @click="addTime"
                 class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
               >{{ displayTime(time.time) }}</span>
               <div
-                @click="removeTime(times.length - 1 - index)"
+                @click="removeTimer(time.id)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
-                <svg
-                  class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300"
-                >
+                <svg class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300">
                   <use xlink:href="#cross-delete" />
                 </svg>
               </div>
@@ -92,30 +91,15 @@
 </style>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  data() {
-    return {
-      isLocal: this.$store.state.localMode,
-      hasData: null,
-      dummyData: [
-        { date: 1579980220571, time: 42671.85595703125, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:42.67
-        { date: 1579980220571, time: 3316.85498046875, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:03.31
-        { date: 1579980220571, time: 20211.68896484375, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:20.21
-        { date: 1579980220571, time: 42671.85595703125, },
-        { date: 1579980220571, time: 3216.85498046875, },
-        { date: 1579980220571, time: 20211.68896484375, },
-        { date: 1579980220571, time: 42671.85595703125, },
-        { date: 1579980220571, time: 3316.85498046875, },
-        { date: 1579980220571, time: 20211.68896484375, },
-        { date: 1579980220571, time: 42671.85595703125, },
-        { date: 1579980220571, time: 3316.85498046875, },
-      ],
-      times: [],
-      bestTime: {}
+  computed: {
+    ...mapState('timer', ['timers']),
+    bestTime(){
+      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
+      return timesSorted[0]
     }
-  },
-  created() {
-    this.loadData(this.isLocal)
   },
   methods: {
     displayTime(msTime) {
@@ -144,38 +128,7 @@ export default {
       }
       return min + ':' + sec + '.' + hundredth
     },
-    getBestTime() {
-      const timesSorted = [...this.times].sort((first, next) => first.time - next.time)
-      this.bestTime = timesSorted[0]
-    },
-    addTime() {
-      this.times.push({ date: Date.now() + 20, time: 2211.58896484375 })
-      localStorage.times = JSON.stringify(this.times)
-      this.getBestTime()
-    },
-    removeTime(index) {
-      this.times.splice(index, 1)
-      localStorage.times = JSON.stringify(this.times)
-      this.getBestTime()
-    },
-    loadData(isLocal) {
-      if (isLocal) {
-        if (!localStorage.times) {
-          // return this.hasData = false
-          localStorage.times = JSON.stringify(this.dummyData)
-        }
-        this.times = JSON.parse(localStorage.times)
-        if (this.times.length === 0) {
-          return this.hasData = false
-        }
-
-        this.getBestTime()
-
-        this.hasData = true
-      } else {
-        // Call API
-      }
-    }
+    ...mapActions('timer', ['removeTimer'])
   },
 }
 </script>

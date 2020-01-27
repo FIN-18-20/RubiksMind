@@ -19,21 +19,21 @@
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[0]) }}</p>
+              >{{ bestTime }}</p>
             </div>
             <div class="worst">
               <p class="text-xs text-left text-blue-100">Worst</p>
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[1]) }}</p>
+              >{{ worstTime }}</p>
             </div>
             <div class="last">
               <p class="text-xs text-left text-blue-100">Last</p>
               <p
                 class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[2]) }}</p>
+              >{{ lastTime }}</p>
             </div>
           </div>
           <div class="my-2 stats-right">
@@ -42,21 +42,21 @@
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[3]) }}</p>
+              >{{ averageTime }}</p>
             </div>
             <div class="avg5">
               <p class="text-xs text-left text-blue-100">Avg 5</p>
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[4]) }}</p>
+              >{{ average5Time }}</p>
             </div>
             <div class="avg12">
               <p class="text-xs text-left text-blue-100">Avg 12</p>
               <p
                 class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ displayTime(stats[5]) }}</p>
+              >{{ average12Time }}</p>
             </div>
           </div>
         </div>
@@ -83,8 +83,52 @@ export default {
     return {
       isLocal: this.$store.state.localMode,
       hasData: null,
-      dummyData: [3216.85498046875, 42671.85595703125, 3316.85498046875, 42671.85595703125, 42671.85595703125, 42671.85595703125],
-      stats: []
+      dummyData:
+        [
+          { date: 1579980220571, time: 42671, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:42.67
+          { date: 1579980220571, time: 3316, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:03.31
+          { date: 1579980220571, time: 20211, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:20.21
+          { date: 1579980220571, time: 42671, },
+          { date: 1579980220571, time: 3216, },
+          { date: 1579980220571, time: 20211, },
+          { date: 1579980220571, time: 42671, },
+          { date: 1579980220571, time: 3316, },
+          { date: 1579980220571, time: 20211, },
+          { date: 1579980220571, time: 42671, },
+          { date: 1579980220571, time: 3316, },
+        ],
+      times: []
+    }
+  },
+  computed:{
+    bestTime(){
+      const timesSorted = [...this.times].sort((first, next) => first.time - next.time)
+      return this.displayTime(timesSorted[0].time)
+    },
+    worstTime(){
+      const timesSorted = [...this.times].sort((first, next) => next.time - first.time)
+      return this.displayTime(timesSorted[0].time)
+    },
+    lastTime(){
+      return this.displayTime(this.times[this.times.length - 1].time)
+    },
+    averageTime(){
+      const average = this.times.reduce((accumulator, time) => accumulator + time.time, 0) / this.times.length
+      return this.displayTime(average)
+    },
+    average5Time(){
+      const reversedArr = [...this.times].reverse()
+      const slicedArr = reversedArr.slice(0,5)
+
+      const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
+      return this.displayTime(average)
+    },
+    average12Time(){
+      const reversedArr = [...this.times].reverse()
+      const slicedArr = reversedArr.slice(0,12)
+      console.log(slicedArr)
+      const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
+      return this.displayTime(average)
     }
   },
   created() {
@@ -119,13 +163,9 @@ export default {
     },
     loadData(isLocal) {
       if (isLocal) {
-        if (!localStorage.stats) {
-          // return this.hasData = false
-          localStorage.stats = JSON.stringify(this.dummyData)
-        }
-        this.stats = JSON.parse(localStorage.stats)
+        this.times = JSON.parse(localStorage.times)
 
-        if (this.stats.length === 0) {
+        if (this.times.length === 0) {
           return this.hasData = false
         }
         this.hasData = true
