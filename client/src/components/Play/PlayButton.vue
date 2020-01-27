@@ -65,6 +65,9 @@ export default {
 
   mounted() {
     window.addEventListener('mouseup', () => {
+      if (this.state === 'started') {
+        return
+      }
       this.stopWaiting()
     })
     window.addEventListener('keydown', (e) => {
