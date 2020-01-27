@@ -31,3 +31,5 @@ Route.get('/test', async () => {
 
   return await User.all()
 })
+
+Route.get('/scramble', 'CubeController.scramble')
