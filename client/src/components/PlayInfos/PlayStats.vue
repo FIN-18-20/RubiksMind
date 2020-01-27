@@ -12,7 +12,7 @@
       style="width:207px;height:127px;"
     >
       <div class="box-styles rounded-md" style="width:195px;height:115px;">
-        <div v-if="hasData" class="flex items-center justify-around">
+        <div v-if="timers.length > 0" class="flex items-center justify-around">
           <div class="my-2 stats-left">
             <div class="best">
               <p class="text-xs text-left text-blue-100">Best</p>
@@ -78,68 +78,45 @@
 </style>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      isLocal: this.$store.state.localMode,
-      hasData: null,
-      dummyData:
-        [
-          { date: 1579980220571, time: 42671, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:42.67
-          { date: 1579980220571, time: 3316, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:03.31
-          { date: 1579980220571, time: 20211, }, // Date: Sat Jan 25 2020 20:24:31 GMT+0100, time: 00:20.21
-          { date: 1579980220571, time: 42671, },
-          { date: 1579980220571, time: 3216, },
-          { date: 1579980220571, time: 20211, },
-          { date: 1579980220571, time: 42671, },
-          { date: 1579980220571, time: 3316, },
-          { date: 1579980220571, time: 20211, },
-          { date: 1579980220571, time: 42671, },
-          { date: 1579980220571, time: 3316, },
-        ],
-      times: []
-    }
-  },
   computed:{
+    ...mapState('timer', ['timers']),
     bestTime(){
-      const timesSorted = [...this.times].sort((first, next) => first.time - next.time)
+      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
       return this.displayTime(timesSorted[0].time)
     },
     worstTime(){
-      const timesSorted = [...this.times].sort((first, next) => next.time - first.time)
+      const timesSorted = [...this.timers].sort((first, next) => next.time - first.time)
       return this.displayTime(timesSorted[0].time)
     },
     lastTime(){
-      return this.displayTime(this.times[this.times.length - 1].time)
+      return this.displayTime(this.timers[this.timers.length - 1].time)
     },
     averageTime(){
-      const average = this.times.reduce((accumulator, time) => accumulator + time.time, 0) / this.times.length
-      return this.displayTime(average)
+      const average = this.timers.reduce((accumulator, time) => accumulator + time.time, 0)/ this.timers.length
+      return this.displayTime(average.toFixed(0))
     },
     average5Time(){
-      const reversedArr = [...this.times].reverse()
+      const reversedArr = [...this.timers].reverse()
       const slicedArr = reversedArr.slice(0,5)
-
       const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
-      return this.displayTime(average)
+      return this.displayTime(average.toFixed(0))
     },
     average12Time(){
-      const reversedArr = [...this.times].reverse()
+      const reversedArr = [...this.timers].reverse()
       const slicedArr = reversedArr.slice(0,12)
-      console.log(slicedArr)
       const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
-      return this.displayTime(average)
+      return this.displayTime(average.toFixed(0))
     }
-  },
-  created() {
-    this.loadData(this.isLocal)
   },
   methods: {
     displayTime(msTime) {
       let min = parseInt(msTime / 60000)
       let sec = parseInt((msTime - (min * 60000)) / 1000)
       let hundredth = msTime % 1000
-
+      console.log(hundredth)
       if (hundredth > 99) {
         hundredth = Math.floor(hundredth / 10)
       }
@@ -160,18 +137,6 @@ export default {
         hundredth = '0' + hundredth
       }
       return min + ':' + sec + '.' + hundredth
-    },
-    loadData(isLocal) {
-      if (isLocal) {
-        this.times = JSON.parse(localStorage.times)
-
-        if (this.times.length === 0) {
-          return this.hasData = false
-        }
-        this.hasData = true
-      } else {
-        // Call API
-      }
     }
   },
 }
