@@ -14,42 +14,18 @@
 </template>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
+
 export default {
+  mixins: [
+    formatTimer(false),
+  ],
+  
   props: {
     time: {
       type: Number,
       required: true
     }
   },
-
-  computed: {
-    displayTime() {
-      let min = parseInt(this.time / 60000)
-      let sec = parseInt((this.time - (min * 60000)) / 1000)
-      let hundredth = this.time % 1000
-
-      if (hundredth > 99) {
-        hundredth = Math.floor(hundredth / 10)
-      }
-
-      min = min.toString()
-      sec = sec.toString()
-      hundredth = hundredth.toString()
-
-      if (min.length < 2) {
-        min = '0' + min
-      }
-
-      if (sec.length < 2) {
-        sec = '0' + sec
-      }
-
-      if (hundredth.length < 2) {
-        hundredth = '0' + hundredth
-      }
-
-      return { min, sec, hundredth }
-    }
-  }
 }
 </script>
