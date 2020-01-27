@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import PlayButton from '@/components/Play/PlayButton.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
@@ -34,6 +35,10 @@ export default {
       ticker: null,
       startTime: null,
     }
+  },
+
+  created() {
+    this.getTimers()
   },
 
   methods: {
@@ -93,7 +98,8 @@ export default {
     stopTimer() {
       this.ticker.stop()
       console.timeEnd('timer')
-    }
+    },
+    ...mapActions('timer', ['getTimers']),
   }
 }
 </script>
