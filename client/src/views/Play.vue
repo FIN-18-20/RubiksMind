@@ -1,16 +1,17 @@
 <template>
   <div class="mt-12 text-center">
-    <Scramble class="group">
+    <Scramble class="group select-none">
       <ScrambleTooltip class="group-hover:inline-block" />
     </Scramble>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
     <ExplanationMessage class="mt-4" />
-    <play-infos class="mt-4 flex flex-col items-center justify-center text-xl"></play-infos>
+    <play-infos></play-infos>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import PlayButton from '@/components/Play/PlayButton.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
@@ -34,6 +35,10 @@ export default {
       ticker: null,
       startTime: null,
     }
+  },
+
+  created() {
+    this.getTimers()
   },
 
   methods: {
@@ -92,8 +97,10 @@ export default {
     },
     stopTimer() {
       this.ticker.stop()
-      console.timeEnd('timer') 
-    }
+      this.addTimer({ date: Date.now(), time: this.resolutionTime })
+      console.timeEnd('timer')
+    },
+    ...mapActions('timer', ['addTimer', 'getTimers']),
   }
 }
 </script>

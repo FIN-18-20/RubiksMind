@@ -6,12 +6,14 @@
       <hr style="width:59px;" class="border-blue-200">
     </div>
     <div class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md" style="width:207px;height:113px;">
-      <div class="box-styles rounded-md" style="width:195px;height:101px;">
-        <div v-if="hasData">
-
+      <div class="box-styles rounded-md flex items-center justify-center" style="width:195px;height:101px;">
+        <div v-if="timers.length > 0" class="flex items-center justify-center w-full h-full">
+          <progress-line :data="timesOnly" :width="190" :height="90" class="flex items-center justify-center w-full h-full"></progress-line>
         </div>
-        <div v-else class="flex flex-col items-center justify-center w-full h-full">
-          <img src="@/assets/img/stats.svg" alt="stats">
+        <div v-else>
+          <svg width="47" height="36">
+            <use xlink:href="#stats" />
+          </svg>
         </div>
       </div>
     </div>
@@ -26,11 +28,18 @@
 </style>
 
 <script>
+import ProgressLine from './ProgressLine.js'
+import { mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      hasData: false
-    }
+  components: {
+    ProgressLine
   },
+  computed:{
+    ...mapState('timer', ['timers']),
+    timesOnly(){
+      return this.timers.map(time => time.time)
+    }
+  }
 }
 </script>

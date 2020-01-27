@@ -12,34 +12,30 @@
       style="width:220px;height:280px;"
     >
       <div class="overflow-y-scroll box-styles rounded-md" style="width:200px;height:260px;">
-        <div v-if="hasData">
-          <transition-group name="times" tag="div">
+        <div v-if="timers.length > 0">
+          <transition-group name="timers" tag="div">
             <div
-              v-for="(time, index) in times.slice().reverse()"
-              :key="time.try"
+              v-for="(time, index) in timers.slice().reverse()"
+              :key="index"
               class="relative flex items-center justify-between"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
+              :class="[(timers.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === timers.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
-              <div class="flex">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <img
-                  v-if="time.personalBest"
-                  src="@/assets/img/trophy.svg"
-                  class="ml-3"
-                  alt="trophy"
-                />
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-6 ml-1 text-xs font-medium text-right text-blue-200"
+                >{{ timers.length - index }}.</span>
+                <svg v-if="time === bestTime" width="13" height="12" class="ml-3">
+                  <use xlink:href="#trophy" />
+                </svg>
               </div>
               <span
-                @click="addTime"
                 class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
-              >{{ time.time }}</span>
+              >{{ displayTime(time.time, true) }}</span>
               <div
-                @click="removeTime(times.length - 1 - index)"
+                @click="removeTimer(time.id)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
-                <svg
-                  class="w-auto h-3 cursor-pointer text-blue-400 hover:text-blue-300"
-                >
+                <svg class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300">
                   <use xlink:href="#cross-delete" />
                 </svg>
               </div>
@@ -47,7 +43,9 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <img src="@/assets/img/timer.svg" alt="timer" />
+          <svg width="58" height="71">
+            <use xlink:href="#timer" />
+          </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
         </div>
       </div>
@@ -93,30 +91,22 @@
 </style>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  data() {
-    return {
-      hasData: true,
-      times: [
-        { try: 1, time: '00:58.24', personalBest: false },
-        { try: 2, time: '00:58.24', personalBest: false },
-        { try: 3, time: '00:58.24', personalBest: false },
-        { try: 4, time: '00:58.24', personalBest: false },
-        { try: 8, time: '00:03.47', personalBest: true },
-        { try: 9, time: '00:58.24', personalBest: false },
-        { try: 10, time: '59:59.10', personalBest: false },
-        { try: 30, time: '00:58.24', personalBest: false },
-        { try: 101, time: '01:17.24', personalBest: false },
-      ]
+  mixins: [
+    formatTimer,
+  ],
+  computed: {
+    ...mapState('timer', ['timers']),
+    bestTime() {
+      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
+      return timesSorted[0]
     }
   },
   methods: {
-    addTime() {
-      this.times.push({ try: this.times.length + 20, time: '00:00.00', personalBest: false })
-    },
-    removeTime(index) {
-      this.times.splice(index, 1)
-    }
-  }
+    ...mapActions('timer', ['removeTimer'])
+  },
 }
 </script>
