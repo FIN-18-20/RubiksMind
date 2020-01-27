@@ -49,8 +49,8 @@ const actions = {
   async removeTimer({ commit, rootState }, timerId) {
     commit('REMOVE_TIMER', timerId)
     if (rootState.localMode) {
-      const currentTimers = JSON.parse(localStorage.getItem('timers')) || []
-      currentTimers.filter(timer => timer.id !== timerId)
+      let currentTimers = JSON.parse(localStorage.getItem('timers')) || []
+      currentTimers = currentTimers.filter(timer => timer.id !== timerId)
       localStorage.setItem('timers', JSON.stringify(currentTimers))
       return
     }
