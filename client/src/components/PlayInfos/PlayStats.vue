@@ -78,66 +78,42 @@
 </style>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
 import { mapState } from 'vuex'
 
 export default {
-  computed:{
+  mixins: [
+    formatTimer,
+  ],
+  computed: {
     ...mapState('timer', ['timers']),
-    bestTime(){
+    bestTime() {
       const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
-      return this.displayTime(timesSorted[0].time)
+      return this.displayTime(timesSorted[0].time, true)
     },
-    worstTime(){
+    worstTime() {
       const timesSorted = [...this.timers].sort((first, next) => next.time - first.time)
-      return this.displayTime(timesSorted[0].time)
+      return this.displayTime(timesSorted[0].time, true)
     },
-    lastTime(){
-      return this.displayTime(this.timers[this.timers.length - 1].time)
+    lastTime() {
+      return this.displayTime(this.timers[this.timers.length - 1].time, true)
     },
-    averageTime(){
-      const average = this.timers.reduce((accumulator, time) => accumulator + time.time, 0)/ this.timers.length
-      return this.displayTime(average.toFixed(0))
+    averageTime() {
+      const average = this.timers.reduce((accumulator, time) => accumulator + time.time, 0) / this.timers.length
+      return this.displayTime(average.toFixed(0), true)
     },
-    average5Time(){
+    average5Time() {
       const reversedArr = [...this.timers].reverse()
-      const slicedArr = reversedArr.slice(0,5)
+      const slicedArr = reversedArr.slice(0, 5)
       const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
-      return this.displayTime(average.toFixed(0))
+      return this.displayTime(average.toFixed(0), true)
     },
-    average12Time(){
+    average12Time() {
       const reversedArr = [...this.timers].reverse()
-      const slicedArr = reversedArr.slice(0,12)
+      const slicedArr = reversedArr.slice(0, 12)
       const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
-      return this.displayTime(average.toFixed(0))
+      return this.displayTime(average.toFixed(0), true)
     }
-  },
-  methods: {
-    displayTime(msTime) {
-      let min = parseInt(msTime / 60000)
-      let sec = parseInt((msTime - (min * 60000)) / 1000)
-      let hundredth = msTime % 1000
-      console.log(hundredth)
-      if (hundredth > 99) {
-        hundredth = Math.floor(hundredth / 10)
-      }
-
-      min = min.toString()
-      sec = sec.toString()
-      hundredth = hundredth.toString()
-
-      if (min.length < 2) {
-        min = '0' + min
-      }
-
-      if (sec.length < 2) {
-        sec = '0' + sec
-      }
-
-      if (hundredth.length < 2) {
-        hundredth = '0' + hundredth
-      }
-      return min + ':' + sec + '.' + hundredth
-    }
-  },
+  }
 }
 </script>

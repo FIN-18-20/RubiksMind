@@ -30,7 +30,7 @@
               </div>
               <span
                 class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
-              >{{ displayTime(time.time) }}</span>
+              >{{ displayTime(time.time, true) }}</span>
               <div
                 @click="removeTimer(time.id)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
@@ -91,43 +91,21 @@
 </style>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  mixins: [
+    formatTimer,
+  ],
   computed: {
     ...mapState('timer', ['timers']),
-    bestTime(){
+    bestTime() {
       const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
       return timesSorted[0]
     }
   },
   methods: {
-    displayTime(msTime) {
-      let min = parseInt(msTime / 60000)
-      let sec = parseInt((msTime - (min * 60000)) / 1000)
-      let hundredth = msTime % 1000
-
-      if (hundredth > 99) {
-        hundredth = Math.floor(hundredth / 10)
-      }
-
-      min = min.toString()
-      sec = sec.toString()
-      hundredth = hundredth.toString()
-
-      if (min.length < 2) {
-        min = '0' + min
-      }
-
-      if (sec.length < 2) {
-        sec = '0' + sec
-      }
-
-      if (hundredth.length < 2) {
-        hundredth = '0' + hundredth
-      }
-      return min + ':' + sec + '.' + hundredth
-    },
     ...mapActions('timer', ['removeTimer'])
   },
 }

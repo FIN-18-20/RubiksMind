@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      isLocal: this.$store.state.localMode === true
+      isLocal: this.$store.state.localMode
     }
   }
 }
