@@ -1,13 +1,34 @@
 <template>
-  <div class="inline-block relative"> 
+  <div class="inline-block relative">
     <slot></slot>
     <div
-      class="text-2xl font-semibold text-blue-400 tracking-wider cursor-pointer" 
-    >B2 R F U2 F U2 B U D2 L2 R' B2 L' U' F' U L2 B' R' U'</div>
+      @click="generateScramble"
+      class="text-2xl font-semibold text-blue-400 tracking-wider cursor-pointer"
+    >{{ scramble }}</div>
   </div>
 </template>
 
 <script>
-export default {}
-</script>
+import Cube from 'cubejs'
 
+export default {
+  data() {
+    return {
+      scramble: ''
+    }
+  },
+
+  async created() {
+    console.time('SCRAMBLE')
+    Cube.initSolver()
+    this.generateScramble()
+    console.timeEnd('SCRAMBLE')
+  },
+
+  methods: {
+    generateScramble() {
+      this.scramble = Cube.scramble()
+    }
+  }
+}
+</script>
