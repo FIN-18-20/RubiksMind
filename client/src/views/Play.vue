@@ -97,9 +97,10 @@ export default {
     },
     stopTimer() {
       this.ticker.stop()
+      this.addTimer({ date: Date.now(), time: this.resolutionTime })
       console.timeEnd('timer')
     },
-    ...mapActions('timer', ['getTimers']),
+    ...mapActions('timer', ['addTimer', 'getTimers']),
   }
 }
 </script>

@@ -20,10 +20,10 @@ const actions = {
   async addTimer({ commit, rootState }, timer) {
     if (rootState.localMode) {
       const currentTimers = JSON.parse(localStorage.getItem('timers')) || []
+      const idTimer = currentTimers.length ? (currentTimers.reduce((a, b) => a.id > b.id ? a : b).id + 1) : 0
+      timer.id = idTimer
       currentTimers.push(timer)
       localStorage.setItem('timers', JSON.stringify(currentTimers))
-      const idTimer = (currentTimers.reduce((a, b) => a.id > b.id ? a : b).id + 1)
-      timer.id = idTimer
       commit('ADD_TIMER', timer)
       return
     }
