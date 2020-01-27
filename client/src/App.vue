@@ -7,7 +7,7 @@
           <img class="w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
         <div class="leading-relaxed text-center">
-          <router-link :to="{ name: 'leaderboard'}" class="leaddddd relative text-white mr-6">Leaderboard</router-link>
+          <router-link :to="{ name: 'leaderboard'}" class="leaddddd relative text-white mr-6 -mt-2">Leaderboard</router-link>
           <router-link
             :to="{ name: 'login' }"
             class="inline-block w-24 py-2 border border-blue-300 rounded-md"
@@ -42,7 +42,7 @@ a.router-link-exact-active {
   /*color: #63b3ed;*/
 }
 .leaddddd.router-link-exact-active {
-  @apply border-b border-solid border-blue-300;
+  @apply border-b border-solid border-blue-300 pb-1;
 }
 
 .leaddddd.router-link-exact-active::after {
@@ -53,5 +53,6 @@ a.router-link-exact-active {
   height: 10px;
   left: 50%;
   transform: translateX(-50%);
+  top: -30%;
 }
 </style>
