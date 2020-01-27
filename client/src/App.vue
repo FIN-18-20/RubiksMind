@@ -23,12 +23,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import SVGContainer from '@/components/SVGContainer.vue'
 
 export default {
   components: {
     SVGContainer,
   },
+
+  created() {
+    this.loadAllSettings()
+  },
+
+  methods: {
+    ...mapActions('settings', ['loadAllSettings']),
+  }
 }
 </script>
 

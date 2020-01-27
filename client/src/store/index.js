@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import settings from '@/store/modules/settings'
 import timer from '@/store/modules/timer'
 
 Vue.use(Vuex)
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    settings,
     timer,
   }
 })
