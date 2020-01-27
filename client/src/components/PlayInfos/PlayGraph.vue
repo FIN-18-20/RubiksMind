@@ -6,7 +6,7 @@
       <hr style="width:59px;" class="border-blue-200">
     </div>
     <div class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md" style="width:207px;height:113px;">
-      <div class="box-styles rounded-md" style="width:195px;height:101px;">
+      <div class="box-styles rounded-md flex items-center justify-center" style="width:195px;height:101px;">
         <div v-if="timers.length > 0" class="flex items-center justify-center w-full h-full">
           <progress-line :data="timesOnly" :width="190" :height="90" class="flex items-center justify-center w-full h-full"></progress-line>
         </div>
