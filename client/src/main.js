@@ -9,7 +9,7 @@ import '@/assets/css/tailwind.css'
 import VueAxios from './plugins/axios'
 
 Vue.config.productionTip = false
-Vue.use(VueAxios)
+Vue.use(VueAxios, { store })
 
 new Vue({
   router,

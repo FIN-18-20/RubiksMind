@@ -36,7 +36,7 @@
           required
         />
       </div>
-        <p class="w-128 text-red-600 text-sm px-24 text-right">Passwords don't match !</p>
+      <p class="w-128 text-red-600 text-sm px-24 text-right">Passwords don't match !</p>
       <button
         class="w-64 mx-auto bg-blue-500 rounded my-2 p-1"
         type="submit"
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -80,14 +82,15 @@ export default {
     }
   },
   computed: {
-    passwordIsValid: function() {
-      if(this.action === 'register') {
+    passwordIsValid: function () {
+      if (this.action === 'register') {
         return this.password === this.confirmPassword;
       }
       return true;
     }
   },
   methods: {
+    ...mapActions('auth', ['setJwtToken', 'setRefreshToken']),
     async postAction() {
       if (this.authProvider === "local") {
         if (this.passwordIsValid) {
@@ -96,11 +99,12 @@ export default {
               username: this.username,
               password: this.password
             })
-            .then(response => {
+            .then(async response => {
               if (response.status === 201) {
                 const { refreshToken, token } = response.data;
-                localStorage.setItem('jwt', token);
-                localStorage.setItem('refreshToken', refreshToken);
+                await this.setJwtToken(token);
+                await this.setRefreshToken(refreshToken);
+                console.log('Logged');
               }
             });
         } else {

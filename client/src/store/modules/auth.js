@@ -13,15 +13,15 @@ const mutations = {
 };
 
 const actions = {
-  async setJwtToken({ commit }, token) {
+  setJwtToken({ commit }, token) {
     localStorage.setItem('jwtToken', token);
     commit('SET_JWT_TOKEN', token);
   },
-  async setRefreshToken({ commit }, token) {
+  setRefreshToken({ commit }, token) {
     localStorage.setItem('refreshToken', token);
     commit('SET_REFRESH_TOKEN', token);
   },
-  async getJwtToken({ getters, commit }) {
+  getJwtToken({ getters, commit }) {
     if (getters.getJwtToken !== '') {
       return getters.getJwtToken;
     }
@@ -34,7 +34,7 @@ const actions = {
       return '';
     }
   },
-  async getRefreshToken({ getters, commit }) {
+  getRefreshToken({ getters, commit }) {
     if (getters.refreshToken !== '') {
       return getters.refreshToken;
     }
