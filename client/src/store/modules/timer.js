@@ -11,25 +11,32 @@ const mutations = {
   LOAD_TIMERS(state, timers) {
     state.timers = timers
   },
+  REMOVE_TIMER(state, timerId) {
+    state.timers.filter(timer => timer.id !== timerId)
+  }
 }
 
 const actions = {
   async addTimer({ commit, rootState }, timer) {
-    commit('ADD_TIMER', timer)
     if (rootState.localMode) {
       const currentTimers = JSON.parse(localStorage.getItem('timers')) || []
       currentTimers.push(timer)
       localStorage.setItem('timers', JSON.stringify(currentTimers))
+      const idTimer = (currentTimers.reduce((a, b) => a.id > b.id ? a : b).id + 1)
+      timer.id = idTimer
+      commit('ADD_TIMER', timer)
       return
     }
     const username = 'ToDo'
     console.log('SAVE NEW TIMER IN DB')
-    await axios(({ url: `${username}/timers/create`, data: { timer }, method: 'POST' })).catch(() => { })
+    const idTimer = await axios(({ url: `${username}/timers/create`, data: { timer }, method: 'POST' })).catch(() => { })
+    timer.id = idTimer
+    commit('ADD_TIMER', timer)
   },
   async getTimers({ commit, rootState }) {
     if (rootState.localMode) {
       console.log('LOCAL MODE')
-      const timers = JSON.parse(localStorage.getItem('timers'))
+      const timers = JSON.parse(localStorage.getItem('timers')) || []
       commit('LOAD_TIMERS', timers)
       return
     }
@@ -38,6 +45,19 @@ const actions = {
     const username = 'ToDo'
     const resp = await axios(({ url: `${username}/timers`, method: 'GET' })).catch(() => { })
     commit('LOAD_TIMERS', resp.data)
+  },
+  async removeTimer({ commit, rootState }, timerId) {
+    commit('REMOVE_TIMER', timerId)
+    if (rootState.localMode) {
+      const currentTimers = JSON.parse(localStorage.getItem('timers')) || []
+      currentTimers.filter(timer => timer.id !== timerId)
+      localStorage.setItem('timers', JSON.stringify(currentTimers))
+      return
+    }
+
+    console.log('API CALL REMOVE TIMER')
+    const username = 'ToDo'
+    await axios(({ url: `${username}/timers/delete`, data: { timerId }, method: 'POST' })).catch(() => { })
   },
 }
 
