@@ -137,8 +137,8 @@ export default {
   transform: translateX(75px) !important;
 }
 
-.pressed .icon-left img,
-.pressed .icon-right img {
+.pressed .icon-left svg,
+.pressed .icon-right svg {
   animation: 1s linear 0s infinite normal none running rotate;
 }
 
