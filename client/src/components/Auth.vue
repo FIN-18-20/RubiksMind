@@ -53,6 +53,13 @@
 import { mapActions } from 'vuex'
 
 export default {
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
   props: {
     action: {
       type: String,
@@ -143,12 +150,5 @@ export default {
       }*/
     },
   },
-  filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  }
 }
 </script>

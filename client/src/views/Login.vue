@@ -1,12 +1,12 @@
 <template>
-  <Auth action="login"/>
+  <Auth action="login" />
 </template>
 
 <script>
-import Auth from '../components/Auth';
+import Auth from '../components/Auth'
 export default {
   components: {
     Auth
   }
-};
+}
 </script>
