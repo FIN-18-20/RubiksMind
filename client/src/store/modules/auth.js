@@ -22,7 +22,8 @@ const actions = {
     commit('SET_REFRESH_TOKEN', token);
   },
   getJwtToken({ getters, commit }) {
-    if (getters.getJwtToken !== '') {
+    if (getters.getJwtToken !== '' && getters.jwtToken !== undefined) {
+      console.log(getters.getJwtToken)
       return getters.getJwtToken;
     }
     else {
@@ -35,7 +36,7 @@ const actions = {
     }
   },
   getRefreshToken({ getters, commit }) {
-    if (getters.refreshToken !== '') {
+    if (getters.refreshToken !== '' && getters.refreshToken !== undefined) {
       return getters.refreshToken;
     }
     else {

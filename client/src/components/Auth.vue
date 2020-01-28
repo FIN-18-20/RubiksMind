@@ -25,7 +25,7 @@
         />
       </div>
       <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
-        <label for="password">Confirm Password</label>
+        <label for="confirmPassword">Confirm Password</label>
         <input
           class="text-black ml-4 rounded"
           v-model="confirmPassword"
@@ -36,10 +36,11 @@
           required
         />
       </div>
-      <p class="w-128 text-red-600 text-sm px-24 text-right">Passwords don't match !</p>
+      <p class="w-128 h-6 text-red-600 text-sm px-24 text-right">{{ bottomMessage }}</p>
       <button
-        class="w-64 mx-auto bg-blue-500 rounded my-2 p-1"
+        class="w-64 mx-auto bg-blue-500 rounded my-2 p-1 disabled:opacity-50 disabled:cursor-not-allowed"
         type="submit"
+        :disabled="action === 'register' && !passwordIsValid"
       >{{ action | capitalize }}</button>
 
       <button @click="authProvider = 'github'">Github</button>
@@ -57,7 +58,9 @@ export default {
       username: "",
       password: "",
       confirmPassword: "",
+      errorMessage: '',
       authProvider: "local",
+
       actionsRoutes: {
         login: this.loginRoute,
         register: this.registerRoute
@@ -84,10 +87,19 @@ export default {
   computed: {
     passwordIsValid: function () {
       if (this.action === 'register') {
-        return this.password === this.confirmPassword;
+        if (this.confirmPassword !== '') {
+          return this.password === this.confirmPassword;
+        }
+        return false;
       }
       return true;
-    }
+    },
+    bottomMessage: function () {
+      if (this.errorMessage !== '') {
+        return this.errorMessage;
+      }
+      return this.passwordIsValid ? '' : 'Passwords don\'t match !';
+    },
   },
   methods: {
     ...mapActions('auth', ['setJwtToken', 'setRefreshToken']),
@@ -104,11 +116,15 @@ export default {
                 const { refreshToken, token } = response.data;
                 await this.setJwtToken(token);
                 await this.setRefreshToken(refreshToken);
-                console.log('Logged');
+                this.$router.push('/');
               }
+            })
+            .catch(error => {
+              console.warn(error.response.data);
+              this.errorMessage = error.response.data;
             });
         } else {
-          console.log('Passwords don\'t match');
+          console.warn('Passwords don\'t match');
         }
       } else {
         this.$axios

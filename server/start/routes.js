@@ -35,4 +35,13 @@ Route.get('/test', async () => {
   await example.save()
 
   return await User.all()
-})
+}).middleware(['auth'])
+
+Route.get('/test-auth', async () => {
+
+  const example = new User()
+  example.username = 'Laurent'
+  example.password = '1234'
+
+  return example;
+}).middleware(['auth'])
