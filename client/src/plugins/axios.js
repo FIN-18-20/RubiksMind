@@ -34,9 +34,11 @@ export default {
               error.config.headers['X-Refresh-Token'] = refreshResponse.data.refreshToken
               return await axios.request(error.config)
             })
-            .catch(error => {
+            .catch(async error => {
               console.log('No refresh token : ' + error)
               store.commit('CHANGE_LOCAL_MODE', true)
+              await store.dispatch('auth/setJwtToken', '')
+              await store.dispatch('auth/setRefreshToken', '')
               window.location.href = '/login'
             })
         }

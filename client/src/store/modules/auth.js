@@ -1,6 +1,7 @@
 const state = {
   jwtToken: '',
   refreshToken: '',
+  isLogged: false,
 }
 
 const mutations = {
@@ -9,6 +10,9 @@ const mutations = {
   },
   SET_REFRESH_TOKEN(state, token) {
     state.refreshToken = token
+  },
+  CHANGE_LOGGED_STATE(state, s) {
+    state.isLogged = s
   }
 }
 
@@ -48,11 +52,19 @@ const actions = {
       return ''
     }
   },
+  logout({ commit }) {
+    this.setJwtToken({ commit }, '')
+    this.setRefreshToken({ commit }, '')
+    localStorage.removeItem('jwtToken')
+    localStorage.removeItem('refreshToken')
+    this.commit('CHANGE_LOGGED_STATE', false)
+  },
 }
 
 const getters = {
   getJwtToken: state => state.jwtToken,
   getRefreshToken: state => state.refreshToken,
+  isLogged: state => state.isLogged,
 }
 
 export default {

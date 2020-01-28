@@ -124,6 +124,7 @@ export default {
                 await this.setJwtToken(token)
                 await this.setRefreshToken(refreshToken)
                 this.$store.commit('CHANGE_LOCAL_MODE', false)
+                this.$store.commit('auth/CHANGE_LOGGED_STATE', true)
                 this.$router.push('/')
               }
             })

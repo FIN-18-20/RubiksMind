@@ -101,6 +101,20 @@ class AuthController {
       return response.unauthorized(e.message);
     }
   }
+
+  async logout({auth, request, response}) {
+    let refreshToken = request.header('X-Refresh-Token');
+    if (refreshToken === 'undefined') {
+      return response.unauthorized('No refresh token');
+    }
+    try{
+      await auth.revokeTokens([refreshToken], true)
+      return response.ok()
+    }
+    catch(e) {
+      return response.badRequest(e.message)
+    }
+  }
 }
 
 module.exports = AuthController;
