@@ -1,11 +1,12 @@
 <template>
-    <div>
-        <h1>Register</h1>
-    </div>
+  <Auth action="register" />
 </template>
 
 <script>
+import Auth from '../components/Auth'
 export default {
-    
+  components: {
+    Auth
+  }
 }
 </script>
