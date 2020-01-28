@@ -9,14 +9,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    localMode: true
+    localMode: true,
+    windowWidth: null,
   },
   mutations: {
     CHANGE_LOCAL_MODE(state, mode) {
       state.localMode = mode
-    }
+    },
+    UPDATE_WINDOW_WIDTH(state, width) {
+      state.windowWidth = width
+    },
   },
   actions: {
+    updateWindowWidth({ commit }, width) {
+      commit('UPDATE_WINDOW_WIDTH', width)
+    },
   },
   modules: {
     cube,

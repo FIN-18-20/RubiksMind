@@ -35,8 +35,20 @@ export default {
     this.loadAllSettings()
   },
 
+  mounted() {
+    this.updateWindowWidth(window.innerWidth)
+    window.addEventListener('resize', this.handleWindowResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize)
+  },
+
   methods: {
+    handleWindowResize(event) {
+      this.updateWindowWidth(event.currentTarget.innerWidth)
+    },
     ...mapActions('settings', ['loadAllSettings']),
+    ...mapActions(['updateWindowWidth']),
   }
 }
 </script>
