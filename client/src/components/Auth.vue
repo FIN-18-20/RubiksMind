@@ -132,6 +132,16 @@ export default {
                 case 401: {
                   console.warn(error.response.data)
                   this.errorMessage = error.response.data
+                  break
+                }
+                case 403: {
+                  console.warn('You are already connected !')
+                  this.errorMessage = 'You are already connected !'
+                  break
+                }
+                default: {
+                  console.warn(error.response.data)
+                  break
                 }
               }
             })
