@@ -21,8 +21,8 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.post('/login/:provider?', 'AuthController.login')
-Route.post('/register', 'AuthController.register')
+Route.post('/login/:provider?', 'AuthController.login').middleware(['guest'])
+Route.post('/register', 'AuthController.register').middleware(['guest'])
 Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
 Route.get('/refresh', 'AuthController.refresh')
 

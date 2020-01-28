@@ -128,8 +128,12 @@ export default {
               }
             })
             .catch(error => {
-              console.warn(error.response.data)
-              this.errorMessage = error.response.data
+              switch (error.response.status) {
+                case 401: {
+                  console.warn(error.response.data)
+                  this.errorMessage = error.response.data
+                }
+              }
             })
         } else {
           console.warn('Passwords don\'t match')
