@@ -1,34 +1,27 @@
 <template>
-  <div class="inline-block relative">
+  <div class="relative inline-block select-none">
     <slot></slot>
     <div
-      @click="generateScramble"
+      @click="updateScramble"
       class="text-2xl font-semibold text-blue-400 tracking-wider cursor-pointer"
     >{{ scramble }}</div>
   </div>
 </template>
 
 <script>
-import Cube from 'cubejs'
+import { mapActions, mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      scramble: ''
-    }
+  computed: {
+    ...mapState('cube', ['scramble']),
   },
 
   async created() {
-    console.time('SCRAMBLE')
-    Cube.initSolver()
-    this.generateScramble()
-    console.timeEnd('SCRAMBLE')
+    this.updateScramble()
   },
 
   methods: {
-    generateScramble() {
-      this.scramble = Cube.scramble()
-    }
+    ...mapActions('cube', ['updateScramble']),
   }
 }
 </script>
