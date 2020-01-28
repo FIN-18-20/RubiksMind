@@ -1,13 +1,16 @@
 <template>
   <div class="btn-container fixed z-20 bottom-0 mb-6">
     <button
+      ref="play-btn"
       @mousedown="startWaiting"
       :class="btnClasses"
       :style="btnStyle"
       class="play relative flex items-center justify-center select-none focus:outline-none"
     >
       <div class="content relative z-10 bg-cover bg-center bg-no-repeat">
-        <h1 class="text-blue-100 text-lg font-bold uppercase">Start</h1>
+        <h1
+          class="text-blue-100 text-lg font-bold uppercase"
+        >{{ state === 'started' ? 'Stop' : 'Start' }}</h1>
       </div>
     </button>
   </div>
@@ -43,6 +46,15 @@ export default {
       }
     }
   },
+
+  mounted() {
+    this.$refs['play-btn'].addEventListener('touchstart', () => {
+      this.startWaiting()
+    })
+    this.$refs['play-btn'].addEventListener('touchend', () => {
+      this.stopWaiting()
+    })
+  }
 }
 </script>
 
