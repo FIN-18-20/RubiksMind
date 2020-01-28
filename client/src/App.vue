@@ -1,5 +1,6 @@
 <template>
   <div class="app min-h-screen text-white font-sans">
+    <SVGContainer />
     <div class="container mx-auto">
       <nav class="flex justify-between items-center py-6">
         <router-link :to="{ name: 'play' }">
@@ -20,6 +21,25 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+import SVGContainer from '@/components/SVGContainer.vue'
+
+export default {
+  components: {
+    SVGContainer,
+  },
+
+  created() {
+    this.loadAllSettings()
+  },
+
+  methods: {
+    ...mapActions('settings', ['loadAllSettings']),
+  }
+}
+</script>
 
 <style>
 .app {

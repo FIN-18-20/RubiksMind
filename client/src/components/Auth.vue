@@ -5,34 +5,34 @@
       <div class="w-128 flex flex-row justify-between px-12 my-2">
         <label for="username">Username</label>
         <input
-          class="text-black ml-4 rounded"
           v-model="username"
+          id="username"
+          class="text-black ml-4 rounded"
           type="text"
           name="username"
-          id="username"
           required
         />
       </div>
       <div class="w-128 flex flex-row justify-between px-12 my-2">
         <label for="password">Password</label>
         <input
-          class="text-black ml-4 rounded"
           v-model="password"
+          id="password"
+          class="text-black ml-4 rounded"
           type="password"
           name="password"
-          id="password"
           required
         />
       </div>
       <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
         <label for="confirmPassword">Confirm Password</label>
         <input
-          class="text-black ml-4 rounded"
           v-model="confirmPassword"
           @blur="verifyPasswords"
+          id="confirmPassword"
+          class="text-black ml-4 rounded"
           type="password"
           name="confirmPassword"
-          id="confirmPassword"
           required
         />
       </div>
@@ -50,61 +50,61 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from 'vuex'
 
 export default {
-  data() {
-    return {
-      username: "",
-      password: "",
-      confirmPassword: "",
-      errorMessage: '',
-      authProvider: "local",
-
-      actionsRoutes: {
-        login: this.loginRoute,
-        register: this.registerRoute
-      }
-    };
-  },
   props: {
     action: {
       type: String,
       required: true,
       validator: function (value) {
-        return ["login", "register"].indexOf(value) !== -1;
+        return ['login', 'register'].indexOf(value) !== -1
       }
     },
     loginRoute: {
       type: String,
-      default: "login"
+      default: 'login'
     },
     registerRoute: {
       type: String,
-      default: "register"
+      default: 'register'
+    }
+  },
+  data() {
+    return {
+      username: '',
+      password: '',
+      confirmPassword: '',
+      errorMessage: '',
+      authProvider: 'local',
+
+      actionsRoutes: {
+        login: this.loginRoute,
+        register: this.registerRoute
+      }
     }
   },
   computed: {
     passwordIsValid: function () {
       if (this.action === 'register') {
         if (this.confirmPassword !== '') {
-          return this.password === this.confirmPassword;
+          return this.password === this.confirmPassword
         }
-        return false;
+        return false
       }
-      return true;
+      return true
     },
     bottomMessage: function () {
       if (this.errorMessage !== '') {
-        return this.errorMessage;
+        return this.errorMessage
       }
-      return this.passwordIsValid ? '' : 'Passwords don\'t match !';
+      return this.passwordIsValid ? '' : 'Passwords don\'t match !'
     },
   },
   methods: {
     ...mapActions('auth', ['setJwtToken', 'setRefreshToken']),
     async postAction() {
-      if (this.authProvider === "local") {
+      if (this.authProvider === 'local') {
         if (this.passwordIsValid) {
           this.$axios
             .post(this.actionsRoutes[this.action], {
@@ -113,27 +113,28 @@ export default {
             })
             .then(async response => {
               if (response.status === 201) {
-                const { refreshToken, token } = response.data;
-                await this.setJwtToken(token);
-                await this.setRefreshToken(refreshToken);
-                this.$router.push('/');
+                const { refreshToken, token } = response.data
+                await this.setJwtToken(token)
+                await this.setRefreshToken(refreshToken)
+                this.$store.commit('CHANGE_LOCAL_MODE', false)
+                this.$router.push('/')
               }
             })
             .catch(error => {
-              console.warn(error.response.data);
-              this.errorMessage = error.response.data;
-            });
+              console.warn(error.response.data)
+              this.errorMessage = error.response.data
+            })
         } else {
-          console.warn('Passwords don\'t match');
+          console.warn('Passwords don\'t match')
         }
       } else {
         this.$axios
           .post(this.actionsRoutes[this.action] + '/' + this.authProvider)
           .then(response => {
             if (response.status === 201) {
-              window.location.href = response.data;
+              window.location.href = response.data
             }
-          });
+          })
       }
     },
     verifyPasswords() {
@@ -144,10 +145,10 @@ export default {
   },
   filters: {
     capitalize: function (value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
     }
   }
-};
+}
 </script>

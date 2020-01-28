@@ -1,26 +1,106 @@
 <template>
-  <div>
-    <h1>Play</h1>
-    <button @click="test">Test</button>
-    <br/>
-    <button @click="getRefreshToken">RT</button>
-    <br/>
-    <button @click="getJwtToken">JWT</button>
+  <div class="mt-12 text-center">
+    <Scramble class="group select-none">
+      <ScrambleTooltip class="group-hover:inline-block" />
+    </Scramble>
+    <Timer :time="resolutionTime" />
+    <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+    <ExplanationMessage class="mt-4" />
+    <play-infos></play-infos>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import PlayButton from '@/components/Play/PlayButton.vue'
+import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
+import Scramble from '@/components/Play/Scramble.vue'
+import Timer from '@/components/Play/Timer.vue'
+import PlayInfos from '@/components/Play/PlayInfos.vue'
+import ExplanationMessage from '@/components/Play/ExplanationMessage.vue'
+
 export default {
-  methods: {
-    test() {
-      this.$axios.get('/test-auth').then(response => console.log(response));
-    },
-    async getRefreshToken() {
-      console.log(await this.$store.dispatch('auth/getRefreshToken'))
-    },
-    async getJwtToken() {
-      console.log(await this.$store.dispatch('auth/getJwtToken'))
+  components: {
+    ExplanationMessage,
+    PlayButton,
+    PlayInfos,
+    ScrambleTooltip,
+    Scramble,
+    Timer
+  },
+
+  data() {
+    return {
+      resolutionTime: 0,
+      ticker: null,
+      startTime: null,
     }
+  },
+
+  created() {
+    this.getTimers()
+  },
+
+  methods: {
+    AdjustingInterval(workFunc, interval, errorFunc, resetFunc, granularity) {
+      let expected, timeout, resetStep
+
+      this.start = () => {
+        expected = Date.now() + interval
+        timeout = setTimeout(step, interval)
+        resetStep = 0
+      }
+
+      this.stop = () => {
+        clearTimeout(timeout)
+      }
+
+      const step = () => {
+        let drift = Date.now() - expected
+        if (drift > interval) {
+          if (errorFunc) {
+            errorFunc(drift)
+          }
+        }
+        workFunc()
+        expected += interval
+        resetStep++
+        if (resetStep >= granularity) {
+          resetFunc()
+          resetStep = 0
+          expected = Date.now()
+        }
+
+        timeout = setTimeout(step, Math.max(0, interval - drift))
+      }
+    },
+    startTimer() {
+      this.resolutionTime = 0
+      this.startTime = Date.now()
+
+      const doWork = () => {
+        this.resolutionTime += 25
+      }
+
+      const doError = drift => {
+        console.log('Drift in timer', drift)
+      }
+
+      const fixTimerDrift = () => {
+        this.resolutionTime = Date.now() - this.startTime
+      }
+
+      this.ticker = new this.AdjustingInterval(doWork, 25, doError, fixTimerDrift, 10)
+
+      this.ticker.start()
+      console.time('timer')
+    },
+    stopTimer() {
+      this.ticker.stop()
+      this.addTimer({ date: Date.now(), time: this.resolutionTime })
+      console.timeEnd('timer')
+    },
+    ...mapActions('timer', ['addTimer', 'getTimers']),
   }
 }
 </script>
