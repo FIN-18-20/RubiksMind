@@ -22,7 +22,7 @@
             >
               <div class="flex items-center justify-center">
                 <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <svg v-if="time.personalBest" width="13" height="12" class="ml-3">
+                <svg v-if="time.personalBest" width="13" height="12" class="fill-current text-orange-400 ml-3">
                   <use xlink:href="#trophy" />
                 </svg>
               </div>

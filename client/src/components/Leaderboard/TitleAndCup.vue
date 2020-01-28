@@ -1,10 +1,19 @@
 <template>
-  <div class="text-blue-200 font-bold italic flex items-center">
-    <hr class="w-32">
-    <div class="mx-4">
-      <span class="text-3xl">L</span>
-      <span class="text-xl uppercase">eaderBoard</span>
+  <div class="text-blue-200 font-bold italic">
+    <div class="flex justify-center -mb-3">
+
     </div>
-    <hr class="w-32">
+    <svg class="fill-current w-12 h-12 text-blue-200 mx-auto -mb-3">
+      <use xlink:href="#trophy" />
+    </svg>
+    <div class="flex items-center">
+      <hr class="w-32">
+      <div class="mx-4">
+        <span class="text-3xl">L</span>
+        <span class="text-xl uppercase">eaderBoard</span>
+      </div>
+      <hr class="w-32">
+    </div>
+    
   </div>
 </template>
