@@ -1,8 +1,10 @@
 <template>
   <div class="mt-12 text-center">
-    <Scramble class="group select-none">
-      <ScrambleTooltip class="group-hover:inline-block" />
-    </Scramble>
+    <div class="w-full h-10">
+      <Scramble class="group">
+        <ScrambleTooltip class="group-hover:inline-block" />
+      </Scramble>
+    </div>
     <Timer :time="resolutionTime" />
     <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
     <ExplanationMessage class="mt-4" />

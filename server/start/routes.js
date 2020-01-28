@@ -45,3 +45,5 @@ Route.get('/test-auth', async () => {
 
   return example;
 }).middleware(['auth'])
+
+Route.get('/scramble', 'CubeController.scramble')
