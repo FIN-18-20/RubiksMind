@@ -19,10 +19,20 @@
       </nav>
       <router-view />
       <div v-if="windowWidth < 400">
-        <nav class="fixed bottom-0 w-full z-10">
-          <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-4 leading-normal">
-            <div>Home</div>
-            <div>Scores</div>
+        <nav class="fixed bottom-0 w-full z-10 select-none">
+          <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
+            <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+              <svg class="w-8 h-8 text-blue-700">
+                <use xlink:href="#home" />
+              </svg>
+              <span class="text-blue-100 text-xxs uppercase">Home</span>
+            </router-link>
+            <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+              <svg class="w-8 h-8 text-blue-700">
+                <use xlink:href="#trophy" />
+              </svg>
+              <span class="text-blue-100 text-xxs uppercase">Scores</span>
+            </router-link>
           </div>
         </nav>
       </div>
