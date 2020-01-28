@@ -11,6 +11,9 @@ export default new Vuex.Store({
     localMode: true
   },
   mutations: {
+    CHANGE_LOCAL_MODE(state, mode) {
+      state.localMode = mode
+    }
   },
   actions: {
   },

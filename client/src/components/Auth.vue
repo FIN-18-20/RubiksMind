@@ -116,6 +116,7 @@ export default {
                 const { refreshToken, token } = response.data
                 await this.setJwtToken(token)
                 await this.setRefreshToken(refreshToken)
+                this.$store.commit('CHANGE_LOCAL_MODE', false)
                 this.$router.push('/')
               }
             })
