@@ -6,15 +6,22 @@
       </Scramble>
     </div>
     <Timer :time="resolutionTime" />
-    <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
-    <ExplanationMessage class="mt-4" />
-    <play-infos></play-infos>
+    <template v-if="windowWidth > 400">
+      <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+      <ExplanationMessage class="mt-4" />
+      <play-infos></play-infos>
+    </template>
+    <template v-else>
+      <play-infos></play-infos>
+      <PlayButtonMobile @startTimer="startTimer" @stopTimer="stopTimer" />
+    </template>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import PlayButton from '@/components/Play/PlayButton.vue'
+import PlayButtonMobile from '@/components/Play/PlayButtonMobile.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
 import Timer from '@/components/Play/Timer.vue'
@@ -25,6 +32,7 @@ export default {
   components: {
     ExplanationMessage,
     PlayButton,
+    PlayButtonMobile,
     PlayInfos,
     ScrambleTooltip,
     Scramble,
@@ -37,6 +45,10 @@ export default {
       ticker: null,
       startTime: null,
     }
+  },
+
+  computed: {
+    ...mapState(['windowWidth']),
   },
 
   created() {
