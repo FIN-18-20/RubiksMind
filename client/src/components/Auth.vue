@@ -53,6 +53,13 @@
 import { mapActions } from 'vuex'
 
 export default {
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
   props: {
     action: {
       type: String,
@@ -121,8 +128,22 @@ export default {
               }
             })
             .catch(error => {
-              console.warn(error.response.data)
-              this.errorMessage = error.response.data
+              switch (error.response.status) {
+                case 401: {
+                  console.warn(error.response.data)
+                  this.errorMessage = error.response.data
+                  break
+                }
+                case 403: {
+                  console.warn('You are already connected !')
+                  this.errorMessage = 'You are already connected !'
+                  break
+                }
+                default: {
+                  console.warn(error.response.data)
+                  break
+                }
+              }
             })
         } else {
           console.warn('Passwords don\'t match')
@@ -143,12 +164,5 @@ export default {
       }*/
     },
   },
-  filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  }
 }
 </script>

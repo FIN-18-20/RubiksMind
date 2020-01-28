@@ -36,6 +36,7 @@ export default {
             })
             .catch(error => {
               console.log('No refresh token : ' + error)
+              store.commit('CHANGE_LOCAL_MODE', true)
               window.location.href = '/login'
             })
         }
