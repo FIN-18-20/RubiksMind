@@ -27,9 +27,8 @@ const actions = {
       commit('ADD_TIMER', timer)
       return
     }
-    const username = 'ToDo'
     console.log('SAVE NEW TIMER IN DB')
-    const idTimer = await axios(({ url: `${username}/timers/create`, data: { timer }, method: 'POST' })).catch(() => { })
+    const idTimer = await axios(({ url: '/times/create', data: { timer }, method: 'POST' })).catch((err) => { console.log(err) })
     timer.id = idTimer
     commit('ADD_TIMER', timer)
   },
@@ -40,10 +39,8 @@ const actions = {
       commit('LOAD_TIMERS', timers)
       return
     }
-
     console.log('API CALL FOR TIMERS')
-    const username = 'ToDo'
-    const resp = await axios(({ url: `${username}/timers`, method: 'GET' })).catch(() => { })
+    const resp = await axios(({ url: '/times/all', method: 'GET' })).catch((err) => { console.log(err) })
     commit('LOAD_TIMERS', resp.data)
   },
   async removeTimer({ commit, rootState }, timerId) {

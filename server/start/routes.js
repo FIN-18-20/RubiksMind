@@ -47,3 +47,9 @@ Route.get('/test-auth', async () => {
 }).middleware(['auth'])
 
 Route.get('/scramble', 'CubeController.scramble')
+
+
+//Times
+
+Route.get('/times/all', 'TimeController.index').middleware(['auth'])
+Route.post('/times/create', 'TimeController.create').middleware(['auth'])
