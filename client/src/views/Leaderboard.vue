@@ -1,14 +1,17 @@
 <template>
-  <div class="flex justify-center mt-40">
+  <div class="text-center mt-40">
     <TitleAndCup />
+    <TimeList />
   </div>
 </template>
 
 <script>
 import TitleAndCup from '@/components/Leaderboard/TitleAndCup.vue'
+import TimeList from '@/components/Leaderboard/TimeList.vue'
 export default {
   components: {
-    TitleAndCup
+    TitleAndCup,
+    TimeList
   },
 }
 </script>

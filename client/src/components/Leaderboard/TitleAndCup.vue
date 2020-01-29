@@ -3,10 +3,10 @@
     <div class="flex justify-center -mb-3">
 
     </div>
-    <svg class="fill-current w-12 h-12 text-blue-200 mx-auto -mb-3">
+    <svg class="fill-current w-10 h-10 text-blue-200 mx-auto -mb-3">
       <use xlink:href="#trophy" />
     </svg>
-    <div class="flex items-center">
+    <div class="flex items-center justify-center">
       <hr class="w-32">
       <div class="mx-4">
         <span class="text-3xl">L</span>
