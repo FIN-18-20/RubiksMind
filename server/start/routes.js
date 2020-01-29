@@ -21,6 +21,11 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
+Route.post('/login/:provider?', 'AuthController.login').middleware(['guest'])
+Route.post('/register', 'AuthController.register').middleware(['guest'])
+Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
+Route.get('/refresh', 'AuthController.refresh')
+
 Route.get('/test', async () => {
 
   const example = new User()
@@ -30,4 +35,15 @@ Route.get('/test', async () => {
   await example.save()
 
   return await User.all()
-})
+}).middleware(['auth'])
+
+Route.get('/test-auth', async () => {
+
+  const example = new User()
+  example.username = 'Laurent'
+  example.password = '1234'
+
+  return example;
+}).middleware(['auth'])
+
+Route.get('/scramble', 'CubeController.scramble')

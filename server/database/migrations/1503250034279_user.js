@@ -7,9 +7,10 @@ class UserSchema extends Schema {
   up() {
     this.create('users', (table) => {
       table.increments()
-      table.string('username', 80).notNullable()
+      table.string('username', 80).notNullable().unique()
       table.string('email', 254).unique()
-      table.string('password', 60).notNullable()
+      table.string('password', 60)
+      table.string('login_source', 25)
       table.timestamps()
     })
   }
