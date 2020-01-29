@@ -71,7 +71,7 @@ class AuthController {
       const userDetails = {
         username: socialUser.getNickname(),
         email: socialUser.getEmail(),
-        login_source: 'oauth',
+        login_source: params.provider,
       }
 
       const whereClause = {
