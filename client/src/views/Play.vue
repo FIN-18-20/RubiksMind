@@ -6,13 +6,29 @@
       </Scramble>
     </div>
     <Timer :time="resolutionTime" />
-    <template v-if="windowWidth >= 640">
+    <template v-if="breakpoint !== 'mobile'">
       <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
       <ExplanationMessage class="mt-4" />
       <play-infos></play-infos>
     </template>
     <template v-else>
       <play-infos></play-infos>
+      <nav class="fixed bottom-0 left-0 right-0 z-10 select-none">
+        <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
+          <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+            <svg class="w-8 h-8 text-blue-700">
+              <use xlink:href="#home" />
+            </svg>
+            <span class="text-blue-100 text-xxs uppercase">Home</span>
+          </router-link>
+          <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+            <svg class="w-8 h-8 text-blue-700">
+              <use xlink:href="#trophy" />
+            </svg>
+            <span class="text-blue-100 text-xxs uppercase">Scores</span>
+          </router-link>
+        </div>
+      </nav>
       <PlayButtonMobile @startTimer="startTimer" @stopTimer="stopTimer" />
     </template>
   </div>
@@ -48,7 +64,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['windowWidth']),
+    ...mapState(['breakpoint']),
   },
 
   created() {
@@ -118,3 +134,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.nav-mobile {
+  box-shadow: 0px -2px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 27px 27px 0px 0px;
+}
+</style>
