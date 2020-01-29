@@ -6,7 +6,7 @@
       </Scramble>
     </div>
     <Timer :time="resolutionTime" />
-    <template v-if="windowWidth > 400">
+    <template v-if="windowWidth >= 640">
       <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
       <ExplanationMessage class="mt-4" />
       <play-infos></play-infos>

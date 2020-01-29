@@ -1,7 +1,7 @@
 <template>
   <div class="app min-h-screen text-white font-sans">
     <SVGContainer />
-    <div class="container mx-auto">
+    <div class="container mx-auto px-2 md:px-0">
       <nav class="flex justify-between items-center p-4 sm:px-0 sm:py-6">
         <router-link :to="{ name: 'play' }">
           <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
@@ -18,7 +18,7 @@
         </div>
       </nav>
       <router-view />
-      <div v-if="windowWidth < 400">
+      <div v-if="windowWidth < 640">
         <nav class="fixed bottom-0 w-full z-10 select-none">
           <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
             <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
