@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 
 import '@/assets/css/base.css'
+import 'flag-icon-css/css/flag-icon.css'
 
 import VueAxios from './plugins/axios'
 
