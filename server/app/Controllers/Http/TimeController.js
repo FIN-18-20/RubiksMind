@@ -2,7 +2,7 @@
 
 const Time = use('App/Models/Time')
 const Database = use('Database')
-
+const { validate } = use('Validator')
 
 class TimeController {
 
@@ -18,10 +18,20 @@ class TimeController {
 
   //POST
   async create({ request, response, auth }) {
-
-    //Validation here
-    const time = await Time.create({ time: request.all().time, user_id: auth.user.id })
-    return response.created(time.id)
+    const rules = {
+      number: 'required|number'
+    }
+    const messages = {
+      required: "The data can't be empty",
+      number: "The data should be a valid number",
+    }
+    const validation = await validate(request.all().time, rules, messages)
+    if (validation.fails()) {
+      return response.badRequest(validation.messages())
+    } else {
+      const time = await Time.create({ time: request.all().time, user_id: auth.user.id })
+      return response.created(time.id)
+    }
   }
 
   //DELETE
