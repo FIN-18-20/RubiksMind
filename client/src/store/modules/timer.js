@@ -28,8 +28,8 @@ const actions = {
       return
     }
     console.log('SAVE NEW TIMER IN DB')
-    const idTimer = await axios(({ url: '/times/create', data: { timer }, method: 'POST' })).catch((err) => { console.log(err) })
-    timer.id = idTimer
+    const idTimer = await axios(({ url: '/times/create', data: timer, method: 'POST' })).catch((err) => { console.log(err) })
+    timer.id = idTimer.data
     commit('ADD_TIMER', timer)
   },
   async getTimers({ commit, rootState }) {
@@ -51,10 +51,8 @@ const actions = {
       localStorage.setItem('timers', JSON.stringify(currentTimers))
       return
     }
-
     console.log('API CALL REMOVE TIMER')
-    const username = 'ToDo'
-    await axios(({ url: `${username}/timers/delete`, data: { timerId }, method: 'POST' })).catch(() => { })
+    await axios(({ url: `/times/delete/${timerId}`, method: 'DELETE' })).catch((err) => { console.log(err) })
   },
 }
 

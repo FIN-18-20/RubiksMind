@@ -48,8 +48,7 @@ Route.get('/test-auth', async () => {
 
 Route.get('/scramble', 'CubeController.scramble')
 
-
 //Times
-
 Route.get('/times/all', 'TimeController.index').middleware(['auth'])
 Route.post('/times/create', 'TimeController.create').middleware(['auth'])
+Route.delete('/times/delete/:id', 'TimeController.delete').middleware(['auth'])
