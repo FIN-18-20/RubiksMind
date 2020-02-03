@@ -11,7 +11,6 @@
       <div class="mx-4">
         <span class="text-3xl">L</span>
         <span class="text-xl uppercase">eaderBoard</span>
-        <span class="flag-icon flag-icon-tz flag-icon-squared rounded-full"></span>
       </div>
       <hr class="w-32">
     </div>

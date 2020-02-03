@@ -9,29 +9,37 @@
           <transition-group name="times" tag="div">
             <div
               v-for="(time, index) in times.slice().reverse()"
-              :key="time.try"
+              :key="index"
               class="relative flex items-center justify-between"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
+              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12']"
             >
               <div class="flex items-center justify-center">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <svg v-if="time.personalBest" width="13" height="12" class="fill-current text-orange-400 ml-3">
-                  <use xlink:href="#trophy" />
-                </svg>
+                <span
+                  class="w-6 ml-1 text-xs font-medium text-right text-blue-600"
+                >{{ index + 1 }}</span>
+                <div
+                  :class="'flag-icon-' + time.country"
+                  class="w-4
+                   h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
+                ></div>
+                <div class="ml-2 text-sm">
+                  {{ time.username }}
+                </div>
               </div>
               <span
-                @click="addTime"
-                class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
-              >{{ time.time }}</span>
-              <div
-                @click="removeTime(times.length - 1 - index)"
-                class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
+                class=" pl-8 text-md italic font-medium flex items-center text-center text-blue-300 absoluteElement"
               >
-                <svg
-                  class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300"
-                >
-                  <use xlink:href="#cross-delete" />
+                <svg class="fill-current w-4 h-4 text-blue-600 mx-auto mr-2"> /** Delete the fill tag in the svg container  */
+                  <use xlink:href="#timer" />
                 </svg>
+                {{ time.time }}</span>
+              <div
+                class="mr-2 text-sm italic font-medium flex items-center text-center text-blue-300"
+              >
+                <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
+                  <use xlink:href="#calendar" />
+                </svg>
+                {{ time.date }}
               </div>
             </div>
           </transition-group>
@@ -90,18 +98,18 @@ export default {
     return {
       hasData: true,
       times: [
-        { try: 'O', username: 'Lazzer', time: '00:58.24', date: '24.01.2020' },
-        { try: 'O', time: '00:58.24', personlBest: false },
-        { try: 9, time: '00:58.24', personalBest: false },
-        { try: 3, time: '00:08.24', personalBest: true },
-        { try: 2, time: '00:05.24', personalBest: true },
-        { try: 1, time: '00:03.47', personalBest: true },
+        { country: 'ch', username: 'Rasmelthortue', time: '00:58.24', date: '24.01.2020' },
+        { country: 'fr', username: 'LazGreve', time: '00:58.24', date: '24.01.2020' },
+        { country: 'br', username: 'Lazhino', time: '00:58.24', date: '24.01.2020' },
+        { country: 'ch', username: 'LazBank', time: '00:58.24', date: '24.01.2020' },
+        { country: 'be', username: 'LazFrite', time: '00:58.24', date: '24.01.2020' },
+        { country: 'ch', username: 'LazNeutre', time: '00:58.24', date: '24.01.2020' },
       ]
     }
   },
   methods: {
     addTime() {
-      this.times.push({ try: this.times.length + 20, time: '00:00.00', personalBest: false })
+      this.times.push({ time: '00:00.00', personalBest: false })
     },
     removeTime(index) {
       this.times.splice(index, 1)
