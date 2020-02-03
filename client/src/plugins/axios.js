@@ -8,7 +8,7 @@ const openRoutes = ['refresh', 'login', 'register']
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? baseUrl + 'api/' : ''
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? baseUrl + 'api/' : 'https://api.rubiksmind.com/'
 
 export default {
   async install(Vue, { store }) {
