@@ -1,5 +1,20 @@
 <template>
-  <div class="mt-2 text-center">
+  <div class="relative mt-2 text-center">
+    <template v-if="windowWidth > breakpoints.md && status === 'Personal best'">
+      <svg class="star-left-xl absolute w-20 h-20 text-orange-400">
+        <use xlink:href="#star" />
+      </svg>
+      <svg class="star-left absolute w-12 h-12 text-orange-400" style="transform: rotate(-20deg);">
+        <use xlink:href="#star" />
+      </svg>
+
+      <svg class="star-right-xl absolute w-20 h-20 text-orange-400">
+        <use xlink:href="#star" />
+      </svg>
+      <svg class="star-right absolute w-12 h-12 text-orange-400" style="transform: rotate(20deg);">
+        <use xlink:href="#star" />
+      </svg>
+    </template>
     <div
       :class="statusColor"
       class="flex items-center justify-center h-10 text-sm font-semibold italic uppercase md:text-base"
@@ -82,7 +97,9 @@ export default {
   computed: {
     ...mapState({
       breakpoint: state => state.breakpoint,
+      breakpoints: state => state.breakpoints,
       timers: state => state.timer.timers,
+      windowWidth: state => state.windowWidth,
     }),
   },
 
@@ -180,5 +197,69 @@ export default {
 .nav-mobile {
   box-shadow: 0px -2px 7px rgba(0, 0, 0, 0.25);
   border-radius: 27px 27px 0px 0px;
+}
+
+.star-left,
+.star-right {
+  top: 170px;
+}
+
+.star-left-xl,
+.star-right-xl {
+  top: 120px;
+}
+
+@screen md {
+  .star-left-xl {
+    left: 60px;
+  }
+
+  .star-left {
+    left: 20px;
+  }
+
+  .star-right-xl {
+    right: 60px;
+  }
+
+  .star-right {
+    right: 20px;
+  }
+}
+
+@screen lg {
+  .star-left-xl {
+    left: 180px;
+  }
+
+  .star-left {
+    left: 120px;
+  }
+
+  .star-right-xl {
+    right: 180px;
+  }
+
+  .star-right {
+    right: 120px;
+  }
+}
+
+@screen xl {
+  .star-left-xl {
+    left: 290px;
+  }
+
+  .star-left {
+    left: 230px;
+  }
+
+  .star-right-xl {
+    right: 290px;
+  }
+
+  .star-right {
+    right: 230px;
+  }
 }
 </style>
