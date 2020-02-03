@@ -1,20 +1,13 @@
 <template>
   <div class="app min-h-screen text-white font-sans">
     <SVGContainer />
-    <div class="container mx-auto">
-      <nav class="flex justify-between items-center py-6">
+    <div class="container mx-auto px-2 md:px-0">
+      <nav class="flex justify-between items-center p-4 sm:px-0 sm:py-6">
         <router-link :to="{ name: 'play' }">
-          <img class="w-48" src="@/assets/img/logo.svg" alt="logo" />
+          <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
         <div class="leading-relaxed text-center">
-          <router-link
-            :to="{ name: 'login' }"
-            class="inline-block w-24 py-2 border border-blue-300 rounded-md"
-          >Login</router-link>
-          <router-link
-            :to="{ name: 'register' }"
-            class="ml-5 inline-block w-24 py-2 bg-blue-900 border border-blue-300 rounded-md"
-          >Register</router-link>
+          
         </div>
       </nav>
       <router-view />
@@ -35,8 +28,20 @@ export default {
     this.loadAllSettings()
   },
 
+  mounted() {
+    this.updateWindowWidth(window.innerWidth)
+    window.addEventListener('resize', this.handleWindowResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize)
+  },
+
   methods: {
+    handleWindowResize(event) {
+      this.updateWindowWidth(event.currentTarget.innerWidth)
+    },
     ...mapActions('settings', ['loadAllSettings']),
+    ...mapActions(['updateWindowWidth']),
   }
 }
 </script>

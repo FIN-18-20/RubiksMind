@@ -1,15 +1,15 @@
 <template>
   <div
-    class="text-10xl text-center text-blue-100 italic font-extrabold flex items-baseline justify-center select-none"
+    class="flex items-baseline justify-center text-6xl text-center text-blue-100 italic font-extrabold leading-none select-none sm:text-10xl"
   >
-    <div class="w-20">{{ timeObject.min[0] }}</div>
-    <div class="w-20">{{ timeObject.min[1] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.min[0] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.min[1] }}</div>
     <div>:</div>
-    <div class="w-20">{{ timeObject.sec[0] }}</div>
-    <div class="w-20">{{ timeObject.sec[1] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.sec[0] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.sec[1] }}</div>
     <div>.</div>
-    <div class="w-12 text-6xl">{{ timeObject.hundredth[0] }}</div>
-    <div class="w-12 text-6xl">{{ timeObject.hundredth[1] }}</div>
+    <div class="w-8 text-5xl sm:text-6xl sm:w-12">{{ timeObject.hundredth[0] }}</div>
+    <div class="w-8 text-5xl sm:text-6xl sm:w-12">{{ timeObject.hundredth[1] }}</div>
   </div>
 </template>
 
