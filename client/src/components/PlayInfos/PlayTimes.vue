@@ -43,7 +43,7 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <svg width="58" height="71">
+          <svg width="58" height="71" class="fill-current text-blue-800">
             <use xlink:href="#timer" />
           </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>

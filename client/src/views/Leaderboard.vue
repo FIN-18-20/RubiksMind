@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mt-40">
+  <div class="text-center mt-24">
     <TitleAndCup />
     <TimeList />
   </div>

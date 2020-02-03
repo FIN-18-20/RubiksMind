@@ -22,14 +22,17 @@
                   class="w-4
                    h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
                 ></div>
-                <div class="ml-2 text-sm">
+                <div v-if="time.username.length < 14" class="ml-2 text-sm">
+                  {{ time.username }}
+                </div>
+                <div v-else class="ml-2 text-xs">
                   {{ time.username }}
                 </div>
               </div>
               <span
                 class=" pl-8 text-md italic font-medium flex items-center text-center text-blue-300 absoluteElement"
               >
-                <svg class="fill-current w-4 h-4 text-blue-600 mx-auto mr-2"> /** Delete the fill tag in the svg container  */
+                <svg class="fill-current w-4 h-4 text-blue-600 mx-auto mr-2">
                   <use xlink:href="#timer" />
                 </svg>
                 {{ time.time }}</span>
@@ -45,7 +48,7 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <svg width="58" height="71">
+          <svg width="58" height="71" class="fill-current text-blue-800">
             <use xlink:href="#timer" />
           </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
@@ -98,21 +101,13 @@ export default {
     return {
       hasData: true,
       times: [
-        { country: 'ch', username: 'Rasmelthortue', time: '00:58.24', date: '24.01.2020' },
+        { country: 'ch', username: 'Rasmelthortuga', time: '00:58.24', date: '24.01.2020' },
         { country: 'fr', username: 'LazGreve', time: '00:58.24', date: '24.01.2020' },
         { country: 'br', username: 'Lazhino', time: '00:58.24', date: '24.01.2020' },
         { country: 'ch', username: 'LazBank', time: '00:58.24', date: '24.01.2020' },
         { country: 'be', username: 'LazFrite', time: '00:58.24', date: '24.01.2020' },
         { country: 'ch', username: 'LazNeutre', time: '00:58.24', date: '24.01.2020' },
       ]
-    }
-  },
-  methods: {
-    addTime() {
-      this.times.push({ time: '00:00.00', personalBest: false })
-    },
-    removeTime(index) {
-      this.times.splice(index, 1)
     }
   }
 }
