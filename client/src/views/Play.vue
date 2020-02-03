@@ -1,13 +1,21 @@
 <template>
-  <div class="mt-12 text-center">
-    <div class="w-full h-10">
+  <div class="mt-2 text-center">
+    <div
+      :class="statusColor"
+      class="flex items-center justify-center h-10 text-sm font-semibold italic uppercase md:text-base"
+    >{{ status }}</div>
+    <div class="w-full min-h-10">
       <Scramble class="group">
         <ScrambleTooltip class="group-hover:inline-block" />
       </Scramble>
     </div>
+    <div
+      :class="statusColor"
+      class="flex items-start justify-center h-6 text-base font-semibold italic md:text-xl"
+    >{{ statusTime }}</div>
     <Timer :time="resolutionTime" />
     <template v-if="breakpoint !== 'mobile'">
-      <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+      <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" class="mt-6" />
       <ExplanationMessage class="mt-4" />
       <play-infos></play-infos>
     </template>
@@ -36,6 +44,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { formatTimer } from '@/mixins/formatTimer'
 import PlayButton from '@/components/Play/PlayButton.vue'
 import PlayButtonMobile from '@/components/Play/PlayButtonMobile.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
@@ -55,16 +64,26 @@ export default {
     Timer
   },
 
+  mixins: [
+    formatTimer,
+  ],
+
   data() {
     return {
       resolutionTime: 0,
       ticker: null,
       startTime: null,
+      status: '',
+      statusColor: '',
+      statusTime: '',
     }
   },
 
   computed: {
-    ...mapState(['breakpoint']),
+    ...mapState({
+      breakpoint: state => state.breakpoint,
+      timers: state => state.timer.timers,
+    }),
   },
 
   created() {
@@ -105,6 +124,10 @@ export default {
       }
     },
     startTimer() {
+      // Clear status
+      this.status = ''
+      this.statusTime = ''
+
       this.resolutionTime = 0
       this.startTime = Date.now()
 
@@ -127,8 +150,26 @@ export default {
     },
     stopTimer() {
       this.ticker.stop()
-      this.addTimer({ date: Date.now(), time: this.resolutionTime })
       console.timeEnd('timer')
+
+      // Impossible time
+      if (this.resolutionTime < 3000) {
+        this.statusColor = 'text-red-500'
+        return this.status = 'Did not count - Impossible time'
+      }
+
+      this.addTimer({ date: Date.now(), time: this.resolutionTime })
+
+      // Check if PB
+      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
+      if (timesSorted[0].time === this.resolutionTime) {
+        this.statusColor = 'text-orange-400'
+        this.status = 'Personal best'
+        this.statusTime = '-' + this.displayTime(timesSorted[1].time - this.resolutionTime, true)
+      } else {
+        this.statusColor = 'text-red-500'
+        this.statusTime = '+' + this.displayTime(this.resolutionTime - timesSorted[0].time, true)
+      }
     },
     ...mapActions('timer', ['addTimer', 'getTimers']),
   }
