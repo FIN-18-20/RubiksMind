@@ -7,14 +7,7 @@
           <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
         <div class="leading-relaxed text-center">
-          <router-link
-            :to="{ name: 'login' }"
-            class="inline-block w-20 py-1 border border-blue-300 rounded-md sm:w-24 sm:py-2"
-          >Login</router-link>
-          <router-link
-            :to="{ name: 'register' }"
-            class="ml-5 hidden w-24 py-2 bg-blue-900 border border-blue-300 rounded-md sm:inline-block"
-          >Register</router-link>
+          
         </div>
       </nav>
       <router-view />
