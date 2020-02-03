@@ -1,20 +1,26 @@
 <template>
   <div
-    class="text-10xl text-center text-blue-100 italic font-extrabold flex items-baseline justify-center select-none"
+    class="text-6xl text-center text-blue-100 italic font-extrabold flex items-baseline justify-center select-none sm:text-10xl"
   >
-    <div class="w-20">{{ displayTime.min[0] }}</div>
-    <div class="w-20">{{ displayTime.min[1] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.min[0] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.min[1] }}</div>
     <div>:</div>
-    <div class="w-20">{{ displayTime.sec[0] }}</div>
-    <div class="w-20">{{ displayTime.sec[1] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.sec[0] }}</div>
+    <div class="w-12 sm:w-20">{{ timeObject.sec[1] }}</div>
     <div>.</div>
-    <div class="w-12 text-6xl">{{ displayTime.hundredth[0] }}</div>
-    <div class="w-12 text-6xl">{{ displayTime.hundredth[1] }}</div>
+    <div class="w-8 text-5xl sm:text-6xl sm:w-12">{{ timeObject.hundredth[0] }}</div>
+    <div class="w-8 text-5xl sm:text-6xl sm:w-12">{{ timeObject.hundredth[1] }}</div>
   </div>
 </template>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
+
 export default {
+  mixins: [
+    formatTimer,
+  ],
+
   props: {
     time: {
       type: Number,
@@ -23,32 +29,8 @@ export default {
   },
 
   computed: {
-    displayTime() {
-      let min = parseInt(this.time / 60000)
-      let sec = parseInt((this.time - (min * 60000)) / 1000)
-      let hundredth = this.time % 1000
-
-      if (hundredth > 99) {
-        hundredth = Math.floor(hundredth / 10)
-      }
-
-      min = min.toString()
-      sec = sec.toString()
-      hundredth = hundredth.toString()
-
-      if (min.length < 2) {
-        min = '0' + min
-      }
-
-      if (sec.length < 2) {
-        sec = '0' + sec
-      }
-
-      if (hundredth.length < 2) {
-        hundredth = '0' + hundredth
-      }
-
-      return { min, sec, hundredth }
+    timeObject() {
+      return this.displayTime(this.time, false)
     }
   }
 }

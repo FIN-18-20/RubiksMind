@@ -1,17 +1,27 @@
 <template>
   <div class="mt-12 text-center">
-    <Scramble class="group select-none">
-      <ScrambleTooltip class="group-hover:inline-block" />
-    </Scramble>
+    <div class="w-full h-10">
+      <Scramble class="group">
+        <ScrambleTooltip class="group-hover:inline-block" />
+      </Scramble>
+    </div>
     <Timer :time="resolutionTime" />
-    <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
-    <ExplanationMessage class="mt-4" />
-    <play-infos></play-infos>
+    <template v-if="windowWidth > 400">
+      <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" />
+      <ExplanationMessage class="mt-4" />
+      <play-infos></play-infos>
+    </template>
+    <template v-else>
+      <play-infos></play-infos>
+      <PlayButtonMobile @startTimer="startTimer" @stopTimer="stopTimer" />
+    </template>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import PlayButton from '@/components/Play/PlayButton.vue'
+import PlayButtonMobile from '@/components/Play/PlayButtonMobile.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
 import Scramble from '@/components/Play/Scramble.vue'
 import Timer from '@/components/Play/Timer.vue'
@@ -22,6 +32,7 @@ export default {
   components: {
     ExplanationMessage,
     PlayButton,
+    PlayButtonMobile,
     PlayInfos,
     ScrambleTooltip,
     Scramble,
@@ -34,6 +45,14 @@ export default {
       ticker: null,
       startTime: null,
     }
+  },
+
+  computed: {
+    ...mapState(['windowWidth']),
+  },
+
+  created() {
+    this.getTimers()
   },
 
   methods: {
@@ -92,8 +111,10 @@ export default {
     },
     stopTimer() {
       this.ticker.stop()
+      this.addTimer({ date: Date.now(), time: this.resolutionTime })
       console.timeEnd('timer')
-    }
+    },
+    ...mapActions('timer', ['addTimer', 'getTimers']),
   }
 }
 </script>

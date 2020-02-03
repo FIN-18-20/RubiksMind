@@ -20,8 +20,7 @@
     </div>
     <div class="flex">
       <play-times></play-times>
-
-      <div class="ml-4">
+      <div class="hidden sm:block sm:ml-4">
         <play-stats></play-stats>
         <play-graph></play-graph>
       </div>
@@ -42,8 +41,8 @@ export default {
   },
   data() {
     return {
-      isLocal: true
+      isLocal: this.$store.state.localMode
     }
-  },
+  }
 }
 </script>

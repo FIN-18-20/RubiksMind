@@ -40,6 +40,8 @@ services:
    - "traefik.enable=true"
    - "traefik.http.routers.rubiks-client.rule=Host(`localhost`)"
    - "traefik.http.routers.rubiks-client.entrypoints=web"
+  ports:
+   - 0.0.0.0:8080:8080
   environment:
    - CHOKIDAR_USEPOLLING=true
   restart: always

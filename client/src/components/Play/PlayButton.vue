@@ -20,27 +20,14 @@
 </template>
 
 <script>
+import { playButton } from '@/mixins/playButton'
+
 export default {
-  data() {
-    return {
-      state: 'none',
-      timeDown: 0,
-      timer: null,
-    }
-  },
+  mixins: [
+    playButton,
+  ],
 
   computed: {
-    btnClasses() {
-      switch (this.state) {
-        case 'pressed':
-        case 'ready':
-          return 'pressed'
-        case 'started':
-          return 'started'
-        default:
-          return ''
-      }
-    },
     btnStyle() {
       switch (this.state) {
         case 'pressed':
@@ -62,59 +49,6 @@ export default {
       }
     }
   },
-
-  mounted() {
-    window.addEventListener('mouseup', () => {
-      this.stopWaiting()
-    })
-    window.addEventListener('keydown', (e) => {
-      if (e.keyCode !== 32) {
-        return
-      }
-      // Prevent space from scrolling the page
-      e.preventDefault()
-      this.startWaiting()
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
-        return
-      }
-      this.stopWaiting()
-    })
-  },
-
-  methods: {
-    startWaiting() {
-      if (this.state === 'pressed' || this.state === 'ready') {
-        return
-      }
-      // Stop timer if started
-      if (this.state === 'started') {
-        this.state = 'none'
-        this.$emit('stopTimer')
-        return
-      }
-      this.state = 'pressed'
-      this.timeDown = 100
-      this.timer = setInterval(() => {
-        this.timeDown += 100
-        if (this.timeDown >= 1000) {
-          this.state = 'ready'
-        }
-      }, 100)
-    },
-    stopWaiting() {
-      // Start timer
-      if (this.state === 'ready') {
-        this.state = 'started'
-        this.$emit('startTimer')
-      } else {
-        this.state = 'none'
-      }
-      this.timeDown = 0
-      clearInterval(this.timer)
-    },
-  }
 }
 </script>
 
@@ -137,8 +71,8 @@ export default {
   transform: translateX(75px) !important;
 }
 
-.pressed .icon-left img,
-.pressed .icon-right img {
+.pressed .icon-left svg,
+.pressed .icon-right svg {
   animation: 1s linear 0s infinite normal none running rotate;
 }
 
