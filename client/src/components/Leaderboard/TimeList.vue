@@ -11,31 +11,30 @@
               v-for="(time, index) in times.slice().reverse()"
               :key="index"
               class="relative flex items-center justify-between"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12']"
+              :class="[
+                (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
+                index === 0 ? 'rounded-t-md' : '',
+                index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
+                'gradient-' + (index + 1),
+              ]"
             >
               <div class="flex items-center justify-center">
-                <span
-                  class="w-6 ml-1 text-xs font-medium text-right text-blue-600"
-                >{{ index + 1 }}</span>
+                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-600">{{ index + 1 }}</span>
                 <div
                   :class="'flag-icon-' + time.country"
-                  class="w-4
-                   h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
+                  class="w-4 h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
                 ></div>
-                <div v-if="time.username.length < 14" class="ml-2 text-sm">
-                  {{ time.username }}
-                </div>
-                <div v-else class="ml-2 text-xs">
-                  {{ time.username }}
-                </div>
+                <div v-if="time.username.length < 14" class="ml-2 text-sm">{{ time.username }}</div>
+                <div v-else class="ml-2 text-xs">{{ time.username }}</div>
               </div>
               <span
-                class=" pl-8 text-md italic font-medium flex items-center text-center text-blue-300 absoluteElement"
+                class="pl-8 text-md italic font-medium flex items-center text-center text-blue-300 absoluteElement"
               >
-                <svg class="fill-current w-4 h-4 text-blue-600 mx-auto mr-2">
-                  <use xlink:href="#timer" />
+                <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
+                  <use :xlink:href="getTimeIcon(index + 1)" />
                 </svg>
-                {{ time.time }}</span>
+                {{ time.time }}
+              </span>
               <div
                 class="mr-2 text-sm italic font-medium flex items-center text-center text-blue-300"
               >
@@ -57,6 +56,50 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      hasData: true,
+      times: [
+        { country: 'ch', username: 'Rasmelthortuga', time: '00:58.24', date: '24.01.2020' },
+        { country: 'fr', username: 'LazGreve', time: '00:58.24', date: '24.01.2020' },
+        { country: 'br', username: 'Lazhino', time: '00:58.24', date: '24.01.2020' },
+        { country: 'ch', username: 'LazBank', time: '00:58.24', date: '24.01.2020' },
+        { country: 'be', username: 'LazFrite', time: '00:58.24', date: '24.01.2020' },
+        { country: 'ch', username: 'LazNeutre', time: '00:58.24', date: '24.01.2020' },
+      ]
+    }
+  },
+
+  methods: {
+    getTimeColor(index) {
+      switch (index) {
+        case 1:
+          return 'text-orange-400'
+        case 2:
+          return 'text-silver'
+        case 3:
+          return 'text-orange-700'
+        default:
+          return 'text-blue-600'
+      }
+    },
+    getTimeIcon(index) {
+      switch (index) {
+        case 1:
+        case 2:
+        case 3:
+          return '#trophy'
+        default:
+          return '#timer'
+      }
+    },
+  }
+}
+</script>
+
 <style scoped>
 .box-styles {
   background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
@@ -93,22 +136,31 @@
   overflow: hidden;
   max-height: 0;
 }
-</style>
 
-<script>
-export default {
-  data() {
-    return {
-      hasData: true,
-      times: [
-        { country: 'ch', username: 'Rasmelthortuga', time: '00:58.24', date: '24.01.2020' },
-        { country: 'fr', username: 'LazGreve', time: '00:58.24', date: '24.01.2020' },
-        { country: 'br', username: 'Lazhino', time: '00:58.24', date: '24.01.2020' },
-        { country: 'ch', username: 'LazBank', time: '00:58.24', date: '24.01.2020' },
-        { country: 'be', username: 'LazFrite', time: '00:58.24', date: '24.01.2020' },
-        { country: 'ch', username: 'LazNeutre', time: '00:58.24', date: '24.01.2020' },
-      ]
-    }
-  }
+.gradient-1 {
+  background: linear-gradient(
+      266.65deg,
+      rgba(247, 148, 30, 0.85) -21.85%,
+      rgba(42, 67, 101, 0) 29.41%
+    ),
+    #2a4365;
 }
-</script>
+
+.gradient-2 {
+  background: linear-gradient(
+      260.78deg,
+      rgba(255, 255, 255, 0.8) -36.55%,
+      rgba(42, 67, 101, 0) 27.73%
+    ),
+    #1f3451;
+}
+
+.gradient-3 {
+  background: linear-gradient(
+      256.78deg,
+      rgba(192, 86, 33, 0.75) -28.09%,
+      rgba(42, 67, 101, 0) 29.28%
+    ),
+    #2a4365;
+}
+</style>
