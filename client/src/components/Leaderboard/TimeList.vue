@@ -8,7 +8,7 @@
         <div v-if="hasData && times.length > 0">
           <transition-group name="times" tag="div">
             <div
-              v-for="(time, index) in times.slice().reverse()"
+              v-for="(time, index) in times"
               :key="index"
               class="relative flex items-center justify-between"
               :class="[
@@ -21,7 +21,7 @@
               <div class="flex items-center justify-center">
                 <span class="w-6 ml-1 text-xs font-medium text-right text-blue-600">{{ index + 1 }}</span>
                 <div
-                  :class="'flag-icon-' + time.country"
+                  :class="'flag-icon-' + time.country_code.toLowerCase()"
                   class="w-4 h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
                 ></div>
                 <div v-if="time.username.length < 14" class="ml-2 text-sm">{{ time.username }}</div>
@@ -33,7 +33,7 @@
                 <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
                   <use :xlink:href="getTimeIcon(index + 1)" />
                 </svg>
-                {{ time.time }}
+                {{ displayTime(time.time, true) }}
               </span>
               <div
                 class="mr-2 text-sm italic font-medium flex items-center text-center text-blue-300"
@@ -41,7 +41,7 @@
                 <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
                   <use xlink:href="#calendar" />
                 </svg>
-                {{ time.date }}
+                {{ formatDate(time.date) }}
               </div>
             </div>
           </transition-group>
@@ -58,22 +58,26 @@
 </template>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
+
 export default {
+  mixins: [
+    formatTimer,
+  ],
   data() {
     return {
       hasData: true,
-      times: [
-        { country: 'ch', username: 'Rasmelthortuga', time: '00:58.24', date: '24.01.2020' },
-        { country: 'fr', username: 'LazGreve', time: '00:58.24', date: '24.01.2020' },
-        { country: 'br', username: 'Lazhino', time: '00:58.24', date: '24.01.2020' },
-        { country: 'ch', username: 'LazBank', time: '00:58.24', date: '24.01.2020' },
-        { country: 'be', username: 'LazFrite', time: '00:58.24', date: '24.01.2020' },
-        { country: 'ch', username: 'LazNeutre', time: '00:58.24', date: '24.01.2020' },
-      ]
+      times: [],
     }
   },
-
+  created() {
+    this.getTimes()
+  },
   methods: {
+    formatDate(dateToParse) {
+      let date = new Date(dateToParse)
+      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: 'numeric' })
+    },
     getTimeColor(index) {
       switch (index) {
         case 1:
@@ -96,6 +100,16 @@ export default {
           return '#timer'
       }
     },
+    getTimes() {
+      this.$axios.get('/players/leaderboard')
+        .then(res => {
+          this.times = res.data
+        })
+        .catch(err => {
+          console.log(err)
+          this.hasData = false
+        })
+    }
   }
 }
 </script>
