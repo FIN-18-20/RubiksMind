@@ -3,6 +3,8 @@ const User = use('App/Models/User');
 
 class AuthController {
   async register({ request, auth, response }) {
+    return response.notFound();
+
     let { username, password } = request.all();
     const userDetails = {
       username,
@@ -24,6 +26,8 @@ class AuthController {
   }
 
   async login({ ally, auth, request, response, params }) {
+    return response.notFound();
+
     const { username, password } = request.all();
     const provider = params.provider;
     if (provider !== null && provider !== 'local') { // Social login
@@ -65,6 +69,8 @@ class AuthController {
   }
 
   async callback({ ally, auth, params, response }) {
+    return response.notFound();
+
     try {
       let socialUser = await ally.driver(params.provider).getUser();
 
@@ -89,6 +95,8 @@ class AuthController {
   }
 
   async refresh({ auth, request, response }) {
+    return response.notFound();
+    
     let refreshToken = request.header('X-Refresh-Token');
     if (refreshToken === 'undefined') {
       return response.unauthorized('No refresh token');

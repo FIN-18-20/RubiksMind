@@ -3,7 +3,7 @@
     <slot></slot>
     <div
       @click="updateScramble"
-      class="text-2xl font-semibold text-blue-400 tracking-wider cursor-pointer"
+      class="px-12 text-sm font-semibold text-blue-400 tracking-wider cursor-pointer sm:px-0 sm:text-base md:text-xl lg:text-2xl"
     >{{ scramble }}</div>
   </div>
 </template>
