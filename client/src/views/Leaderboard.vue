@@ -1,6 +1,6 @@
 <template>
   <div class="text-center mt-24">
-    <TitleAndCup />
+    <TitleAndCup class="mb-2" />
     <TimeList />
   </div>
 </template>

@@ -19,11 +19,11 @@
               ]"
             >
               <div class="flex items-center justify-center">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-600">{{ index + 1 }}</span>
-                <div
-                  :class="'flag-icon-' + time.country_code.toLowerCase()"
-                  class="w-4 h-4 ml-2 flag-icon flag-icon-squared flag-icon rounded-full"
-                ></div>
+                <span class="w-6 ml-1 mr-2 text-sm font-medium text-right text-blue-600">{{ index + 1 }}</span>
+                <svg v-if="time.country_code === 'WR'" class="fill-current w-6 h-6 rounded-full border border-blue-300">
+                  <use xlink:href="#world" />
+                </svg>
+                <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300" />
                 <div v-if="time.username.length < 14" class="ml-2 text-sm">{{ time.username }}</div>
                 <div v-else class="ml-2 text-xs">{{ time.username }}</div>
               </div>
@@ -36,7 +36,7 @@
                 {{ displayTime(time.time, true) }}
               </span>
               <div
-                class="mr-2 text-sm italic font-medium flex items-center text-center text-blue-300"
+                class="mr-4 text-sm italic font-medium flex items-center text-center text-blue-300"
               >
                 <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
                   <use xlink:href="#calendar" />

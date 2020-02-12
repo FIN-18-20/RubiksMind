@@ -5,12 +5,13 @@ import router from './router'
 import store from './store'
 
 import '@/assets/css/base.css'
-import 'flag-icon-css/css/flag-icon.css'
 
+import FlagIcon from 'vue-flag-icon'
 import VueAxios from './plugins/axios'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, { store })
+Vue.use(FlagIcon)
 
 new Vue({
   router,
