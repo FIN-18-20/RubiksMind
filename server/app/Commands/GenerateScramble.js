@@ -9,7 +9,8 @@ class GenerateScramble extends Command {
   static get signature() {
     return `
       generate:scramble
-      { number?=10 : Number of scrambles to create }
+      { number?=10 : Number of scrambles to generate }
+      { fileName?=scrambles : Name of the CSV file }
     `
   }
 
@@ -18,24 +19,24 @@ class GenerateScramble extends Command {
   }
 
   async handle(args) {
-    this.info('Start creating the scrambles.')
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
+    const now = new Date().toLocaleTimeString('fr-FR', timeOptions)
+    this.info(`Start creating the scrambles at ${now}.`)
+    console.time('generateScrambles')
 
-    let writer
-    if (!fs.existsSync('scrambles.csv')) {
-      writer = csvWriter({ headers: ['scramble'] })
-    }
-    else {
-      writer = csvWriter({ sendHeaders: false })
-    }
+    const writer = fs.existsSync(`${args.fileName}.csv`) ? csvWriter({ sendHeaders: false }) : csvWriter({ headers: ['scramble'] }) 
 
-    writer.pipe(fs.createWriteStream('scrambles.csv', { flags: 'a' }))
+    writer.pipe(fs.createWriteStream(`${args.fileName}.csv`, { flags: 'a' }))
 
+    // Generate scrambles
     for (let i = 0; i < args.number; i++) {
       writer.write({ scramble: Cube.scramble() })
     }
 
     writer.end()
-    this.success(`${this.icon('success')} Generate ${args.number} Scrambles completed`)
+    console.timeEnd('generateScrambles')
+    const finished = new Date().toLocaleTimeString('fr-FR', timeOptions)
+    this.success(`${this.icon('success')} Generate ${args.number} Scrambles completed at ${finished}.`)
   }
 }
 
