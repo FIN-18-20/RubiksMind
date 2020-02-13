@@ -7,7 +7,7 @@ class ScrambleSchema extends Schema {
   up () {
     this.create('scrambles', (table) => {
       table.increments()
-      table.string('scramble', 72)
+      table.string('scramble', 72).notNullable().unique()
     })
   }
 

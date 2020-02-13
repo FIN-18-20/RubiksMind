@@ -19,12 +19,11 @@ class GenerateScramble extends Command {
   }
 
   async handle(args) {
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
-    const now = new Date().toLocaleTimeString('fr-FR', timeOptions)
+    const now = new Date().toLocaleTimeString('en-US', { hour12: false })
     this.info(`Start creating the scrambles at ${now}.`)
     console.time('generateScrambles')
 
-    const writer = fs.existsSync(`${args.fileName}.csv`) ? csvWriter({ sendHeaders: false }) : csvWriter({ headers: ['scramble'] }) 
+    const writer = fs.existsSync(`${args.fileName}.csv`) ? csvWriter({ sendHeaders: false }) : csvWriter({ headers: ['scramble'] })
 
     writer.pipe(fs.createWriteStream(`${args.fileName}.csv`, { flags: 'a' }))
 
@@ -35,7 +34,7 @@ class GenerateScramble extends Command {
 
     writer.end()
     console.timeEnd('generateScrambles')
-    const finished = new Date().toLocaleTimeString('fr-FR', timeOptions)
+    const finished = new Date().toLocaleTimeString('en-US', { hour12: false })
     this.success(`${this.icon('success')} Generate ${args.number} Scrambles completed at ${finished}.`)
   }
 }

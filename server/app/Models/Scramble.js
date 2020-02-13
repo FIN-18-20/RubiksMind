@@ -4,6 +4,10 @@
 const Model = use('Model')
 
 class Scramble extends Model {
+  static boot() {
+    super.boot()
+    this.addTrait('NoTimestamp')
+  }
 }
 
 module.exports = Scramble

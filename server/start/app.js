@@ -61,6 +61,7 @@ const aliases = {}
 */
 const commands = [
   'App/Commands/GenerateScramble',
+  'App/Commands/ImportScramble',
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
