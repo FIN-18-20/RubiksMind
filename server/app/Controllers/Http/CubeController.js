@@ -1,12 +1,22 @@
 'use strict'
 
-const Cube = use('Cube');
+const Database = use('Database')
 
 class CubeController {
-  scramble({ response }) {
+  async scramble({ response }) {
+    const maxId = (await Database.from('scrambles').max('id as max').first()).max
+    const rand = Math.floor(Math.random() * maxId) + 1
+
+    const scramble = await Database
+      .select('scramble')
+      .from('scrambles')
+      .where('id', '>=', rand)
+      .orderBy('id')
+      .first()
+
     return response.json({
-      scramble: Cube.scramble(),
-    });
+      scramble: scramble.scramble,
+    })
   }
 }
 
