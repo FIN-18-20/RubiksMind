@@ -11,3 +11,6 @@ Dockerfile.prod
 
 # The development sqlite file
 database/*.sqlite
+
+# CSV files containing the scrambles
+*.csv
