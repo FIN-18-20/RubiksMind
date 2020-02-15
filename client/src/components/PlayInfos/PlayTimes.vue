@@ -20,7 +20,7 @@
               class="relative flex items-center justify-between"
               :class="[(timers.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === timers.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
-              <div v-show="removeMessage && time.id === idToDelete"
+              <div v-if="removeMessage && time.id === idToDelete"
                    class=" bg-blue-900 delete-gradient w-full h-full flex justify-center items-center absolute z-20"
               >
                 <div @click="removeTimer(time.id), removeMessage = false, idToDelete = null"
