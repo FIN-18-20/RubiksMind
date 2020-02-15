@@ -1,12 +1,8 @@
 <template>
-  <Auth action="login" />
+  <h1>Login</h1>
 </template>
 
 <script>
-import Auth from '../components/Auth'
 export default {
-  components: {
-    Auth
-  }
 }
 </script>

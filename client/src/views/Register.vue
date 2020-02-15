@@ -1,12 +1,8 @@
 <template>
-  <Auth action="register" />
+  <h1>Register</h1>
 </template>
 
 <script>
-import Auth from '../components/Auth'
 export default {
-  components: {
-    Auth
-  }
 }
 </script>
