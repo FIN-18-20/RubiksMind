@@ -9,7 +9,7 @@ import '@/assets/css/base.css'
 import VueAxios from './plugins/axios'
 
 Vue.config.productionTip = false
-Vue.use(VueAxios, { store })
+Vue.use(VueAxios, { store, router })
 
 new Vue({
   router,

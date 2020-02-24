@@ -69,7 +69,7 @@ module.exports = {
     serializer: 'lucid',
     model: 'App/Models/User',
     scheme: 'jwt',
-    uid: 'username',
+    uid: 'email',
     password: 'password',
     options: {
       secret: Env.get('APP_KEY'),

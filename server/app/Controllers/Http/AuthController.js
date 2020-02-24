@@ -3,9 +3,10 @@ const User = use('App/Models/User');
 
 class AuthController {
   async register({ request, auth, response }) {
-    let { username, password } = request.all();
+    let { username, email, password } = request.all();
     const userDetails = {
       username,
+      email,
       password,
       login_source: 'local',
     }
@@ -24,7 +25,7 @@ class AuthController {
   }
 
   async login({ ally, auth, request, response, params }) {
-    const { username, password } = request.all();
+    const { email, password } = request.all();
     const provider = params.provider;
     if (provider !== null && provider !== 'local') { // Social login
       try {
@@ -43,12 +44,12 @@ class AuthController {
       }
     }
     else { // Local login
-      if(username === null || password === null) {
+      if(email === null || password === null) {
         return response.unauthorized('The fields can\'t be empty');
       }
       try {
-        if (await auth.attempt(username, password)) {
-          let user = await User.findBy('username', username);
+        if (await auth.attempt(email, password)) {
+          let user = await User.findBy('email', email);
           let token = await auth.withRefreshToken().generate(user);
 
           return response.created(token);
@@ -108,7 +109,7 @@ class AuthController {
       return response.unauthorized('No refresh token');
     }
     try{
-      await auth.revokeTokens([refreshToken], true)
+      await auth.revokeTokens([refreshToken])
       return response.ok()
     }
     catch(e) {

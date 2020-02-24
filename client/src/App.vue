@@ -7,9 +7,9 @@
           <img class="w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
         <div class="leading-relaxed text-center">
-          <div v-if="getJwtToken === ''">
+          <div v-if="isLogged()">
             <a
-              @click="logout"
+              @click="methodLogout"
               class="inline-block w-24 py-2 border border-blue-300 rounded-md"
             >Logout</a>
           </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SVGContainer from '@/components/SVGContainer.vue'
 
 export default {
@@ -39,21 +39,19 @@ export default {
     SVGContainer,
   },
 
-  computed: {
-  },
-
   created() {
     this.loadAllSettings()
+    this.loadAuth()
   },
 
   methods: {
     ...mapActions('settings', ['loadAllSettings']),
-    ...mapActions('auth', ['logout', 'getJwtToken']),
-    logout() {
+    ...mapActions('auth', ['logout', 'getLoggedState', 'loadAuth']),
+    ...mapGetters('auth', ['isLogged']),
+    methodLogout() {
       this.$axios.get('logout')
-        .then(() => {
-          this.$store.commit('CHANGE_LOCAL_MODE', true)
-          this.logout()
+        .then(async () => {
+          await this.logout()
         })
         .catch(error => {
           console.warn(error.message)

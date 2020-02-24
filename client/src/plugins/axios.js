@@ -11,7 +11,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? baseUrl + 'api/' : ''
 
 export default {
-  async install(Vue, { store }) {
+  async install(Vue, { store, router }) {
     Vue.prototype.$axios = axiosHttp
 
     axios.interceptors.request.use(async (config) => {
@@ -22,7 +22,11 @@ export default {
       return config
     })
 
-    axios.interceptors.response.use(response => response, async error => {
+    axios.interceptors.response.use(response => {
+      console.log(response)
+      return response
+    }, async error => {
+      console.log(error.response)
       if (error.response.status === 401) {
         if (openRoutes.every(route => !error.response.config.url.includes(route))) {
           return await axios.get('/refresh')
@@ -32,14 +36,12 @@ export default {
 
               error.config.headers['Authorization'] = 'Bearer ' + refreshResponse.data.token
               error.config.headers['X-Refresh-Token'] = refreshResponse.data.refreshToken
-              return await axios.request(error.config)
+              //return await axios.request(error.config)
             })
             .catch(async error => {
               console.log('No refresh token : ' + error)
-              store.commit('CHANGE_LOCAL_MODE', true)
-              await store.dispatch('auth/setJwtToken', '')
-              await store.dispatch('auth/setRefreshToken', '')
-              window.location.href = '/login'
+              await store.dispatch('auth/logout')
+              router.push('login')
             })
         }
       }

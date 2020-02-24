@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center py-4 text-xl">
-    <div v-if="isLocal" class="flex items-center">
+    <div v-if="!isLogged" class="flex items-center">
       <svg class="w-4 h-4 text-blue-400">
         <use xlink:href="#bolt" />
       </svg>
@@ -32,6 +32,7 @@
 import PlayTimes from '../PlayInfos/PlayTimes.vue'
 import PlayStats from '../PlayInfos/PlayStats.vue'
 import PlayGraph from '../PlayInfos/PlayGraph.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -39,10 +40,8 @@ export default {
     PlayStats,
     PlayGraph
   },
-  data() {
-    return {
-      isLocal: this.$store.state.localMode
-    }
+  methods: {
+    ...mapGetters('auth', ['isLogged'])
   }
 }
 </script>

@@ -8,12 +8,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    localMode: true
   },
   mutations: {
-    CHANGE_LOCAL_MODE(state, mode) {
-      state.localMode = mode
-    }
+  },
+  getters: {
   },
   actions: {
   },
