@@ -10,10 +10,15 @@ class ProfileController {
       .where('username', params.username)
       .first()
 
+    if (!user) {
+      return response.noContent(null)
+    }
+
     const times = await Database
       .select('id', 'time', 'user_id', 'created_at AS date')
       .from('times')
       .where('user_id', user.id)
+      .orderBy('id', 'desc')
 
     return response.json({
       user,
