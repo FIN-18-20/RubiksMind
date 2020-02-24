@@ -1,12 +1,10 @@
 export const statsTimer = {
   computed: {
     bestTime() {
-      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
-      return this.displayTime(timesSorted[0].time, true)
+      return this.displayTime(this.timesSorted[0].time, true)
     },
     worstTime() {
-      const timesSorted = [...this.timers].sort((first, next) => next.time - first.time)
-      return this.displayTime(timesSorted[0].time, true)
+      return this.displayTime(this.timesSorted[0].time, true)
     },
     lastTime() {
       return this.displayTime(this.timers[this.timers.length - 1].time, true)
@@ -26,6 +24,15 @@ export const statsTimer = {
       const slicedArr = reversedArr.slice(0, 12)
       const average = slicedArr.reduce((accumulator, time) => accumulator + time.time, 0) / slicedArr.length
       return this.displayTime(average.toFixed(0), true)
+    },
+    timesSorted() {
+      return [...this.timers].sort((first, next) => first.time - next.time)
+    }
+  },
+
+  methods: {
+    getXBest(x) {
+      return this.displayTime(this.timesSorted[x - 1].time, true)
     }
   }
 }
