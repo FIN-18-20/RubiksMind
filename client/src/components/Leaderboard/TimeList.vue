@@ -14,30 +14,32 @@
               :class="[
                 (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
                 index === 0 ? 'rounded-t-md' : '',
+                time.username == seelf ? '' : '',
                 index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
-                time.username == 'licte' ? 'gradient-self' : '',
                 'gradient-' + (index + 1),
               ]"
             >
+              <div v-if="time.username == seelf" class=" gradient-self absolute w-full h-full flex items-center">
+                <svg class="w-3 h-3 text-white ml-1 self-center">
+                  <use xlink:href="#rubiks-icon" />
+                </svg>
+              </div>
               <div class="flex items-center justify-center">
-                <div v-if="time.username == 'licte'" class="flex">
-                  <svg class="w-3 h-3 text-white ml-2 self-center">
-                    <use xlink:href="#rubiks-icon" />
-                  </svg>
-                  <span class="w-4 mr-2 text-sm font-medium text-center text-blue-600">{{ index + 1 }}</span>
-                </div>
-                <div v-else>
-                  <span class="w-4 ml-6 mr-2 text-sm font-medium text-right text-blue-600">{{ index + 1 }}</span>
-                </div>
+                
+                <span :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-sm font-medium text-right leading-none']">{{ index + 1 }}</span>
                 <svg v-if="time.country_code === 'WR'" class="fill-current w-6 h-6 rounded-full border border-blue-300">
                   <use xlink:href="#world" />
                 </svg>
                 <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300" />
-                <div v-if="time.username.length < 14" class="ml-2 text-sm">{{ time.username }}</div>
-                <div v-else class="ml-2 text-xs">{{ time.username }}</div>
+                <div
+                  :class="[
+                    time.username.length < 14 ? 'text-sm' : 'text-xs', 'ml-2',
+                    time.username === seelf ? 'font-bold' : ''
+                  ]"
+                >{{ time.username }}</div>
               </div>
               <span
-                :class="[time.username === 'licte' ? 'text-blue-100' : 'text-blue-300' ,'pl-8 text-md italic font-medium flex items-center text-center  absoluteElement']"
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300' ,'pl-8 text-md italic font-medium flex items-center text-center absoluteElement']"
               >
                 <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
                   <use :xlink:href="getTimeIcon(index + 1)" />
@@ -45,7 +47,7 @@
                 {{ displayTime(time.time, true) }}
               </span>
               <div
-                class="mr-4 text-sm italic font-medium flex items-center text-center text-blue-300"
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300', 'mr-4 text-sm italic font-medium flex items-center text-center']"
               >
                 <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
                   <use xlink:href="#calendar" />
@@ -77,6 +79,7 @@ export default {
     return {
       hasData: true,
       times: [],
+      seelf: 'licte',
     }
   },
   created() {
