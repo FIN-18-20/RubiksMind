@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mt-24">
+  <div>
     <TitleAndCup class="mb-2" />
     <TimeList />
   </div>

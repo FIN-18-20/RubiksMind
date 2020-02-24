@@ -15,11 +15,20 @@
                 (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
                 index === 0 ? 'rounded-t-md' : '',
                 index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
+                time.username == 'licte' ? 'gradient-self' : '',
                 'gradient-' + (index + 1),
               ]"
             >
               <div class="flex items-center justify-center">
-                <span class="w-6 ml-1 mr-2 text-sm font-medium text-right text-blue-600">{{ index + 1 }}</span>
+                <div v-if="time.username == 'licte'" class="flex">
+                  <svg class="w-3 h-3 text-white ml-2 self-center">
+                    <use xlink:href="#rubiks-icon" />
+                  </svg>
+                  <span class="w-4 mr-2 text-sm font-medium text-center text-blue-600">{{ index + 1 }}</span>
+                </div>
+                <div v-else>
+                  <span class="w-4 ml-6 mr-2 text-sm font-medium text-right text-blue-600">{{ index + 1 }}</span>
+                </div>
                 <svg v-if="time.country_code === 'WR'" class="fill-current w-6 h-6 rounded-full border border-blue-300">
                   <use xlink:href="#world" />
                 </svg>
@@ -28,7 +37,7 @@
                 <div v-else class="ml-2 text-xs">{{ time.username }}</div>
               </div>
               <span
-                class="pl-8 text-md italic font-medium flex items-center text-center text-blue-300 absoluteElement"
+                :class="[time.username === 'licte' ? 'text-blue-100' : 'text-blue-300' ,'pl-8 text-md italic font-medium flex items-center text-center  absoluteElement']"
               >
                 <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
                   <use :xlink:href="getTimeIcon(index + 1)" />
@@ -151,11 +160,15 @@ export default {
   max-height: 0;
 }
 
+.gradient-self {
+  background: linear-gradient(90deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 15%);
+}
+
 .gradient-1 {
   background: linear-gradient(
       266.65deg,
-      rgba(247, 148, 30, 0.85) -21.85%,
-      rgba(42, 67, 101, 0) 29.41%
+      rgba(247, 148, 30, 0.55) -21.85%,
+      rgba(42, 67, 101, 0) 20.41%
     ),
     #2a4365;
 }
@@ -163,8 +176,8 @@ export default {
 .gradient-2 {
   background: linear-gradient(
       260.78deg,
-      rgba(255, 255, 255, 0.8) -36.55%,
-      rgba(42, 67, 101, 0) 27.73%
+      rgba(255, 255, 255, 0.5) -36.55%,
+      rgba(42, 67, 101, 0) 20.73%
     ),
     #1f3451;
 }
@@ -172,8 +185,8 @@ export default {
 .gradient-3 {
   background: linear-gradient(
       256.78deg,
-      rgba(192, 86, 33, 0.75) -28.09%,
-      rgba(42, 67, 101, 0) 29.28%
+      rgba(192, 86, 33, 0.45) -28.09%,
+      rgba(42, 67, 101, 0) 20.28%
     ),
     #2a4365;
 }
