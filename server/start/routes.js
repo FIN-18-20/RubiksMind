@@ -55,3 +55,6 @@ Route.delete('/times/delete/:id', 'TimeController.delete').middleware(['auth'])
 
 // Profile
 Route.get('/profile/:username', 'ProfileController.show')
+
+//Players' times & infos
+Route.get('/players/leaderboard', 'PlayerController.leaderboard')

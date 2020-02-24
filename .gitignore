@@ -2,3 +2,4 @@
 .vscode
 
 docker-compose.prod.yml
+server/.env
