@@ -79,7 +79,7 @@ export default {
     return {
       hasData: true,
       times: [],
-      seelf: 'licte',
+      seelf: 'binni',
     }
   },
   created() {

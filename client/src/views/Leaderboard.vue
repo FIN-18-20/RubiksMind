@@ -1,7 +1,9 @@
 <template>
   <div>
     <TitleAndCup class="mb-2" />
-    <TimeList />
+    <TimeList class="relative z-20" />
+    <img src="@/assets/img/leaderboard-cube.svg" alt="leftcube" class="absolute leftCube z-10">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube z-10">
   </div>
 </template>
 
@@ -15,3 +17,16 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .leftCube{
+    top: 25%;
+    left: 21%;
+  }
+
+  .rightCube{
+    top: 25%;
+    left: 54%;
+    transform: rotate(180deg)
+  }
+</style>
