@@ -26,7 +26,7 @@ export default {
 
   .rightCube{
     top: 25%;
-    left: 54%;
+    right: 21%;
     transform: rotate(180deg)
   }
 </style>
