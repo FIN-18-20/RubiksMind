@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col items-center">
     <div
-      class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md"
-      style="width:445px;height:550px;"
+      class="ffefefe flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md max-w-md w-full"
+      style="height:550px;"
     >
-      <div class="overflow-y-scroll box-styles rounded-md" style="width:410px;height:515px;">
+      <div class="overflow-y-scroll box-styles rounded-md mx-3" style="width:410px;height:515px;">
         <div v-if="hasData && times.length > 0">
           <transition-group name="times" tag="div">
             <div
@@ -14,40 +14,43 @@
               :class="[
                 (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
                 index === 0 ? 'rounded-t-md' : '',
+                time.username == seelf ? '' : '',
                 index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
-                time.username == 'licte' ? 'gradient-self' : '',
                 'gradient-' + (index + 1),
               ]"
             >
+              <div v-if="time.username == seelf" class=" gradient-self absolute w-full h-full flex items-center">
+                <svg class="w-3 h-3 text-white ml-1 self-center">
+                  <use xlink:href="#rubiks-icon" />
+                </svg>
+              </div>
               <div class="flex items-center justify-center">
-                <div v-if="time.username == 'licte'" class="flex">
-                  <svg class="w-3 h-3 text-white ml-2 self-center">
-                    <use xlink:href="#rubiks-icon" />
-                  </svg>
-                  <span class="w-4 mr-2 text-sm font-medium text-center text-blue-600">{{ index + 1 }}</span>
-                </div>
-                <div v-else>
-                  <span class="w-4 ml-6 mr-2 text-sm font-medium text-right text-blue-600">{{ index + 1 }}</span>
-                </div>
+                
+                <span :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']">{{ index + 1 }}</span>
                 <svg v-if="time.country_code === 'WR'" class="fill-current w-6 h-6 rounded-full border border-blue-300">
                   <use xlink:href="#world" />
                 </svg>
-                <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300" />
-                <div v-if="time.username.length < 14" class="ml-2 text-sm">{{ time.username }}</div>
-                <div v-else class="ml-2 text-xs">{{ time.username }}</div>
+                <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300 hidden sm:block" />
+                <div
+                  :class="[
+                    time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-12 truncate sm:w-24',
+                    time.username === seelf ? 'font-bold' : ''
+                  ]"
+                >{{ time.username }}</div>
               </div>
-              <span
-                :class="[time.username === 'licte' ? 'text-blue-100' : 'text-blue-300' ,'pl-8 text-md italic font-medium flex items-center text-center  absoluteElement']"
+              <div
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300' ,'pl-6 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
               >
-                <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
+                <svg :class="getTimeColor(index + 1)" class="hidden fill-current w-4 h-4 mx-auto mr-2 sm:block">
                   <use :xlink:href="getTimeIcon(index + 1)" />
                 </svg>
                 {{ displayTime(time.time, true) }}
-              </span>
+              </div>
               <div
-                class="mr-4 text-sm italic font-medium flex items-center text-center text-blue-300"
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300']"
+                class="mr-2 text-xs sm:text-sm italic text-center font-medium flex items-center sm:mr-4"
               >
-                <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
+                <svg class="hidden fill-current w-3 h-3 text-blue-600 mx-auto mr-2 sm:block">
                   <use xlink:href="#calendar" />
                 </svg>
                 {{ formatDate(time.date) }}
@@ -59,7 +62,7 @@
           <svg width="58" height="71" class="fill-current text-blue-800">
             <use xlink:href="#timer" />
           </svg>
-          <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
+          <p class="mx-auto mt-4 text-xs sm:text-xs italic text-blue-700">No times to display</p>
         </div>
       </div>
     </div>
@@ -77,6 +80,7 @@ export default {
     return {
       hasData: true,
       times: [],
+      seelf: 'fieze',
     }
   },
   created() {
