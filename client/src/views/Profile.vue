@@ -28,7 +28,10 @@
         <div class="text-sm text-blue-200 font-normal italic">Joined on {{ registerDate }}</div>
       </div>
 
-      <div v-if="timers.length" class="mt-2 max-w-3xl mx-auto sm:flex sm:items-start sm:justify-around">
+      <div
+        v-if="timers.length"
+        class="mt-2 max-w-3xl mx-auto sm:flex sm:items-start sm:justify-around"
+      >
         <div class="mt-3 p-2 bg-blue-800 border border-blue-700 rounded-md sm:inline-block">
           <div class="box-styles flex items-center justify-around rounded-md leading-none">
             <div class="px-6 pb-2">
@@ -44,6 +47,12 @@
                 <p class="text-xs text-left text-blue-100">Last</p>
                 <p class="text-sm italic font-medium text-left text-blue-300">{{ lastTime }}</p>
               </div>
+              <div class="mt-2">
+                <p class="text-xs text-left text-blue-100">Total resolutions</p>
+                <p
+                  class="text-sm italic font-medium text-left text-blue-300"
+                >{{ profile.totalTimes }}</p>
+              </div>
             </div>
             <div class="ml-4 px-6 pb-2">
               <div class="mt-2">
@@ -57,6 +66,10 @@
               <div class="mt-2">
                 <p class="text-xs text-left text-blue-100">Avg 12</p>
                 <p class="text-sm italic font-medium text-left text-blue-300">{{ average12Time }}</p>
+              </div>
+              <div class="mt-2">
+                <p class="text-xs text-left text-blue-100">Rank</p>
+                <p class="text-sm italic font-medium text-left text-blue-300">{{ profile.rank }}</p>
               </div>
             </div>
           </div>
@@ -138,6 +151,7 @@ export default {
     this.fetched = false
     const res = await this.$axios.get(`/profile/${this.$route.params.username}`)
     this.profile = res.status === 200 ? res.data : {}
+    console.log(res.data)
     this.fetched = true
   },
 
