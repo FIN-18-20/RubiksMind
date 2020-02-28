@@ -28,19 +28,10 @@ class ProfileController {
       .where('user_id', userId)
       .count('id as total')
 
-    const leaderboard = await Database
-      .select('times.user_id', 'times.time as time', 'times.created_at AS date')
-      .from('times')
-      .min('times.time as time')
-      .groupBy('times.user_id')
-      .orderBy('time', 'asc')
-      .orderBy('times.created_at', 'asc')
-
-    let rank = leaderboard.findIndex(player => player.user_id === userId)
-    rank === -1 ? 'Not in leaderboard' : rank++
+    const rank = await Database.raw('SELECT 1 + COUNT(DISTINCT user_id) AS rank FROM times WHERE time < (SELECT time FROM times WHERE user_id = ? ORDER BY time ASC LIMIT 1)', [userId])
 
     return response.json({
-      rank,
+      rank: rank[0][0].rank,
       times,
       totalTimes: totalTimes[0].total,
       user,
