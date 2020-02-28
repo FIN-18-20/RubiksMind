@@ -7,11 +7,12 @@ class PlayerController {
   //GET
   async leaderboard({ response }) {
     const leaderboard = await Database
-      .select('users.country_code', 'users.username', 'times.time', 'times.created_at AS date')
-      .from('users')
-      .leftJoin('times', 'times.user_id', 'users.id')
-      .groupBy('user_id')
-      .orderBy('times.time', 'asc')
+      .select('users.country_code', 'users.username', 'times.time as time', 'times.created_at AS date')
+      .from('times')
+      .min('times.time as time')
+      .leftJoin('users', 'users.id', 'times.user_id')
+      .groupBy('users.id')
+      .orderBy('time', 'asc')
       .orderBy('times.created_at', 'asc')
 
     return response.accepted(leaderboard)
