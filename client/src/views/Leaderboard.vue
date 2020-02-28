@@ -2,8 +2,8 @@
   <div>
     <TitleAndCup class="mb-2" />
     <TimeList class="relative z-20" />
-    <img src="@/assets/img/leaderboard-cube.svg" alt="leftcube" class="absolute leftCube z-10">
-    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube z-10">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="leftcube" class="absolute leftCube z-10 hidden sm:block">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube z-10 hidden sm:block">
   </div>
 </template>
 
