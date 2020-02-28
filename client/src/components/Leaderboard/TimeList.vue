@@ -19,29 +19,45 @@
                 'gradient-' + (index + 1),
               ]"
             >
-              <div v-if="time.username == seelf" class=" gradient-self absolute w-full h-full flex items-center">
+              <div
+                v-if="time.username == seelf"
+                class="gradient-self absolute w-full h-full flex items-center"
+              >
                 <svg class="w-3 h-3 text-white ml-1 self-center">
                   <use xlink:href="#rubiks-icon" />
                 </svg>
               </div>
               <div class="flex items-center justify-center">
-                
-                <span :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']">{{ index + 1 }}</span>
-                <svg v-if="time.country_code === 'WR'" class="fill-current w-6 h-6 rounded-full border border-blue-300">
+                <span
+                  :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']"
+                >{{ index + 1 }}</span>
+                <svg
+                  v-if="time.country_code === 'WR'"
+                  class="fill-current w-6 h-6 rounded-full border border-blue-300"
+                >
                   <use xlink:href="#world" />
                 </svg>
-                <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300 hidden sm:block" />
-                <div
+                <flag
+                  v-else
+                  :iso="time.country_code.toLowerCase()"
+                  style="height:24px;width:24px;"
+                  class="rounded-full border border-blue-300 hidden sm:block"
+                />
+                <router-link
+                  :to="{ name: 'profile', params: { username: time.username }}"
                   :class="[
-                    time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-12 truncate sm:w-24',
+                    time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-12 truncate hover:text-blue-200 sm:w-24',
                     time.username === seelf ? 'font-bold' : ''
                   ]"
-                >{{ time.username }}</div>
+                >{{ time.username }}</router-link>
               </div>
               <div
                 :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300' ,'pl-6 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
               >
-                <svg :class="getTimeColor(index + 1)" class="hidden fill-current w-4 h-4 mx-auto mr-2 sm:block">
+                <svg
+                  :class="getTimeColor(index + 1)"
+                  class="hidden fill-current w-4 h-4 mx-auto mr-2 sm:block"
+                >
                   <use :xlink:href="getTimeIcon(index + 1)" />
                 </svg>
                 {{ displayTime(time.time, true) }}
@@ -165,7 +181,11 @@ export default {
 }
 
 .gradient-self {
-  background: linear-gradient(90deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 15%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 15%
+  );
 }
 
 .gradient-1 {
