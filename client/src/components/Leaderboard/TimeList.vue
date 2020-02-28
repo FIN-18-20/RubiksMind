@@ -33,23 +33,24 @@
                 <flag v-else :iso="time.country_code.toLowerCase()" style="height:24px;width:24px;" class="rounded-full border border-blue-300 hidden sm:block" />
                 <div
                   :class="[
-                    time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-10 truncate',
+                    time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-12 truncate sm:w-24',
                     time.username === seelf ? 'font-bold' : ''
                   ]"
                 >{{ time.username }}</div>
               </div>
-              <span
-                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300' ,'pl-8 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
+              <div
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300' ,'pl-6 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
               >
-                <svg :class="getTimeColor(index + 1)" class="fill-current w-4 h-4 mx-auto mr-2">
+                <svg :class="getTimeColor(index + 1)" class="hidden fill-current w-4 h-4 mx-auto mr-2 sm:block">
                   <use :xlink:href="getTimeIcon(index + 1)" />
                 </svg>
                 {{ displayTime(time.time, true) }}
-              </span>
+              </div>
               <div
-                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300', 'mr-4 text-xs sm:text-sm italic font-medium flex items-center text-center']"
+                :class="[time.username === seelf ? 'text-blue-100' : 'text-blue-300']"
+                class="mr-2 text-xs sm:text-sm italic text-center font-medium flex items-center sm:mr-4"
               >
-                <svg class="fill-current w-3 h-3 text-blue-600 mx-auto mr-2">
+                <svg class="hidden fill-current w-3 h-3 text-blue-600 mx-auto mr-2 sm:block">
                   <use xlink:href="#calendar" />
                 </svg>
                 {{ formatDate(time.date) }}
