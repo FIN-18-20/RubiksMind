@@ -169,8 +169,10 @@ export default {
       this.ticker.stop()
       console.timeEnd('timer')
 
+      this.updateScramble()
+
       // Impossible time
-      if (this.resolutionTime < 3000) {
+      if (this.resolutionTime < 2000) {
         this.statusColor = 'text-red-500'
         return this.status = 'Did not count - Impossible time'
       }
@@ -182,12 +184,13 @@ export default {
       if (timesSorted[0].time === this.resolutionTime) {
         this.statusColor = 'text-orange-400'
         this.status = 'Personal best'
-        this.statusTime = '-' + this.displayTime(timesSorted[1].time - this.resolutionTime, true)
+        this.statusTime = timesSorted.length > 1 ? '-' + this.displayTime(timesSorted[1].time - this.resolutionTime, true) : ''
       } else {
         this.statusColor = 'text-red-500'
         this.statusTime = '+' + this.displayTime(this.resolutionTime - timesSorted[0].time, true)
       }
     },
+    ...mapActions('cube', ['updateScramble']),
     ...mapActions('timer', ['addTimer', 'getTimers']),
   }
 }
