@@ -10,7 +10,6 @@
           class="text-black ml-4 rounded"
           type="text"
           name="username"
-          required
         />
       </div>
       <div class="w-128 flex flex-row justify-between px-12 my-2">
@@ -21,7 +20,6 @@
           class="text-black ml-4 rounded"
           type="email"
           name="email"
-          required
         />
       </div>
       <div class="w-128 flex flex-row justify-between px-12 my-2">
@@ -32,7 +30,6 @@
           class="text-black ml-4 rounded"
           type="password"
           name="password"
-          required
         />
       </div>
       <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
@@ -44,7 +41,6 @@
           class="text-black ml-4 rounded"
           type="password"
           name="confirmPassword"
-          required
         />
       </div>
       <p class="w-128 h-6 text-red-600 text-sm px-24 text-right">{{ bottomMessage }}</p>
@@ -56,6 +52,8 @@
 
       <button @click="authProvider = 'github'">Github</button>
       <button @click="authProvider = 'google'">Google</button>
+      <!--<button @click="authProvider = 'discord'">Discord</button>
+      <button @click="authProvider = 'twitter'">Twitter</button>-->
     </form>
   </div>
 </template>

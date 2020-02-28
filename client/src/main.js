@@ -4,6 +4,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+require('dotenv').config()
+
 import '@/assets/css/base.css'
 
 import VueAxios from './plugins/axios'

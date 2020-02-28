@@ -1,5 +1,8 @@
 'use strict';
+const LoginUser = use('App/Validators/LoginUser')
+//import LoginUser from '../../Validators/LoginUser.js';
 const User = use('App/Models/User');
+const { validateAll, sanitize } = use('Validator')
 
 class AuthController {
   async register({ request, auth, response }) {
@@ -95,8 +98,7 @@ class AuthController {
       return response.unauthorized('No refresh token');
     }
     try {
-      let token = await auth.generateForRefreshToken(refreshToken);
-      console.log(token);
+      let token = await auth.newRefreshToken().generateForRefreshToken(refreshToken);
       return response.created(token);
     } catch (e) {
       return response.unauthorized(e.message);
@@ -109,7 +111,7 @@ class AuthController {
       return response.unauthorized('No refresh token');
     }
     try{
-      await auth.revokeTokens([refreshToken])
+      await auth.revokeTokens([refreshToken], true);
       return response.ok()
     }
     catch(e) {

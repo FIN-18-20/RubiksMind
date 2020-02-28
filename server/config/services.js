@@ -29,7 +29,7 @@ module.exports = {
     google: {
       clientId: Env.get('GOOGLE_CLIENT_ID'),
       clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-      redirectUri: `http://localhost/api/oauth-connection-successfull/google`
+      redirectUri: `http://localhost/oauth-connection-successfull/google`
     },
 
     /*
@@ -44,7 +44,7 @@ module.exports = {
     github: {
       clientId: Env.get('GITHUB_CLIENT_ID'),
       clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
-      redirectUri: `http://localhost/api/oauth-connection-successfull/github`
+      redirectUri: `http://localhost/oauth-connection-successfull/github`
     },
 
     /*
@@ -59,7 +59,7 @@ module.exports = {
     discord: {
       clientId: Env.get('DISCORD_CLIENT_ID'),
       clientSecret: Env.get('DISCORD_CLIENT_SECRET'),
-      redirectUri: `http://localhost/api/oauth-connection-successfull/discord`
+      redirectUri: `http://localhost/oauth-connection-successfull/discord`
     }
   }
 }
