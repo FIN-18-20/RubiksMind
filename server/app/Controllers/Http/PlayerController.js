@@ -14,6 +14,7 @@ class PlayerController {
       .groupBy('users.id')
       .orderBy('time', 'asc')
       .orderBy('times.created_at', 'asc')
+      .limit(100)
 
     return response.accepted(leaderboard)
   }
