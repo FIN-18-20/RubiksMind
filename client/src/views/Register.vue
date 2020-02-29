@@ -1,5 +1,4 @@
 <template>
-  <!-- <Auth action="register" /> -->
   <div class="w-full mt-48 flex flex-col md:flex-row justify-center mr-10">
     <div class="relative mr-8 mt-56" style="width:280px;">
       <img class="absolute z-10 inline-block" style="top:-70px;left:85px;" src="@/assets/img/cube-logo.svg" alt="cube logo" />
@@ -8,14 +7,17 @@
         <h3 class="text-blue-100 text-base font-medium italic text-right leading-none">& beat your pb's!</h3>
       </div>
     </div>
-    <FormAuth />
+    <FormAuth action="register" />
+    <!-- <Auth action="register" /> -->
   </div>
 </template>
 
 <script>
 import FormAuth from '../components/FormAuth'
+// import Auth from '../components/Auth'
 export default {
   components: {
+    // Auth,
     FormAuth
   }
 }
