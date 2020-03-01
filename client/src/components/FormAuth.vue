@@ -161,8 +161,8 @@
                 <label for="username" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
                   Username
                 </label>
-                <span class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage }}
+                <span v-if="errorMessage.username !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage.username }}
                 </span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
@@ -171,8 +171,8 @@
                   id="username"
                   required 
                   type="username"
-                  name="username" 
-                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  name="username"
+                  :class="[ errorMessage.username !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 />
               </div>
             </div>
@@ -182,8 +182,8 @@
                 <label for="country" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
                   Country
                 </label>
-                <span class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage }}
+                <span v-if="errorMessage.country !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage.country }}
                 </span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
@@ -261,7 +261,6 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      errorMessages: [],
       errorMessage: {
         username: '',
         country: '',
@@ -282,7 +281,7 @@ export default {
   computed: {
     samePasswords: function () {
       if (this.action === 'register') {
-        if (this.password !== '' && this.confirmPassword !== '') {
+        if (this.password !== '') {
           return this.password === this.confirmPassword
         }
         return true
@@ -298,9 +297,23 @@ export default {
   methods: {
     ...mapActions('auth', ['login']),
     ...mapActions(['changeLocalMode']),
+    sortErrorMessage(messages) {
+      this.errorMessage = {
+        username: '',
+        country: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      }
+      messages.map(message => {
+        this.errorMessage[message.field] = message.message
+        console.log(this.errorMessage[message.field])
+      })
+    },
     async postNextStep() {
       if (this.authProvider === 'local') {
         if (this.samePasswords) {
+          this.errorMessage.password = ''
           this.errorMessage.confirmPassword = ''
           if (this.action === 'register') {
             this.$axios.post('/register/check', {
@@ -317,15 +330,15 @@ export default {
                   this.errorMessage.email = err.response.data
                 }
                 if (err.response.status === 400) {
-                  this.errorMessages = err.response.data
+                  this.sortErrorMessage(err.response.data)
                 }
                 else {
                   console.log(err)
                 }
               })
           }
-
         } else {
+          this.errorMessage.password = ''
           this.errorMessage.confirmPassword = 'Passwords don\'t match'
         }
       } else {
@@ -356,14 +369,16 @@ export default {
         .catch(error => {
           if (error.response) {
             switch (error.response.status) {
+              case 400: {
+                this.sortErrorMessage(error.response.data)
+                break
+              }
               case 401: {
-                console.warn(error.response.data)
-                this.errorMessage = error.response.data
+                this.errorMessage.username = error.response.data
                 break
               }
               case 403: {
-                console.warn('You are already connected !')
-                this.errorMessage = 'You are already connected !'
+                this.errorMessage.username = 'You are already connected !'
                 break
               }
               default: {

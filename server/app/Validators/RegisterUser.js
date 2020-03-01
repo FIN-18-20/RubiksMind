@@ -24,10 +24,10 @@ class RegisterUser {
   get messages() {
     return {
       'username.required': 'You must provide a username.',
-      'username.regex': 'You can use only alphanumeric charachters, underscores, dashes, and spaces.',
-      'username.min': 'The username must be at least 4 characters long.',
-      'username.max': 'The username can be at most 24 characters long.',
-      'email.required': 'You must provide a email address.',
+      'username.regex': 'The username is not valid.',
+      'username.min': 'Minimum length is 4 characters.',
+      'username.max': 'Maximum length is 20 characters.',
+      'email.required': 'You must provide an email address.',
       'email.email': 'You must provide a valid email address.',
       'password.required': 'You must provide a password.'
     }

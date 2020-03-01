@@ -12,7 +12,7 @@ class AuthController {
     if (await User.findBy('email', email) === null)
       return response.ok()
     else
-      return response.unauthorized('The email address already taken')
+      return response.unauthorized('The email address is already taken.')
 
   }
 
@@ -34,7 +34,7 @@ class AuthController {
       return response.created(token);
     }
     else {
-      return response.unauthorized('User already exists');
+      return response.unauthorized('The username is already taken.');
     }
   }
 
