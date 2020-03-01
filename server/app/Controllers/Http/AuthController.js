@@ -29,7 +29,7 @@ class AuthController {
 
       let user = await User.create(userDetails);
 
-      let token = await auth.withRefreshToken().attempt(username, password);
+      let token = await auth.withRefreshToken().attempt(email, password);
 
       return response.created(token);
     }
