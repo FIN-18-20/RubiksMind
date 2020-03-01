@@ -145,7 +145,7 @@
         class="mt-32 flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md"
         style="width:450px;height:340px;"
       >
-        <div class="box-styles py-5 px-8 rounded-md sm:px-10" style="width:420px;height:300px;">
+        <div class="box-styles py-2 px-8 rounded-md sm:px-10" style="width:420px;height:300px;">
         
           <form @submit.prevent="postAction">
             <div class="flex items-center justify-center my-2">
@@ -155,6 +155,8 @@
               </h4>
               <hr style="width:50px;" class="border-blue-200" />
             </div>
+
+            <h5 class="text-center text-xs text-blue-300 italic mb-3">Choose your username and country.</h5>
 
             <div>
               <div class="flex justify-between">
