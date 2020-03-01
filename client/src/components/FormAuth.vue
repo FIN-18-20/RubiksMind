@@ -16,9 +16,14 @@
             </div>
 
             <div>
-              <label for="email" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                Email address
-              </label>
+              <div class="flex justify-between">
+                <label for="email" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
+                  Email address
+                </label>
+                <span v-if="errorMessage.email !== ''" class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage.email }}
+                </span>
+              </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
                   v-model="email" 
@@ -26,39 +31,48 @@
                   required 
                   type="email"
                   name="email" 
-                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  :class="[ errorMessage.email !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 />
               </div>
             </div>
 
             <div class="mt-2">
-              <label for="password" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                Password
-              </label>
+              <div class="flex justify-between">
+                <label for="password" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
+                  Password
+                </label>
+                <span v-if="errorMessage.password !== ''" class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage.password }}
+                </span>
+              </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
                   v-model="password"
                   id="password"
-                  required 
+                  required
                   type="password"
-                  name="password" 
-                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5" 
+                  name="password"
+                  :class="[ errorMessage.password !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 />
               </div>
             </div>
 
             <div class="mt-2">
-              <label for="confirmPassword" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                Confirm Password
-              </label>
+              <div class="flex justify-between">
+                <label for="confirmPassword" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
+                  Confirm Password
+                </label>
+                <span v-if="errorMessage.confirmPassword !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage.confirmPassword }}
+                </span>
+              </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
                   v-model="confirmPassword"
-                  @blur="verifyPasswords"
                   id="confirmPassword"
-                  required 
+                  required
                   type="password"
-                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  :class="[ errorMessage.confirmPassword !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 />
               </div>
             </div>
@@ -143,9 +157,14 @@
             </div>
 
             <div>
-              <label for="username" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                username
-              </label>
+              <div class="flex justify-between">
+                <label for="username" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
+                  Username
+                </label>
+                <span class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage }}
+                </span>
+              </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
                   v-model="username" 
@@ -159,14 +178,26 @@
             </div>
 
             <div class="mt-2">
-              <label for="country" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                Country / Region
-              </label>
+              <div class="flex justify-between">
+                <label for="country" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
+                  Country
+                </label>
+                <span class="mr-1 block text-xs italic leading-5 text-red-400">
+                  {{ errorMessage }}
+                </span>
+              </div>
               <div class="mt-1 rounded-md shadow-sm">
-                <select id="country" class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                <select
+                  v-model="country"
+                  id="country" 
+                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  required
+                >
                   <option>World</option>
-                  <option>Switzerland</option>
-                  <option>France</option>
+                  <option v-for="(c, index) in sortedCountryList"
+                          :key="index"
+                          :value="c.code"
+                  >{{ c.name }}</option>
                 </select>
               </div>
             </div>
@@ -203,15 +234,9 @@
 
 <script>
 import { mapActions } from 'vuex'
+const countryList = require('country-list')
 
 export default {
-  filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  },
   props: {
     action: {
       type: String,
@@ -232,12 +257,21 @@ export default {
   data() {
     return {
       username: '',
+      country: '',
       email: '',
       password: '',
       confirmPassword: '',
-      errorMessage: '',
+      errorMessages: [],
+      errorMessage: {
+        username: '',
+        country: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
       authProvider: 'local',
       secondStep: false,
+      countries: countryList.getData(),
 
       actionsRoutes: {
         login: this.loginRoute,
@@ -246,33 +280,53 @@ export default {
     }
   },
   computed: {
-    passwordIsValid: function () {
+    samePasswords: function () {
       if (this.action === 'register') {
-        if (this.confirmPassword !== '') {
+        if (this.password !== '' && this.confirmPassword !== '') {
           return this.password === this.confirmPassword
         }
-        return false
+        return true
       }
       return true
     },
-    bottomMessage: function () {
-      if (this.errorMessage !== '') {
-        return this.errorMessage
-      }
-      return this.passwordIsValid ? '' : 'Passwords don\'t match !'
-    },
+    sortedCountryList: function () {
+      return [...this.countries].sort((a, b) => {
+        return a.name.localeCompare(b.name)
+      })
+    }
   },
   methods: {
     ...mapActions('auth', ['login']),
     ...mapActions(['changeLocalMode']),
     async postNextStep() {
       if (this.authProvider === 'local') {
-        if (this.passwordIsValid) {
-
-          this.secondStep = true
+        if (this.samePasswords) {
+          this.errorMessage.confirmPassword = ''
+          if (this.action === 'register') {
+            this.$axios.post('/register/check', {
+              username: 'temporaryName',
+              email: this.email,
+              password: this.password
+            })
+              .then(res => {
+                console.log(res)
+                this.secondStep = true
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.errorMessage.email = err.response.data
+                }
+                if (err.response.status === 400) {
+                  this.errorMessages = err.response.data
+                }
+                else {
+                  console.log(err)
+                }
+              })
+          }
 
         } else {
-          console.warn('Passwords don\'t match')
+          this.errorMessage.confirmPassword = 'Passwords don\'t match'
         }
       } else {
         this.$axios
@@ -289,7 +343,8 @@ export default {
         .post(this.actionsRoutes[this.action], {
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
+          country: this.country
         })
         .then(async response => {
           if (response.status === 201) {
@@ -321,11 +376,6 @@ export default {
             console.error(error)
           }
         })
-    },
-    verifyPasswords() {
-      /*if (this.password !== this.confirmPassword) {
-
-      }*/
     },
   },
 }

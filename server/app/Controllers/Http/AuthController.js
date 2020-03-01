@@ -5,6 +5,17 @@ const User = use('App/Models/User');
 const { validateAll, sanitize } = use('Validator')
 
 class AuthController {
+
+  async check({ request, auth, response }) {
+    const { email, password } = request.all()
+
+    if (await User.findBy('email', email) === null)
+      return response.ok()
+    else
+      return response.unauthorized('The email address already taken')
+
+  }
+
   async register({ request, auth, response }) {
     let { username, email, password } = request.all();
     const userDetails = {
@@ -47,7 +58,7 @@ class AuthController {
       }
     }
     else { // Local login
-      if(email === null || password === null) {
+      if (email === null || password === null) {
         return response.unauthorized('The fields can\'t be empty');
       }
       try {
@@ -105,16 +116,16 @@ class AuthController {
     }
   }
 
-  async logout({auth, request, response}) {
+  async logout({ auth, request, response }) {
     let refreshToken = request.header('X-Refresh-Token');
     if (refreshToken === 'undefined') {
       return response.unauthorized('No refresh token');
     }
-    try{
+    try {
       await auth.revokeTokens([refreshToken], true);
       return response.ok()
     }
-    catch(e) {
+    catch (e) {
       return response.badRequest(e.message)
     }
   }
