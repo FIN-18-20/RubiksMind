@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mt-48 flex flex-col md:flex-row justify-center mr-10">
+  <div class="w-full flex flex-col md:flex-row justify-center mr-10">
     <div class="relative mr-8 mt-56" style="width:280px;">
       <img class="absolute z-10 inline-block" style="top:-70px;left:85px;" src="@/assets/img/cube-logo.svg" alt="cube logo" />
       <div class="relative z-20">

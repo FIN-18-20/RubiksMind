@@ -2,7 +2,7 @@
   <div>
     <div v-if="!secondStep">
       <div
-        class="flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md"
+        class="flex items-center justify-center bg-blue-800 border border-blue-700 rounded-md"
         style="width:450px;height:550px;"
       >
         <div class="box-styles py-5 px-8 rounded-md sm:px-10" style="width:420px;height:512px;">
