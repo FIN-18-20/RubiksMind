@@ -17,14 +17,15 @@ class AuthController {
   }
 
   async register({ request, auth, response }) {
-    let { username, email, password } = request.all();
+    let { username, email, password,country_code } = request.all();
     const userDetails = {
       username,
       email,
       password,
+      country_code,
       login_source: 'local',
     }
-
+    console.log(userDetails)
     if (await User.findBy('username', username) === null) {
 
       let user = await User.create(userDetails);

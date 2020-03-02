@@ -11,7 +11,7 @@ class UserSchema extends Schema {
       table.string('email', 254).notNullable()
       table.string('password', 60)
       table.string('login_source', 25).notNullable()
-      table.string('country_code', 2)
+      table.string('country_code', 2).notNullable().defaultTo('WR')
       table.timestamps()
       table.unique('id')
     })

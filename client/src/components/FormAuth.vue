@@ -387,7 +387,7 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
-          country: this.country
+          country_code: this.country
         })
         .then(async response => {
           if (response.status === 201) {
