@@ -8,10 +8,12 @@ require('dotenv').config()
 
 import '@/assets/css/base.css'
 
+import FlagIcon from 'vue-flag-icon'
 import VueAxios from './plugins/axios'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, { store, router })
+Vue.use(FlagIcon)
 
 new Vue({
   router,

@@ -19,7 +19,7 @@ module.exports = {
   origin: (origin) => {
     if (process.env.NODE_ENV === 'development') return true
 
-    if (origin.includes('https://api.rubiksmind.com')) return true
+    if (origin.includes('https://rubiksmind.com')) return true
 
     return false
   },

@@ -54,3 +54,9 @@ Route.get('/scramble', 'CubeController.scramble')
 Route.get('/times/all', 'TimeController.index').middleware(['auth'])
 Route.post('/times/create', 'TimeController.create').middleware(['auth'])
 Route.delete('/times/delete/:id', 'TimeController.delete').middleware(['auth'])
+
+// Profile
+Route.get('/profile/:username', 'ProfileController.show')
+
+//Players' times & infos
+Route.get('/players/leaderboard', 'PlayerController.leaderboard')
