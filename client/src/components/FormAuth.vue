@@ -2,35 +2,34 @@
   <div>
     <div v-if="!secondStep">
       <div
-        class="flex items-center justify-center bg-blue-800 border border-blue-700 rounded-md"
-        style="width:450px;height:550px;"
+        class="max-w-md w-full px-4 py-6 flex items-center justify-center bg-blue-800 border border-blue-700 rounded-md"
       >
-        <div class="box-styles py-5 px-8 rounded-md sm:px-10" style="width:420px;height:512px;">
+        <div class="box-styles py-5 px-8 rounded-md sm:px-10">
           <form @submit.prevent="postNextStep">
             <div class="flex items-center justify-center mb-2">
               <hr style="width:50px;" class="border-blue-200" />
-              <h4 class="mx-2 text-base italic text-blue-200">
-                Register
-              </h4>
+              <h4 class="mx-2 text-base italic text-blue-200">Register</h4>
               <hr style="width:50px;" class="border-blue-200" />
             </div>
 
             <div>
               <div class="flex justify-between">
-                <label for="email" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                  Email address
-                </label>
-                <span v-if="errorMessage.email !== ''" class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage.email }}
-                </span>
+                <label
+                  for="email"
+                  class="ml-1 block text-xs font-medium leading-5 text-blue-600"
+                >Email address</label>
+                <span
+                  v-if="errorMessage.email !== ''"
+                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                >{{ errorMessage.email }}</span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
-                  v-model="email" 
+                  v-model="email"
                   id="email"
-                  required 
+                  required
                   type="email"
-                  name="email" 
+                  name="email"
                   :class="[ errorMessage.email !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 />
               </div>
@@ -38,12 +37,14 @@
 
             <div class="mt-2">
               <div class="flex justify-between">
-                <label for="password" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                  Password
-                </label>
-                <span v-if="errorMessage.password !== ''" class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage.password }}
-                </span>
+                <label
+                  for="password"
+                  class="ml-1 block text-xs font-medium leading-5 text-blue-600"
+                >Password</label>
+                <span
+                  v-if="errorMessage.password !== ''"
+                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                >{{ errorMessage.password }}</span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
@@ -59,12 +60,14 @@
 
             <div class="mt-2">
               <div class="flex justify-between">
-                <label for="confirmPassword" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                  Confirm Password
-                </label>
-                <span v-if="errorMessage.confirmPassword !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage.confirmPassword }}
-                </span>
+                <label
+                  for="confirmPassword"
+                  class="ml-1 block text-xs font-medium leading-5 text-blue-600"
+                >Confirm Password</label>
+                <span
+                  v-if="errorMessage.confirmPassword !== '' "
+                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                >{{ errorMessage.confirmPassword }}</span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
@@ -79,59 +82,94 @@
 
             <div class="mt-5">
               <span class="block w-full rounded-md shadow-sm">
-                <button type="submit" class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out">
-                  Register
-                </button>
+                <button
+                  type="submit"
+                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out"
+                >Register</button>
               </span>
             </div>
           </form>
           <div class="mt-5">
             <div class="flex items-center justify-center mb-3">
               <hr style="width:50px;" class="border-blue-200" />
-              <h4 class="mx-2 text-sm italic text-blue-200">
-                Or connect with
-              </h4>
+              <h4
+                class="mx-2 text-xs italic text-blue-200 sm:text-sm"
+              >{{ windowWidth > 320 ? 'Or connect with' : 'Or' }}</h4>
               <hr style="width:50px;" class="border-blue-200" />
             </div>
 
             <div class="mt-4 grid grid-cols-2 gap-4">
               <div>
-                <span class="w-full h-12 inline-flex rounded-md shadow-sm" style="padding:2px;background-image:linear-gradient(90deg, rgba(7,201,104,1) 0%, rgba(231,69,57,1) 50%, rgba(228,173,69,1) 100%);">
-                  <button @click="authProvider = 'google'" type="button" class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-4 w-4">
+                <span
+                  class="w-full h-12 inline-flex rounded-md shadow-sm"
+                  style="padding:2px;background-image:linear-gradient(90deg, rgba(7,201,104,1) 0%, rgba(231,69,57,1) 50%, rgba(228,173,69,1) 100%);"
+                >
+                  <button
+                    @click="authProvider = 'google'"
+                    type="button"
+                    class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out"
+                  >
+                    <svg class="h-4 w-4 flex-shrink-0">
                       <use xlink:href="#google-logo" />
                     </svg>
-                    <span class="text-xs ml-2 leading-5 font-medium">Login with Google</span>
+                    <span
+                      class="text-xs ml-2 leading-5 font-medium"
+                    >{{ windowWidth > 360 ? 'Login with Google' : 'Login Google' }}</span>
                   </button>
                 </span>
               </div>
               <div>
-                <span class="w-full h-12 inline-flex rounded-md shadow-sm" style="padding:2px;background-color:#1B1F23;">
-                  <button @click="authProvider = 'github'" type="button" class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-4 w-4">
+                <span
+                  class="w-full h-12 inline-flex rounded-md shadow-sm"
+                  style="padding:2px;background-color:#1B1F23;"
+                >
+                  <button
+                    @click="authProvider = 'github'"
+                    type="button"
+                    class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out"
+                  >
+                    <svg class="h-4 w-4 flex-shrink-0">
                       <use xlink:href="#github-logo" />
                     </svg>
-                    <span class="text-xs ml-2 leading-5 font-medium">Login with Github</span>
+                    <span
+                      class="text-xs ml-2 leading-5 font-medium"
+                    >{{ windowWidth > 360 ? 'Login with Github' : 'Login Github' }}</span>
                   </button>
                 </span>
               </div>
               <div>
-                <span class="w-full h-12 inline-flex rounded-md shadow-sm" style="padding:2px;background-color:#1DA1F2">
-                  <button type="button" class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 hover:font-semi-bold text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-4 w-4">
+                <span
+                  class="w-full h-12 inline-flex rounded-md shadow-sm"
+                  style="padding:2px;background-color:#1DA1F2"
+                >
+                  <button
+                    type="button"
+                    class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 hover:font-semi-bold text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out"
+                  >
+                    <svg class="h-4 w-4 flex-shrink-0">
                       <use xlink:href="#twitter-logo" />
                     </svg>
-                    <span class="text-xs ml-2 leading-5 font-medium">Login with Twitter</span>
+                    <span
+                      class="text-xs ml-2 leading-5 font-medium"
+                    >{{ windowWidth > 360 ? 'Login with Twitter' : 'Login Twitter' }}</span>
                   </button>
                 </span>
               </div>
               <div>
-                <span class="w-full h-12 inline-flex rounded-md shadow-sm" style="padding:2px;background-color:#7289DA;">
-                  <button type="button" class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-4 w-4">
+                <span
+                  class="w-full h-12 inline-flex rounded-md shadow-sm"
+                  style="padding:2px;background-color:#7289DA;"
+                >
+                  <button
+                    type="button"
+                    class="w-full inline-flex justify-center items-center py-1 px-3 rounded-md bg-blue-100 text-blue-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out"
+                  >
+                    <svg class="h-4 w-4 flex-shrink-0">
                       <use xlink:href="#discord-logo" />
                     </svg>
-                    <span class="text-xs ml-2 leading-5 font-medium">Login with Discord</span>
+                    <span
+                      class="text-xs ml-2 leading-5 font-medium"
+                    >{{ windowWidth > 360 ? 'Login with Discord' : 'Login Discord' }}</span>
                   </button>
                 </span>
               </div>
@@ -142,36 +180,36 @@
     </div>
     <div v-else>
       <div
-        class="mt-32 flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md"
-        style="width:450px;height:340px;"
+        class="max-w-md w-full px-4 py-6 flex items-center justify-center mt-1 bg-blue-800 border border-blue-700 rounded-md"
       >
-        <div class="box-styles py-2 px-8 rounded-md sm:px-10" style="width:420px;height:300px;">
-        
+        <div class="box-styles py-2 px-8 rounded-md sm:px-10">
           <form @submit.prevent="postAction">
             <div class="flex items-center justify-center my-2">
               <hr style="width:50px;" class="border-blue-200" />
-              <h4 class="mx-2 text-base italic text-blue-200">
-                Register
-              </h4>
+              <h4 class="mx-2 text-base italic text-blue-200">Register</h4>
               <hr style="width:50px;" class="border-blue-200" />
             </div>
 
-            <h5 class="text-center text-xs text-blue-300 italic mb-3">Choose your username and country.</h5>
+            <h5
+              class="text-center text-xs text-blue-300 italic mb-3"
+            >Choose your username and country.</h5>
 
             <div>
               <div class="flex justify-between">
-                <label for="username" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                  Username
-                </label>
-                <span v-if="errorMessage.username !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage.username }}
-                </span>
+                <label
+                  for="username"
+                  class="ml-1 block text-xs font-medium leading-5 text-blue-600"
+                >Username</label>
+                <span
+                  v-if="errorMessage.username !== '' "
+                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                >{{ errorMessage.username }}</span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <input
-                  v-model="username" 
+                  v-model="username"
                   id="username"
-                  required 
+                  required
                   type="username"
                   name="username"
                   :class="[ errorMessage.username !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
@@ -181,37 +219,40 @@
 
             <div class="mt-2">
               <div class="flex justify-between">
-                <label for="country" class="ml-1 block text-xs font-medium leading-5 text-blue-600">
-                  Country
-                </label>
-                <span v-if="errorMessage.country !== '' " class="mr-1 block text-xs italic leading-5 text-red-400">
-                  {{ errorMessage.country }}
-                </span>
+                <label
+                  for="country"
+                  class="ml-1 block text-xs font-medium leading-5 text-blue-600"
+                >Country</label>
+                <span
+                  v-if="errorMessage.country !== '' "
+                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                >{{ errorMessage.country }}</span>
               </div>
               <div class="mt-1 rounded-md shadow-sm">
                 <select
                   v-model="country"
-                  id="country" 
+                  id="country"
                   class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   required
                 >
                   <option>World</option>
-                  <option v-for="(c, index) in sortedCountryList"
-                          :key="index"
-                          :value="c.code"
+                  <option
+                    v-for="(c, index) in sortedCountryList"
+                    :key="index"
+                    :value="c.code"
                   >{{ c.name }}</option>
                 </select>
               </div>
             </div>
 
-            <div class="mt-5">
+            <div class="mt-5 pb-2">
               <span class="block w-full rounded-md shadow-sm">
-                <button type="submit" class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out">
-                  Create account
-                </button>
+                <button
+                  type="submit"
+                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out"
+                >Create account</button>
               </span>
             </div>
-
           </form>
         </div>
       </div>
@@ -219,23 +260,8 @@
   </div>
 </template>
 
-<style scoped>
-  .box-styles {
-    background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-    scrollbar-width: none;
-  }
-
-  .button-bg {
-    background: linear-gradient(105.11deg, #7bbae0 -6.07%, #1a6fbf 93.36%);
-  }
-  .button-bg:hover {
-    background: linear-gradient(105.11deg, #64a0c5 -6.07%, #105697 93.36%);
-  }
-</style>
-
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 const countryList = require('country-list')
 
 export default {
@@ -294,7 +320,10 @@ export default {
       return [...this.countries].sort((a, b) => {
         return a.name.localeCompare(b.name)
       })
-    }
+    },
+    ...mapState({
+      windowWidth: state => state.windowWidth,
+    }),
   },
   methods: {
     ...mapActions('auth', ['login']),
@@ -397,3 +426,19 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.box-styles {
+  background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+  scrollbar-width: none;
+}
+
+.button-bg {
+  background: linear-gradient(105.11deg, #7bbae0 -6.07%, #1a6fbf 93.36%);
+}
+
+.button-bg:hover {
+  background: linear-gradient(105.11deg, #64a0c5 -6.07%, #105697 93.36%);
+}
+</style>
