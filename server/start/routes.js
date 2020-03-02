@@ -22,7 +22,9 @@ Route.get('/', () => {
 })
 
 Route.post('/login/:provider?', 'AuthController.login').middleware(['guest'])
-Route.post('/register', 'AuthController.register').middleware(['guest'])
+Route.post('/register', 'AuthController.register').middleware(['guest']).validator('RegisterUser')
+Route.post('/register/check', 'AuthController.check').middleware(['guest']).validator('RegisterUser')
+Route.get('/logout', 'AuthController.logout').middleware(['auth'])
 Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
 Route.get('/refresh', 'AuthController.refresh')
 

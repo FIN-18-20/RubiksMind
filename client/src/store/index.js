@@ -20,6 +20,8 @@ export default new Vuex.Store({
       state.windowWidth = width
     },
   },
+  getters: {
+  },
   actions: {
     updateWindowWidth({ commit }, width) {
       commit('UPDATE_WINDOW_WIDTH', width)

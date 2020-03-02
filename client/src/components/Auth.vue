@@ -2,7 +2,7 @@
   <div>
     <h1>{{ action | capitalize }}</h1>
     <form @submit.prevent="postAction" class="flex flex-col items-start justify-center w-128">
-      <div class="w-128 flex flex-row justify-between px-12 my-2">
+      <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
         <label for="username">Username</label>
         <input
           v-model="username"
@@ -10,7 +10,16 @@
           class="text-black ml-4 rounded"
           type="text"
           name="username"
-          required
+        />
+      </div>
+      <div class="w-128 flex flex-row justify-between px-12 my-2">
+        <label for="email">E-mail</label>
+        <input
+          v-model="email"
+          id="passemailword"
+          class="text-black ml-4 rounded"
+          type="email"
+          name="email"
         />
       </div>
       <div class="w-128 flex flex-row justify-between px-12 my-2">
@@ -21,7 +30,6 @@
           class="text-black ml-4 rounded"
           type="password"
           name="password"
-          required
         />
       </div>
       <div v-if="action === 'register'" class="w-128 flex flex-row justify-between px-12 my-2">
@@ -33,7 +41,6 @@
           class="text-black ml-4 rounded"
           type="password"
           name="confirmPassword"
-          required
         />
       </div>
       <p class="w-128 h-6 text-red-600 text-sm px-24 text-right">{{ bottomMessage }}</p>
@@ -45,6 +52,8 @@
 
       <button @click="authProvider = 'github'">Github</button>
       <button @click="authProvider = 'google'">Google</button>
+      <!--<button @click="authProvider = 'discord'">Discord</button>
+      <button @click="authProvider = 'twitter'">Twitter</button>-->
     </form>
   </div>
 </template>
@@ -80,6 +89,7 @@ export default {
   data() {
     return {
       username: '',
+      email: '',
       password: '',
       confirmPassword: '',
       errorMessage: '',
@@ -109,40 +119,45 @@ export default {
     },
   },
   methods: {
-    ...mapActions('auth', ['setJwtToken', 'setRefreshToken']),
+    ...mapActions('auth', ['login']),
+    ...mapActions(['changeLocalMode']),
     async postAction() {
       if (this.authProvider === 'local') {
         if (this.passwordIsValid) {
           this.$axios
             .post(this.actionsRoutes[this.action], {
               username: this.username,
+              email: this.email,
               password: this.password
             })
             .then(async response => {
               if (response.status === 201) {
                 const { refreshToken, token } = response.data
-                await this.setJwtToken(token)
-                await this.setRefreshToken(refreshToken)
-                this.$store.commit('CHANGE_LOCAL_MODE', false)
+                await this.login({ token, refreshToken })
                 this.$router.push('/')
               }
             })
             .catch(error => {
-              switch (error.response.status) {
-                case 401: {
-                  console.warn(error.response.data)
-                  this.errorMessage = error.response.data
-                  break
+              if (error.response) {
+                switch (error.response.status) {
+                  case 401: {
+                    console.warn(error.response.data)
+                    this.errorMessage = error.response.data
+                    break
+                  }
+                  case 403: {
+                    console.warn('You are already connected !')
+                    this.errorMessage = 'You are already connected !'
+                    break
+                  }
+                  default: {
+                    console.warn(error.response.data)
+                    break
+                  }
                 }
-                case 403: {
-                  console.warn('You are already connected !')
-                  this.errorMessage = 'You are already connected !'
-                  break
-                }
-                default: {
-                  console.warn(error.response.data)
-                  break
-                }
+              }
+              else {
+                console.error(error)
               }
             })
         } else {

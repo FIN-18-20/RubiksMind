@@ -1,13 +1,26 @@
 'use strict';
+const LoginUser = use('App/Validators/LoginUser')
+//import LoginUser from '../../Validators/LoginUser.js';
 const User = use('App/Models/User');
+const { validateAll, sanitize } = use('Validator')
 
 class AuthController {
-  async register({ request, auth, response }) {
-    return response.notFound();
 
-    let { username, password } = request.all();
+  async check({ request, auth, response }) {
+    const { email, password } = request.all()
+
+    if (await User.findBy('email', email) === null)
+      return response.ok()
+    else
+      return response.unauthorized('The email address is already taken.')
+
+  }
+
+  async register({ request, auth, response }) {
+    let { username, email, password } = request.all();
     const userDetails = {
       username,
+      email,
       password,
       login_source: 'local',
     }
@@ -16,19 +29,17 @@ class AuthController {
 
       let user = await User.create(userDetails);
 
-      let token = await auth.withRefreshToken().attempt(username, password);
+      let token = await auth.withRefreshToken().attempt(email, password);
 
       return response.created(token);
     }
     else {
-      return response.unauthorized('User already exists');
+      return response.unauthorized('The username is already taken.');
     }
   }
 
   async login({ ally, auth, request, response, params }) {
-    return response.notFound();
-
-    const { username, password } = request.all();
+    const { email, password } = request.all();
     const provider = params.provider;
     if (provider !== null && provider !== 'local') { // Social login
       try {
@@ -47,12 +58,12 @@ class AuthController {
       }
     }
     else { // Local login
-      if(username === null || password === null) {
+      if (email === null || password === null) {
         return response.unauthorized('The fields can\'t be empty');
       }
       try {
-        if (await auth.attempt(username, password)) {
-          let user = await User.findBy('username', username);
+        if (await auth.attempt(email, password)) {
+          let user = await User.findBy('email', email);
           let token = await auth.withRefreshToken().generate(user);
 
           return response.created(token);
@@ -77,7 +88,7 @@ class AuthController {
       const userDetails = {
         username: socialUser.getNickname(),
         email: socialUser.getEmail(),
-        login_source: 'oauth',
+        login_source: params.provider,
       }
 
       const whereClause = {
@@ -102,11 +113,24 @@ class AuthController {
       return response.unauthorized('No refresh token');
     }
     try {
-      let token = await auth.generateForRefreshToken(refreshToken);
-      console.log(token);
+      let token = await auth.newRefreshToken().generateForRefreshToken(refreshToken);
       return response.created(token);
     } catch (e) {
       return response.unauthorized(e.message);
+    }
+  }
+
+  async logout({ auth, request, response }) {
+    let refreshToken = request.header('X-Refresh-Token');
+    if (refreshToken === 'undefined') {
+      return response.unauthorized('No refresh token');
+    }
+    try {
+      await auth.revokeTokens([refreshToken], true);
+      return response.ok()
+    }
+    catch (e) {
+      return response.badRequest(e.message)
     }
   }
 }

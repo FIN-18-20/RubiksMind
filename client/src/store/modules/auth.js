@@ -1,6 +1,7 @@
 const state = {
   jwtToken: '',
   refreshToken: '',
+  isLogged: false,
 }
 
 const mutations = {
@@ -9,10 +10,18 @@ const mutations = {
   },
   SET_REFRESH_TOKEN(state, token) {
     state.refreshToken = token
+  },
+  CHANGE_LOGGED_STATE(state, s) {
+    state.isLogged = s
   }
 }
 
 const actions = {
+  loadAuth({ dispatch }) {
+    dispatch('getJwtToken')
+    dispatch('getRefreshToken')
+    dispatch('getLoggedState')
+  },
   setJwtToken({ commit }, token) {
     localStorage.setItem('jwtToken', token)
     commit('SET_JWT_TOKEN', token)
@@ -48,11 +57,41 @@ const actions = {
       return ''
     }
   },
+  changeLoggedState({ commit }, state) {
+    localStorage.setItem('loggedState', state)
+    commit('CHANGE_LOGGED_STATE', state)
+  },
+  getLoggedState({ getters, dispatch }) {
+    if (getters.loggedState !== '' && getters.loggedState !== undefined) {
+      return getters.loggedState
+    }
+    else {
+      if (localStorage.getItem('loggedState')) {
+        let loggedState = localStorage.getItem('loggedState') == 'true'
+        dispatch('changeLoggedState', loggedState)
+        return loggedState
+      }
+      return false
+    }
+  },
+  logout({ dispatch }) {
+    dispatch('setJwtToken', '')
+    dispatch('setRefreshToken', '')
+    localStorage.removeItem('jwtToken')
+    localStorage.removeItem('refreshToken')
+    dispatch('changeLoggedState', false)
+  },
+  login({ dispatch }, { token, refreshToken }) {
+    dispatch('setJwtToken', token)
+    dispatch('setRefreshToken', refreshToken)
+    dispatch('changeLoggedState', true)
+  }
 }
 
 const getters = {
   getJwtToken: state => state.jwtToken,
   getRefreshToken: state => state.refreshToken,
+  isLogged: state => state.isLogged,
 }
 
 export default {
