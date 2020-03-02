@@ -1,5 +1,5 @@
 <template>
-  <div class="app min-h-screen text-white font-sans">
+  <div class="app min-h-screen text-white font-sans overflow-hidden">
     <SVGContainer />
     <div class="relative container mx-auto px-2 md:px-0">
       <nav
