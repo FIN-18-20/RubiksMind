@@ -1,8 +1,8 @@
 <template>
   <div class="app min-h-screen text-white font-sans">
     <SVGContainer />
-    <div class="container mx-auto px-2 md:px-0">
-      <nav class="flex justify-between items-center p-4 sm:px-0 sm:py-6">
+    <div class="relative container mx-auto px-2 md:px-0">
+      <nav class="absolute left-0 right-0 flex justify-between items-center p-4 sm:px-0 sm:py-6">
         <router-link :to="{ name: 'play' }">
           <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
@@ -30,7 +30,9 @@
           >Register</router-link>
         </div>
       </nav>
-      <router-view />
+      <div class="min-h-screen flex flex-col justify-center items-center">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
