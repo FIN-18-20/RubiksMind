@@ -1,5 +1,7 @@
 <template>
   <div class="relative w-full text-center pb-32 sm:pb-0">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="left cube" class="absolute leftCube w-64 z-20 hidden md:block">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube w-64 z-20 hidden md:block">
     <template v-if="windowWidth > breakpoints.md && status === 'Personal best'">
       <svg class="star-left-xl absolute w-20 h-20 text-orange-400">
         <use xlink:href="#star" />
@@ -15,45 +17,47 @@
         <use xlink:href="#star" />
       </svg>
     </template>
-    <div
-      :class="statusColor"
-      class="flex items-center justify-center h-10 text-sm font-semibold italic uppercase md:text-base"
-    >{{ status }}</div>
-    <div class="w-full min-h-10">
-      <Scramble class="group">
-        <ScrambleTooltip class="group-hover:inline-block" />
-      </Scramble>
+    <div class="relative z-30">
+      <div
+        :class="statusColor"
+        class="flex items-center justify-center h-10 text-sm font-semibold italic uppercase md:text-base"
+      >{{ status }}</div>
+      <div class="w-full min-h-10">
+        <Scramble class="group">
+          <ScrambleTooltip class="group-hover:inline-block" />
+        </Scramble>
+      </div>
+      <div
+        :class="statusColor"
+        class="flex items-start justify-center h-6 text-base font-semibold italic md:text-xl"
+      >{{ statusTime }}</div>
+      <Timer :time="resolutionTime" />
+      <template v-if="breakpoint !== 'mobile'">
+        <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" class="mt-6" />
+        <ExplanationMessage class="mt-4" />
+        <play-infos></play-infos>
+      </template>
+      <template v-else>
+        <play-infos></play-infos>
+        <nav class="fixed bottom-0 left-0 right-0 z-10 select-none">
+          <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
+            <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+              <svg class="w-8 h-8 text-blue-700">
+                <use xlink:href="#home" />
+              </svg>
+              <span class="text-blue-100 text-xxs uppercase">Home</span>
+            </router-link>
+            <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+              <svg class="w-8 h-8 text-blue-700">
+                <use xlink:href="#trophy" />
+              </svg>
+              <span class="text-blue-100 text-xxs uppercase">Scores</span>
+            </router-link>
+          </div>
+        </nav>
+        <PlayButtonMobile @startTimer="startTimer" @stopTimer="stopTimer" />
+      </template>
     </div>
-    <div
-      :class="statusColor"
-      class="flex items-start justify-center h-6 text-base font-semibold italic md:text-xl"
-    >{{ statusTime }}</div>
-    <Timer :time="resolutionTime" />
-    <template v-if="breakpoint !== 'mobile'">
-      <PlayButton @startTimer="startTimer" @stopTimer="stopTimer" class="mt-6" />
-      <ExplanationMessage class="mt-4" />
-      <play-infos></play-infos>
-    </template>
-    <template v-else>
-      <play-infos></play-infos>
-      <nav class="fixed bottom-0 left-0 right-0 z-10 select-none">
-        <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
-          <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
-            <svg class="w-8 h-8 text-blue-700">
-              <use xlink:href="#home" />
-            </svg>
-            <span class="text-blue-100 text-xxs uppercase">Home</span>
-          </router-link>
-          <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
-            <svg class="w-8 h-8 text-blue-700">
-              <use xlink:href="#trophy" />
-            </svg>
-            <span class="text-blue-100 text-xxs uppercase">Scores</span>
-          </router-link>
-        </div>
-      </nav>
-      <PlayButtonMobile @startTimer="startTimer" @stopTimer="stopTimer" />
-    </template>
   </div>
 </template>
 
@@ -209,7 +213,16 @@ export default {
 
 .star-left-xl,
 .star-right-xl {
-  top: 120px;
+  top: 120px;.rightCube{
+  top: 19%;
+  right: 11%;
+  transform: rotate(180deg);
+  }
+
+  .leftCube{
+    top: 53%;
+    left: 13%;
+  }
 }
 
 @screen md {
@@ -227,6 +240,17 @@ export default {
 
   .star-right {
     right: 20px;
+  }
+
+  .rightCube{
+  top: 19%;
+  right: -2%;
+  transform: rotate(180deg);
+  }
+
+  .leftCube{
+    top: 53%;
+    left: -0%;
   }
 }
 
@@ -246,6 +270,18 @@ export default {
   .star-right {
     right: 120px;
   }
+
+  .rightCube{
+  top: 19%;
+  right: 11%;
+  transform: rotate(180deg);
+  }
+
+  .leftCube{
+    top: 53%;
+    left: 13%;
+  }
+
 }
 
 @screen xl {
@@ -263,6 +299,17 @@ export default {
 
   .star-right {
     right: 230px;
+  }
+
+  .rightCube{
+  top: 19%;
+  right: 19%;
+  transform: rotate(180deg);
+  }
+
+  .leftCube{
+    top: 53%;
+    left: 20%;
   }
 }
 </style>
