@@ -165,7 +165,7 @@ export default {
       this.ticker.start()
       console.time('timer')
     },
-    stopTimer() {
+    async stopTimer() {
       this.ticker.stop()
       console.timeEnd('timer')
 
@@ -177,11 +177,11 @@ export default {
         return this.status = 'Did not count - Impossible time'
       }
 
-      this.addTimer({ date: Date.now(), time: this.resolutionTime })
+      await this.addTimer({ date: Date.now(), time: this.resolutionTime })
 
       // Check if PB
-      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
-      if (timesSorted[0].time === this.resolutionTime) {
+      const timesSorted = this.timers.length ? [...this.timers].sort((first, next) => first.time - next.time) : []
+      if (timesSorted.length === 0 || timesSorted[0].time === this.resolutionTime) {
         this.statusColor = 'text-orange-400'
         this.status = 'Personal best'
         this.statusTime = timesSorted.length > 1 ? '-' + this.displayTime(timesSorted[1].time - this.resolutionTime, true) : ''
