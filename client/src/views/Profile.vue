@@ -1,5 +1,5 @@
 <template>
-  <div v-if="fetched">
+  <div v-if="fetched" class="w-full">
     <div v-if="userFound">
       <div class="text-center text-blue-200 font-bold italic">
         <svg
