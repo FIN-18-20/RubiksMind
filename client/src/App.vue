@@ -22,14 +22,22 @@
               class="leaderboard relative pb-1 text-sm text-white border-b border-transparent hover:text-blue-200 sm:text-base"
             >Leaderboard</router-link>
           </template>
-          <router-link
-            :to="{ name: 'login' }"
-            class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md sm:ml-6 sm:w-24 sm:py-2"
-          >Login</router-link>
-          <router-link
-            :to="{ name: 'register' }"
-            class="ml-5 hidden w-24 py-2 bg-blue-900 border border-blue-300 rounded-md sm:inline-block"
-          >Register</router-link>
+          <div v-if="isLogged()">
+            <a
+              @click="methodLogout"
+              class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md sm:ml-6 sm:w-24 sm:py-2"
+            >Logout</a>
+          </div>
+          <div v-else>
+            <router-link
+              :to="{ name: 'login' }"
+              class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md sm:ml-6 sm:w-24 sm:py-2"
+            >Login</router-link>
+            <router-link
+              :to="{ name: 'register' }"
+              class="ml-5 hidden w-24 py-2 bg-blue-900 border border-blue-300 rounded-md sm:inline-block"
+            >Register</router-link>
+          </div>
         </div>
       </nav>
       <div class="app-content min-h-screen flex flex-col justify-center items-center">

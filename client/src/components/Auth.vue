@@ -120,7 +120,6 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    ...mapActions(['changeLocalMode']),
     async postAction() {
       if (this.authProvider === 'local') {
         if (this.passwordIsValid) {

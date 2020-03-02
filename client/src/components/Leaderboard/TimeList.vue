@@ -94,7 +94,7 @@ export default {
   ],
   data() {
     return {
-      hasData: true,
+      hasData: false,
       times: [],
       seelf: 'fieze',
     }
@@ -133,6 +133,7 @@ export default {
       this.$axios.get('/players/leaderboard')
         .then(res => {
           this.times = res.data
+          this.hasData = true
         })
         .catch(err => {
           console.log(err)

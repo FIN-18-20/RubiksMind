@@ -36,7 +36,7 @@ export default {
 
               error.config.headers['Authorization'] = 'Bearer ' + refreshResponse.data.token
               error.config.headers['X-Refresh-Token'] = refreshResponse.data.refreshToken
-              //return await axios.request(error.config)
+              return await axios.request(error.config)
             })
             .catch(async error => {
               console.log('No refresh token : ' + error)

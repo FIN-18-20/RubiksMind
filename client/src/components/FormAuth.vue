@@ -327,7 +327,6 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    ...mapActions(['changeLocalMode']),
     sortErrorMessage(messages) {
       this.errorMessage = {
         username: '',

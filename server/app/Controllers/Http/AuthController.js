@@ -106,7 +106,6 @@ class AuthController {
   }
 
   async refresh({ auth, request, response }) {
-    return response.notFound();
     
     let refreshToken = request.header('X-Refresh-Token');
     if (refreshToken === 'undefined') {
