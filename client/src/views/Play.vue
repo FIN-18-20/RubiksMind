@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-center">
+  <div class="relative w-full text-center pb-32 sm:pb-0">
     <template v-if="windowWidth > breakpoints.md && status === 'Personal best'">
       <svg class="star-left-xl absolute w-20 h-20 text-orange-400">
         <use xlink:href="#star" />
