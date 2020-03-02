@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full text-center pb-32 sm:pb-0">
-    <img src="@/assets/img/leaderboard-cube.svg" alt="left cube" class="absolute leftCube w-64 z-20 hidden md:block">
-    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube w-64 z-20 hidden md:block">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="left cube" class="absolute leftCube w-64 z-20 select-none hidden md:block">
+    <img src="@/assets/img/leaderboard-cube.svg" alt="rightcube" class="absolute rightCube w-64 z-20 select-none hidden md:block">
     <template v-if="windowWidth > breakpoints.md && status === 'Personal best'">
       <svg class="star-left-xl absolute w-20 h-20 text-orange-400">
         <use xlink:href="#star" />

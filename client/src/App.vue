@@ -25,7 +25,7 @@
           <div v-if="isLogged()">
             <a
               @click="methodLogout"
-              class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md sm:ml-6 sm:w-24 sm:py-2"
+              class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md cursor-pointer sm:ml-6 sm:w-24 sm:py-2"
             >Logout</a>
           </div>
           <div v-else>
