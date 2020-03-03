@@ -22,11 +22,44 @@
               class="leaderboard relative pb-1 text-sm text-white border-b border-transparent hover:text-blue-200 sm:text-base"
             >Leaderboard</router-link>
           </template>
-          <div v-if="isLogged()">
-            <a
-              @click="methodLogout"
-              class="ml-4 inline-block w-20 py-1 border border-blue-300 rounded-md cursor-pointer sm:ml-6 sm:w-24 sm:py-2"
-            >Logout</a>
+          <div v-if="isLogged()" class="relative">
+            <div>
+              <button
+                @click="profileOpen = !profileOpen"
+                class="ml-4 inline-flex items-center justify-center w-24 py-2 border border-blue-300 rounded-md cursor-pointer sm:ml-6"
+              >
+                <span>{{ user.name }}</span>
+                <flag
+                  :iso="user.country.toLowerCase()"
+                  style="height:20px;width:20px;"
+                  class="ml-2 rounded-full border border-blue-300"
+                />
+              </button>
+            </div>
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <div
+                v-show="profileOpen"
+                class="origin-top-right absolute z-40 right-0 mt-2 w-48 rounded-md shadow-lg border border-blue-700"
+              >
+                <div class="box-styles py-1 rounded-md bg-white shadow-xs">
+                  <router-link
+                    :to="{ name: 'profile', params: {'username': user.name.toLowerCase()} }"
+                    class="block px-4 py-2 text-sm text-blue-200 hover:bg-blue-900 hover:text-blue-100"
+                  >Your Profile</router-link>
+                  <a
+                    @click="methodLogout"
+                    class="block px-4 py-2 text-sm text-blue-200 cursor-pointer hover:bg-blue-900 hover:text-blue-100"
+                  >Sign out</a>
+                </div>
+              </div>
+            </transition>
           </div>
           <div v-else>
             <router-link
@@ -56,8 +89,15 @@ export default {
     SVGContainer,
   },
 
+  data() {
+    return {
+      profileOpen: false,
+    }
+  },
+
   computed: {
     ...mapState({
+      user: state => state.auth.currentUser,
       windowWidth: state => state.windowWidth,
     }),
   },

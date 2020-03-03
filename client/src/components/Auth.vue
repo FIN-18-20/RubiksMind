@@ -131,8 +131,8 @@ export default {
             })
             .then(async response => {
               if (response.status === 201) {
-                const { refreshToken, token } = response.data
-                await this.login({ token, refreshToken })
+                const { refreshToken, token, user } = response.data
+                await this.login({ token, refreshToken, user })
                 this.$router.push('/')
               }
             })

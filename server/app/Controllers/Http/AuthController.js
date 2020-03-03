@@ -31,6 +31,10 @@ class AuthController {
       let user = await User.create(userDetails);
 
       let token = await auth.withRefreshToken().attempt(email, password);
+      token.user = {
+        name: user.username,
+        country: user.country_code,
+      }
 
       return response.created(token);
     }
@@ -66,6 +70,10 @@ class AuthController {
         if (await auth.attempt(email, password)) {
           let user = await User.findBy('email', email);
           let token = await auth.withRefreshToken().generate(user);
+          token.user = {
+            name: user.username,
+            country: user.country_code,
+          }
 
           return response.created(token);
         }

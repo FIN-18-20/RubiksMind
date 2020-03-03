@@ -1,10 +1,14 @@
 const state = {
+  currentUser: null,
   jwtToken: '',
   refreshToken: '',
   isLogged: false,
 }
 
 const mutations = {
+  SET_CURRENT_USER(state, user) {
+    state.currentUser = user
+  },
   SET_JWT_TOKEN(state, token) {
     state.jwtToken = token
   },
@@ -21,6 +25,7 @@ const actions = {
     dispatch('getJwtToken')
     dispatch('getRefreshToken')
     dispatch('getLoggedState')
+    dispatch('getCurrentUser')
   },
   setJwtToken({ commit }, token) {
     localStorage.setItem('jwtToken', token)
@@ -29,6 +34,11 @@ const actions = {
   setRefreshToken({ commit }, token) {
     localStorage.setItem('refreshToken', token)
     commit('SET_REFRESH_TOKEN', token)
+  },
+  getCurrentUser({ commit }) {
+    let user = localStorage.getItem('currentUser')
+    user = user === 'undefined' ? null : JSON.parse(user)
+    commit('SET_CURRENT_USER', user)
   },
   getJwtToken({ getters, commit }) {
     if (getters.getJwtToken !== '' && getters.jwtToken !== undefined) {
@@ -75,16 +85,23 @@ const actions = {
     }
   },
   logout({ dispatch }) {
+    dispatch('setCurrentUser', null)
     dispatch('setJwtToken', '')
     dispatch('setRefreshToken', '')
     localStorage.removeItem('jwtToken')
     localStorage.removeItem('refreshToken')
     dispatch('changeLoggedState', false)
+    dispatch('timer/getTimers', {}, { root: true })
   },
-  login({ dispatch }, { token, refreshToken }) {
+  login({ dispatch }, { token, refreshToken, user }) {
+    dispatch('setCurrentUser', user)
     dispatch('setJwtToken', token)
     dispatch('setRefreshToken', refreshToken)
     dispatch('changeLoggedState', true)
+  },
+  setCurrentUser({ commit }, user) {
+    commit('SET_CURRENT_USER', user)
+    localStorage.setItem('currentUser', JSON.stringify(user))
   }
 }
 
