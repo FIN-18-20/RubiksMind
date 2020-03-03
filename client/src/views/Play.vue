@@ -47,7 +47,7 @@
               </svg>
               <span class="text-blue-100 text-xxs uppercase">Home</span>
             </router-link>
-            <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
+            <router-link :to="{ name: 'leaderboard' }" class="flex flex-col items-center justify-between">
               <svg class="w-8 h-8 text-blue-700">
                 <use xlink:href="#trophy" />
               </svg>

@@ -1,5 +1,6 @@
 <template>
   <div class="app min-h-screen text-white font-sans overflow-hidden">
+    <div v-if="profileOpen" @click="profileOpen = false" class="fixed inset-0 z-40"></div>
     <SVGContainer />
     <div class="relative container mx-auto px-2 md:px-0">
       <nav
@@ -26,7 +27,7 @@
             <div>
               <button
                 @click="profileOpen = !profileOpen"
-                class="ml-4 inline-flex items-center justify-center w-24 py-2 border border-blue-300 rounded-md cursor-pointer sm:ml-6"
+                class="relative z-40 ml-4 inline-flex items-center justify-center w-24 py-2 border border-blue-300 rounded-md cursor-pointer sm:ml-6"
               >
                 <span>{{ user.name }}</span>
                 <flag
@@ -46,6 +47,7 @@
             >
               <div
                 v-show="profileOpen"
+                @click="profileOpen = false"
                 class="origin-top-right absolute z-40 right-0 mt-2 w-48 rounded-md shadow-lg border border-blue-700"
               >
                 <div class="box-styles py-1 rounded-md bg-white shadow-xs">
