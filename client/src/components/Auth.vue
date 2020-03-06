@@ -86,7 +86,7 @@
               <span class="block w-full rounded-md shadow-sm">
                 <button
                   type="submit"
-                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out"
+                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-gradient focus:outline-none transition duration-150 ease-in-out"
                 >{{ action === 'register' ? 'Register' : 'Login' }}</button>
               </span>
             </div>
@@ -251,7 +251,7 @@
               <span class="block w-full rounded-md shadow-sm">
                 <button
                   type="submit"
-                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-bg focus:outline-none transition duration-150 ease-in-out"
+                  class="w-full flex justify-center py-3 px-4 text-base text-blue-100 rounded-md button-gradient focus:outline-none transition duration-150 ease-in-out"
                 >Create account</button>
               </span>
             </div>
@@ -478,13 +478,5 @@ export default {
   background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   scrollbar-width: none;
-}
-
-.button-bg {
-  background: linear-gradient(105.11deg, #7bbae0 -6.07%, #1a6fbf 93.36%);
-}
-
-.button-bg:hover {
-  background: linear-gradient(105.11deg, #64a0c5 -6.07%, #105697 93.36%);
 }
 </style>

@@ -22,3 +22,11 @@ input:-webkit-autofill {
   -webkit-animation-name: autofill;
   -webkit-animation-fill-mode: both;
 }
+
+.button-gradient {
+  background: linear-gradient(105.11deg, #7bbae0 -6.07%, #1a6fbf 93.36%);
+}
+
+.button-gradient:hover {
+  background: linear-gradient(105.11deg, #64a0c5 -6.07%, #105697 93.36%);
+}
