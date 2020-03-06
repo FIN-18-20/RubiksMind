@@ -8,3 +8,17 @@ button:focus {
   background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
+/* Fix Chrome white input color when selecting autocomplete value */
+@-webkit-keyframes autofill {
+  0%,100% {
+      color: #90cdf4;
+      background: #1f3451;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-delay: 1s;
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
