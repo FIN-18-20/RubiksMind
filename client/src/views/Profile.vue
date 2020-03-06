@@ -105,8 +105,8 @@
           </div>
         </div>
       </div>
-      <div v-else>
-        <div>The user has no time saved.</div>
+      <div v-else class="text-center">
+        <div class="mt-12">The user has no time saved.</div>
       </div>
     </div>
     <div v-else class="mt-4">

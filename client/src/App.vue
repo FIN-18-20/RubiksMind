@@ -4,7 +4,7 @@
     <SVGContainer />
     <div class="relative container mx-auto px-2 md:px-0">
       <nav
-        class="absolute left-0 right-0 flex justify-between items-center pt-4 px-2 sm:px-0 sm:pt-6"
+        class="absolute left-0 right-0 flex justify-between items-center pt-4 px-2 sm:pt-6"
       >
         <router-link :to="{ name: 'play' }">
           <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
@@ -27,9 +27,9 @@
             <div>
               <button
                 @click="profileOpen = !profileOpen"
-                class="relative z-40 ml-4 inline-flex items-center justify-center w-24 py-2 border border-blue-300 rounded-md cursor-pointer sm:ml-6"
+                class="relative z-40 ml-4 inline-flex items-center justify-center px-2 py-2 border border-blue-300 rounded-md cursor-pointer sm:px-4 sm:ml-6"
               >
-                <span>{{ user.name }}</span>
+                <span class="text-sm sm:text-base">{{ user.name }}</span>
                 <flag
                   :iso="user.country.toLowerCase()"
                   style="height:20px;width:20px;"
