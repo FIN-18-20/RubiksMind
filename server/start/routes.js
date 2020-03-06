@@ -18,7 +18,7 @@ const Route = use('Route')
 const User = use('App/Models/User')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return 'Welcome to the API of Rubiksmind!'
 })
 
 Route.post('/login/:provider?', 'AuthController.login').middleware(['guest'])
