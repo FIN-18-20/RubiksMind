@@ -3,9 +3,7 @@
     <div v-if="profileOpen" @click="profileOpen = false" class="fixed inset-0 z-40"></div>
     <SVGContainer />
     <div class="relative container mx-auto px-2 md:px-0">
-      <nav
-        class="absolute left-0 right-0 flex justify-between items-center pt-4 px-2 sm:pt-6"
-      >
+      <nav class="absolute left-0 right-0 flex justify-between items-center pt-4 px-2 sm:pt-6">
         <router-link :to="{ name: 'play' }">
           <img class="w-28 sm:w-48" src="@/assets/img/logo.svg" alt="logo" />
         </router-link>
@@ -30,7 +28,15 @@
                 class="relative z-40 ml-4 inline-flex items-center justify-center px-2 py-2 border border-blue-300 rounded-md cursor-pointer sm:px-4 sm:ml-6"
               >
                 <span class="text-sm sm:text-base">{{ user.name }}</span>
+                <svg
+                  v-if="user.country === 'WR'"
+                  style="height:20px;width:20px;"
+                  class="ml-2 rounded-full border border-blue-300"
+                >
+                  <use xlink:href="#world" />
+                </svg>
                 <flag
+                  v-else
                   :iso="user.country.toLowerCase()"
                   style="height:20px;width:20px;"
                   class="ml-2 rounded-full border border-blue-300"

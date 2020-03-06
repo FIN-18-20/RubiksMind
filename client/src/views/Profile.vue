@@ -4,7 +4,7 @@
       <div class="text-center text-blue-200 font-bold italic">
         <svg
           v-if="profile.user.country_code === 'WR'"
-          class="fill-current w-6 h-6 rounded-full border border-blue-300"
+          class="block mx-auto w-6 h-6 rounded-full border border-blue-300"
         >
           <use xlink:href="#world" />
         </svg>
