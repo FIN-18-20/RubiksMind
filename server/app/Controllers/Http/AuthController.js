@@ -1,6 +1,4 @@
 'use strict';
-const LoginUser = use('App/Validators/LoginUser')
-//import LoginUser from '../../Validators/LoginUser.js';
 const User = use('App/Models/User');
 const { validateAll, sanitize } = use('Validator')
 
@@ -17,7 +15,7 @@ class AuthController {
   }
 
   async register({ request, auth, response }) {
-    let { username, email, password,country_code } = request.all();
+    let { username, email, password, country_code } = request.all();
     const userDetails = {
       username,
       email,
@@ -63,27 +61,41 @@ class AuthController {
       }
     }
     else { // Local login
-      if (email === null || password === null) {
-        return response.unauthorized('The fields can\'t be empty');
+      const rules = {
+        email: 'required|email',
+        password: 'required'
       }
-      try {
-        if (await auth.attempt(email, password)) {
-          let user = await User.findBy('email', email);
-          let token = await auth.withRefreshToken().generate(user);
-          token.user = {
-            name: user.username,
-            country: user.country_code,
+
+      const messages = {
+        'email.required': 'You must provide an email address.',
+        'email.email': 'You must provide a valid email address.',
+        'password.required': 'You must provide a password.'
+      }
+
+      const validation = await validateAll(request.all(), rules, messages)
+
+      if (validation.fails()) {
+        return response.badRequest(validation.messages())
+      } else {
+        try {
+          if (await auth.attempt(email, password)) {
+            let user = await User.findBy('email', email);
+            let token = await auth.withRefreshToken().generate(user);
+            token.user = {
+              name: user.username,
+              country: user.country_code,
+            }
+
+            return response.created(token);
+          }
+          else {
+            return response.unauthorized('Bad credentials');
           }
 
-          return response.created(token);
         }
-        else {
-          return response.unauthorized('Bad credentials');
+        catch (e) {
+          return response.unauthorized(e.message);
         }
-
-      }
-      catch (e) {
-        return response.unauthorized(e.message);
       }
     }
   }
@@ -115,7 +127,7 @@ class AuthController {
   }
 
   async refresh({ auth, request, response }) {
-    
+
     let refreshToken = request.header('X-Refresh-Token');
     if (refreshToken === 'undefined') {
       return response.unauthorized('No refresh token');

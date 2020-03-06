@@ -10,19 +10,16 @@
           <h3 class="text-blue-100 text-base font-medium italic text-right leading-none">& beat your pb's!</h3>
         </div>
       </div>
-      <FormAuth action="register" />
-    <!-- <Auth action="register" /> -->
+      <Auth action="register" />
     </div>
   </div>
 </template>
 
 <script>
-import FormAuth from '@/components/FormAuth'
-// import Auth from '../components/Auth'
+import Auth from '@/components/Auth'
 export default {
   components: {
-    // Auth,
-    FormAuth
+    Auth
   }
 }
 </script>
