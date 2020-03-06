@@ -108,7 +108,7 @@ const actions = {
 const getters = {
   getJwtToken: state => state.jwtToken,
   getRefreshToken: state => state.refreshToken,
-  isLogged: state => state.isLogged,
+  isLogged: state => state.isLogged && state.currentUser !== null,
 }
 
 export default {
