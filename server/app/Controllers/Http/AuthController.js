@@ -61,6 +61,7 @@ class AuthController {
     const { email, password } = request.all();
     const provider = params.provider;
     if (provider !== null && provider !== 'local') { // Social login
+      return response.notFound();
       try {
         let url;
         if (provider === 'github') {

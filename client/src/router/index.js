@@ -29,17 +29,12 @@ const routes = [
     name: 'leaderboard',
     component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue')
   },
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import(/* webpackChunkName: "test" */ '../views/Test.vue')
-  },
-  {
-    path: '/oauth-connection-successfull/:provider?',
-    name: 'oauth-connection-successfull',
-    component: () => import(/* webpackChunkName: "oauth-connection-successfull" */ '../views/OAuthConnectionSuccessfull.vue'),
-    props: true
-  },
+  // {
+  //   path: '/oauth-connection-successfull/:provider?',
+  //   name: 'oauth-connection-successfull',
+  //   component: () => import(/* webpackChunkName: "oauth-connection-successfull" */ '../views/OAuthConnectionSuccessfull.vue'),
+  //   props: true
+  // },
   {
     path: '/profile/:username',
     name: 'profile',

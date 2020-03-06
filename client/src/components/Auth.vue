@@ -116,7 +116,7 @@
                     </svg>
                     <span
                       class="text-xs ml-2 leading-5 font-medium"
-                    >{{ windowWidth > 360 ? 'Login with Google' : 'Login Google' }}</span>
+                    >{{ windowWidth > 360 ? 'Coming Soon' : 'Coming Soon' }}</span>
                   </button>
                 </span>
               </div>
@@ -135,7 +135,7 @@
                     </svg>
                     <span
                       class="text-xs ml-2 leading-5 font-medium"
-                    >{{ windowWidth > 360 ? 'Login with Github' : 'Login Github' }}</span>
+                    >{{ windowWidth > 360 ? 'Coming Soon' : 'Coming Soon' }}</span>
                   </button>
                 </span>
               </div>
@@ -153,7 +153,7 @@
                     </svg>
                     <span
                       class="text-xs ml-2 leading-5 font-medium"
-                    >{{ windowWidth > 360 ? 'Login with Twitter' : 'Login Twitter' }}</span>
+                    >{{ windowWidth > 360 ? 'Coming Soon' : 'Coming Soon' }}</span>
                   </button>
                 </span>
               </div>
@@ -171,7 +171,7 @@
                     </svg>
                     <span
                       class="text-xs ml-2 leading-5 font-medium"
-                    >{{ windowWidth > 360 ? 'Login with Discord' : 'Login Discord' }}</span>
+                    >{{ windowWidth > 360 ? 'Coming Soon' : 'Coming Soon' }}</span>
                   </button>
                 </span>
               </div>
