@@ -46,7 +46,7 @@
               leave-to-class="transform opacity-0 scale-95"
             >
               <div
-                v-show="profileOpen"
+                v-if="profileOpen"
                 @click="profileOpen = false"
                 class="origin-top-right absolute z-40 right-0 mt-2 w-48 rounded-md shadow-lg border border-blue-700"
               >

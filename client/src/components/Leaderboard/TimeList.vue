@@ -14,13 +14,12 @@
               :class="[
                 (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
                 index === 0 ? 'rounded-t-md' : '',
-                time.username == user.name ? '' : '',
                 index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
                 'gradient-' + (index + 1),
               ]"
             >
               <div
-                v-if="time.username == user.name"
+                v-if="isLoggedUser(time.username)"
                 class="gradient-self absolute w-full h-full flex items-center"
               >
                 <svg class="w-3 h-3 text-white ml-1 self-center">
@@ -29,7 +28,7 @@
               </div>
               <div class="flex items-center justify-center">
                 <span
-                  :class="[time.username === user.name ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']"
+                  :class="[isLoggedUser(time.username) ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']"
                 >{{ index + 1 }}</span>
                 <svg
                   v-if="time.country_code === 'WR'"
@@ -47,12 +46,12 @@
                   :to="{ name: 'profile', params: { username: time.username }}"
                   :class="[
                     time.username.length < 14 ? 'text-xs sm:text-sm' : 'text-xs', 'ml-2 w-12 truncate hover:text-blue-200 sm:w-24',
-                    time.username === user.name ? 'font-bold' : ''
+                    isLoggedUser(time.username) ? 'font-bold' : ''
                   ]"
                 >{{ time.username }}</router-link>
               </div>
               <div
-                :class="[time.username === user.name ? 'text-blue-100' : 'text-blue-300' ,'pl-6 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
+                :class="[isLoggedUser(time.username) ? 'text-blue-100' : 'text-blue-300' ,'pl-6 text-xs sm:text-base italic font-medium flex items-center text-center absoluteElement']"
               >
                 <svg
                   :class="getTimeColor(index + 1)"
@@ -63,7 +62,7 @@
                 {{ displayTime(time.time, true) }}
               </div>
               <div
-                :class="[time.username === user.name ? 'text-blue-100' : 'text-blue-300']"
+                :class="[isLoggedUser(time.username) ? 'text-blue-100' : 'text-blue-300']"
                 class="mr-2 text-xs sm:text-sm italic text-center font-medium flex items-center sm:mr-4"
               >
                 <svg class="hidden fill-current w-3 h-3 text-blue-600 mx-auto mr-2 sm:block">
@@ -148,6 +147,10 @@ export default {
           console.log(err)
           this.hasData = false
         })
+    },
+    isLoggedUser(name) {
+      if (!this.user) return
+      return this.user.name === name
     }
   }
 }
