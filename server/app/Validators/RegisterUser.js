@@ -7,9 +7,10 @@ class RegisterUser {
 
   get rules() {
     return {
-      username: 'required|regex:^[A-Za-z0-9]+([ _-][A-Za-z0-9]+)*$|min:4|max:24',
+      username: 'required|regex:^[A-Za-z0-9]+([ _-][A-Za-z0-9]+)*$|min:4|max:24|unique:users,username',
       email: 'required|email',
-      password: 'required'
+      password: 'required',
+      country_code: 'required|validCountryCode'
     }
   }
 
@@ -27,9 +28,12 @@ class RegisterUser {
       'username.regex': 'The username is not valid.',
       'username.min': 'Minimum length is 4 characters.',
       'username.max': 'Maximum length is 20 characters.',
+      'username.unique': 'The username is already taken',
       'email.required': 'You must provide an email address.',
       'email.email': 'You must provide a valid email address.',
-      'password.required': 'You must provide a password.'
+      'password.required': 'You must provide a password.',
+      'country_code.required': 'You must provide a location.',
+      'country_code.validCountryCode': 'The country code is not valid.'
     }
   }
 }

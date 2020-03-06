@@ -5,13 +5,29 @@ const { validateAll, sanitize } = use('Validator')
 class AuthController {
 
   async check({ request, auth, response }) {
-    const { email, password } = request.all()
+    const rules = {
+      email: 'required|email',
+      password: 'required'
+    }
 
-    if (await User.findBy('email', email) === null)
-      return response.ok()
-    else
-      return response.unauthorized('The email address is already taken.')
+    const messages = {
+      'email.required': 'You must provide an email address.',
+      'email.email': 'You must provide a valid email address.',
+      'password.required': 'You must provide a password.'
+    }
 
+    const validation = await validateAll(request.all(), rules, messages)
+
+    if (validation.fails()) {
+      return response.badRequest(validation.messages())
+    } else {
+      const { email, password } = request.all()
+
+      if (await User.findBy('email', email) === null)
+        return response.ok()
+      else
+        return response.unauthorized('The email address is already taken.')
+    }
   }
 
   async register({ request, auth, response }) {

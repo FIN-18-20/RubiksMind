@@ -23,30 +23,10 @@ Route.get('/', () => {
 
 Route.post('/login/:provider?', 'AuthController.login').middleware(['guest'])
 Route.post('/register', 'AuthController.register').middleware(['guest']).validator('RegisterUser')
-Route.post('/register/check', 'AuthController.check').middleware(['guest']).validator('RegisterUser')
+Route.post('/register/check', 'AuthController.check').middleware(['guest'])
 Route.get('/logout', 'AuthController.logout').middleware(['auth'])
 Route.get('/oauth-connection-successfull/:provider', 'AuthController.callback')
 Route.get('/refresh', 'AuthController.refresh')
-
-Route.get('/test', async () => {
-
-  const example = new User()
-  example.username = 'Laurent'
-  example.password = '1234'
-
-  await example.save()
-
-  return await User.all()
-}).middleware(['auth'])
-
-Route.get('/test-auth', async () => {
-
-  const example = new User()
-  example.username = 'Laurent'
-  example.password = '1234'
-
-  return example;
-}).middleware(['auth'])
 
 Route.get('/scramble', 'CubeController.scramble')
 

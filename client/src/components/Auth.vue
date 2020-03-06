@@ -234,8 +234,8 @@
                 <select
                   v-model="country"
                   id="country"
-                  class="bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border border-blue-1000 rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   required
+                  :class="[ errorMessage.country !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
                 >
                   <option value="WR">World</option>
                   <option
@@ -339,8 +339,11 @@ export default {
         confirmPassword: '',
       }
       messages.map(message => {
+        if (message.field === 'country_code')
+          this.errorMessage['country'] = message.message
+
         this.errorMessage[message.field] = message.message
-        console.log(this.errorMessage[message.field])
+        //console.log(this.errorMessage[message.field])
       })
     },
     registerAction() {
@@ -348,7 +351,7 @@ export default {
         username: this.username,
         email: this.email.toLowerCase(),
         password: this.password,
-        country_code: this.country
+        country_code: this.country.toUpperCase()
       })
         .then(async response => {
           if (response.status === 201) {
@@ -431,10 +434,8 @@ export default {
           this.errorMessage.confirmPassword = ''
           if (this.action === 'register') {
             this.$axios.post('/register/check', {
-              username: 'temporaryName',
-              email: this.email,
-              password: this.password,
-              country_code: 'WR'
+              email: this.email.toLowerCase(),
+              password: this.password
             })
               .then(res => {
                 console.log(res)
