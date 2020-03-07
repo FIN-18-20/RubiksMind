@@ -20,19 +20,40 @@
               class="relative flex items-center justify-between"
               :class="[(timers.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === timers.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
+              <div v-if="removeMessage && time.id === idToDelete"
+                   class=" bg-blue-900 delete-gradient w-full h-full flex justify-center items-center absolute z-20"
+              >
+                <div @click="removeTimer(time.id), removeMessage = false, idToDelete = null"
+                     class="flex justify-center items-center cursor-pointer transform hover:scale-105"
+                >
+                  <span class="text-xs font-medium">Delete</span>
+                  <svg class="w-3 h-3 ml-1 text-white">
+                    <use xlink:href="#trash" />
+                  </svg>
+                </div>
+                <div @click="removeMessage = false, idToDelete = null"
+                     class="ml-8 flex justify-center items-center cursor-pointer transform hover:scale-105"
+                >
+                  <span class="text-xs font-medium">Undo</span>
+                  <svg class="w-3 h-3 ml-1 text-white">
+                    <use xlink:href="#cross-delete" />
+                  </svg>
+                </div>
+              </div>
               <div class="flex items-center justify-center">
-                <span
-                  class="w-6 ml-1 text-xs font-medium text-right text-blue-200"
+                <span v-show="time.id !== idToDelete"
+                      class="w-6 ml-1 text-xs font-medium text-right text-blue-200"
                 >{{ timers.length - index }}.</span>
-                <svg v-if="time === bestTime" width="13" height="12" class="ml-3">
+                <svg v-if="time === bestTime && time.id !== idToDelete" width="13" height="12" class="ml-3 fill-current text-orange-400">
                   <use xlink:href="#trophy" />
                 </svg>
               </div>
-              <span
-                class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
+              <span v-show="time.id !== idToDelete"
+                    class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
               >{{ displayTime(time.time, true) }}</span>
               <div
-                @click="removeTimer(time.id)"
+                v-show="time.id !== idToDelete"
+                @click="confirmRemove(time.id)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
                 <svg class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300">
@@ -43,7 +64,7 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <svg width="58" height="71">
+          <svg width="58" height="71" class="fill-current text-blue-800">
             <use xlink:href="#timer" />
           </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
@@ -57,6 +78,10 @@
   background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   scrollbar-width: none;
+}
+
+.delete-gradient {
+  background: linear-gradient(90deg, rgba(221,0,0,0.44861694677871145) 0%, rgba(255,0,0,0) 60%);
 }
 
 ::-webkit-scrollbar {
@@ -98,6 +123,12 @@ export default {
   mixins: [
     formatTimer,
   ],
+  data() {
+    return {
+      idToDelete: null,
+      removeMessage: false
+    }
+  },
   computed: {
     ...mapState('timer', ['timers']),
     bestTime() {
@@ -106,7 +137,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('timer', ['removeTimer'])
+    ...mapActions('timer', ['removeTimer']),
+    confirmRemove(id) {
+      this.idToDelete = id
+      this.removeMessage = true
+    },
   },
 }
 </script>

@@ -9,7 +9,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    localMode: true,
     windowWidth: null,
     breakpoint: null,
     breakpoints: {
@@ -21,9 +20,6 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    CHANGE_LOCAL_MODE(state, mode) {
-      state.localMode = mode
-    },
     UPDATE_WINDOW_WIDTH(state, width) {
       state.windowWidth = width
       const breakpoints = Object.values(state.breakpoints)
@@ -34,6 +30,8 @@ export default new Vuex.Store({
       const breakpointValue = breakpoints[indexBreakpoint]
       state.breakpoint = Object.keys(state.breakpoints).find(breakpoint => state.breakpoints[breakpoint] === breakpointValue)
     },
+  },
+  getters: {
   },
   actions: {
     updateWindowWidth({ commit }, width) {

@@ -25,9 +25,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import(/* webpackChunkName: "test" */ '../views/Test.vue')
+    path: '/leaderboard',
+    name: 'leaderboard',
+    component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue')
+  },
+  // {
+  //   path: '/oauth-connection-successfull/:provider?',
+  //   name: 'oauth-connection-successfull',
+  //   component: () => import(/* webpackChunkName: "oauth-connection-successfull" */ '../views/OAuthConnectionSuccessfull.vue'),
+  //   props: true
+  // },
+  {
+    path: '/profile/:username',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
   }
 ]
 

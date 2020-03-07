@@ -14,6 +14,7 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
+      silver: '#C0C0C0',
 
       gray: {
         100: '#f7fafc',
@@ -149,6 +150,9 @@ module.exports = {
       '48': '12rem',
       '56': '14rem',
       '64': '16rem',
+      '76': '18rem',
+      '96': '24rem',
+      '114': '28rem',
       '128': '32rem',
     },
     backgroundColor: theme => theme('colors'),
@@ -272,6 +276,7 @@ module.exports = {
     height: theme => ({
       auto: 'auto',
       ...theme('spacing'),
+      '1/3': '33.333333%',
       full: '100%',
       screen: '100vh',
     }),
