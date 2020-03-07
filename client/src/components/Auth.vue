@@ -220,34 +220,48 @@
             </div>
 
             <div class="mt-2">
-              <div class="flex justify-between">
+              <div class="mb-1 flex justify-between">
                 <label
                   for="country"
                   class="ml-1 block text-xs font-medium leading-5 text-blue-600"
                 >Country</label>
                 <span
                   v-if="errorMessage.country !== '' "
-                  class="mr-1 block text-xs italic leading-5 text-red-400"
+                  class=" mr-1 block text-xs italic leading-5 text-red-400"
                 >{{ errorMessage.country }}</span>
               </div>
-              <div class="mt-1 rounded-md shadow-sm">
-                <select
-                  v-model="country"
-                  id="country"
-                  required
-                  :class="[ errorMessage.country !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
+              <div class="flex items-center justify-between w-full">
+                <div class="rounded-md shadow-sm mr-1 w-5/6">
+                  <select
+                    v-model="country"
+                    id="country"
+                    required
+                    :class="[ errorMessage.country !== '' ? 'border-red-400' : 'border-blue-1000','bg-blue-1000 text-blue-300 appearance-none block w-full px-3 py-2 border  rounded-md placeholder-blue-500 focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5']"
+                  >
+                    <option value="WR" selected>World</option>
+                    <option
+                      v-for="(c, index) in sortedCountryList"
+                      :key="index"
+                      :value="c.code"
+                    >{{ c.name }}</option>
+                  </select>
+                </div>
+                <svg v-if="country === 'WR' || country === ''"
+                     style="height:35px;width:35px;"
+                     class="w-10 h-10 rounded-full border border-blue-300"
                 >
-                  <option value="WR">World</option>
-                  <option
-                    v-for="(c, index) in sortedCountryList"
-                    :key="index"
-                    :value="c.code"
-                  >{{ c.name }}</option>
-                </select>
+                  <use xlink:href="#world" />
+                </svg>
+                <flag
+                  v-else
+                  :iso="country"
+                  style="height:35px;width:35px;"
+                  class="block rounded-full w-10 h-10 border border-blue-300 hidden sm:block"
+                />
               </div>
             </div>
 
-            <div class="mt-5 pb-2">
+            <div class="mt-5 mb-3 pb-2">
               <span class="block w-full rounded-md shadow-sm">
                 <button
                   type="submit"
