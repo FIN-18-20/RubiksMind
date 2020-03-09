@@ -39,7 +39,7 @@ class AuthController {
       country_code,
       login_source: 'local',
     }
-    console.log(userDetails)
+
     if (await User.findBy('username', username) === null) {
 
       let user = await User.create(userDetails);
