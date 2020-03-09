@@ -9,8 +9,6 @@ hooks.after.providersRegistered(() => {
 
     if (!code || code === 'WR') return
 
-    console.log(message)
-
     if (countryList.getCodes().find(countryCode => countryCode === code) === undefined) {
       throw message
     } else {

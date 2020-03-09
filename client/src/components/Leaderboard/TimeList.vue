@@ -15,7 +15,7 @@
                 (times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , 
                 index === 0 ? 'rounded-t-md' : '',
                 index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-12',
-                'gradient-' + (index + 1),
+                (times.length - index) % 2 ? 'dark-gradient-' + (index + 1) : 'light-gradient-' + (index + 1)
               ]"
             >
               <div
@@ -201,7 +201,7 @@ export default {
   );
 }
 
-.gradient-1 {
+.light-gradient-1 {
   background: linear-gradient(
       266.65deg,
       rgba(247, 148, 30, 0.55) -21.85%,
@@ -210,7 +210,7 @@ export default {
     #2a4365;
 }
 
-.gradient-2 {
+.dark-gradient-2 {
   background: linear-gradient(
       260.78deg,
       rgba(255, 255, 255, 0.5) -36.55%,
@@ -219,7 +219,7 @@ export default {
     #1f3451;
 }
 
-.gradient-3 {
+.light-gradient-3 {
   background: linear-gradient(
       256.78deg,
       rgba(192, 86, 33, 0.45) -28.09%,
@@ -227,4 +227,32 @@ export default {
     ),
     #2a4365;
 }
+.dark-gradient-1 {
+  background: linear-gradient(
+      266.65deg,
+      rgba(247, 148, 30, 0.55) -21.85%,
+      rgba(42, 67, 101, 0) 20.41%
+    ),
+    #1f3451;
+}
+
+.light-gradient-2 {
+  background: linear-gradient(
+      260.78deg,
+      rgba(255, 255, 255, 0.5) -36.55%,
+      rgba(42, 67, 101, 0) 20.73%
+    ),
+    #2a4365;
+}
+
+.dark-gradient-3 {
+  background: linear-gradient(
+      256.78deg,
+      rgba(192, 86, 33, 0.45) -28.09%,
+      rgba(42, 67, 101, 0) 20.28%
+    ),
+    #1f3451;
+}
+
+
 </style>
