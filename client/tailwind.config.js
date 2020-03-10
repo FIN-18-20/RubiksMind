@@ -14,6 +14,7 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
+      silver: '#C0C0C0',
 
       gray: {
         100: '#f7fafc',
@@ -143,11 +144,16 @@ module.exports = {
       '16': '4rem',
       '20': '5rem',
       '24': '6rem',
+      '28': '7rem',
       '32': '8rem',
       '40': '10rem',
       '48': '12rem',
       '56': '14rem',
       '64': '16rem',
+      '76': '18rem',
+      '96': '24rem',
+      '114': '28rem',
+      '128': '32rem',
     },
     backgroundColor: theme => theme('colors'),
     backgroundPosition: {
@@ -270,6 +276,7 @@ module.exports = {
     height: theme => ({
       auto: 'auto',
       ...theme('spacing'),
+      '1/3': '33.333333%',
       full: '100%',
       screen: '100vh',
     }),
@@ -324,6 +331,7 @@ module.exports = {
     }),
     minHeight: {
       '0': '0',
+      '10': '2.5rem',
       full: '100%',
       screen: '100vh',
     },
@@ -571,7 +579,7 @@ module.exports = {
     borderWidth: ['responsive'],
     boxShadow: ['responsive', 'hover', 'focus'],
     boxSizing: ['responsive'],
-    cursor: ['responsive'],
+    cursor: ['responsive', 'disabled'],
     display: ['responsive', 'group-hover'],
     fill: ['responsive'],
     flex: ['responsive'],
@@ -600,7 +608,7 @@ module.exports = {
     minWidth: ['responsive'],
     objectFit: ['responsive'],
     objectPosition: ['responsive'],
-    opacity: ['responsive', 'hover', 'focus'],
+    opacity: ['responsive', 'hover', 'focus', 'disabled'],
     order: ['responsive'],
     outline: ['responsive', 'focus'],
     overflow: ['responsive'],

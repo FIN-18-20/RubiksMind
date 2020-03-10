@@ -1,41 +1,33 @@
 <template>
   <button
+    @mousedown="startWaiting"
     :class="btnClasses"
     :style="btnStyle"
-    class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed"
+    class="play mx-auto w-full max-w-md flex items-center justify-center py-3 rounded-md text-blue-100 font-bold italic uppercase leading-relaxed select-none"
   >
     <div class="icon-left transition-transform ease-in-out duration-200">
-      <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
+      <svg class="w-4 h-4 text-blue-100">
+        <use xlink:href="#rubiks-icon" />
+      </svg>
     </div>
     <div class="mx-5">{{ state === 'started' ? 'Stop Timer' : 'Get Started' }}</div>
     <div class="icon-right transition-transform ease-in-out duration-200">
-      <img class="w-4" src="@/assets/img/rubiks-icon.svg" alt="rubiks icon" />
+      <svg class="w-4 h-4 text-blue-100">
+        <use xlink:href="#rubiks-icon" />
+      </svg>
     </div>
   </button>
 </template>
 
 <script>
+import { playButton } from '@/mixins/playButton'
+
 export default {
-  data() {
-    return {
-      state: 'none',
-      timeDown: 0,
-      timer: null,
-    }
-  },
+  mixins: [
+    playButton,
+  ],
 
   computed: {
-    btnClasses() {
-      switch (this.state) {
-        case 'pressed':
-        case 'ready':
-          return 'pressed'
-        case 'started':
-          return 'started'
-        default:
-          return ''
-      }
-    },
     btnStyle() {
       switch (this.state) {
         case 'pressed':
@@ -56,42 +48,6 @@ export default {
           }
       }
     }
-  },
-
-  mounted() {
-    window.addEventListener('keydown', (e) => {
-      if (e.keyCode !== 32 || this.state === 'pressed' || this.state === 'ready') {
-        return
-      }
-      // Stop timer
-      if (this.state === 'started') {
-        this.state = 'none'
-        this.$emit('stopTimer')
-        return
-      }
-      this.state = 'pressed'
-      this.timeDown += 100
-      this.timer = setInterval(() => {
-        this.timeDown += 100
-        if (this.timeDown >= 1000) {
-          this.state = 'ready'
-        }
-      }, 100)
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
-        return
-      }
-      // Start timer
-      if (this.timeDown >= 1000) {
-        this.state = 'started'
-        this.$emit('startTimer')
-      } else {
-        this.state = 'none'
-      }
-      this.timeDown = 0
-      clearInterval(this.timer)
-    })
   },
 }
 </script>
@@ -115,8 +71,8 @@ export default {
   transform: translateX(75px) !important;
 }
 
-.pressed .icon-left img,
-.pressed .icon-right img {
+.pressed .icon-left svg,
+.pressed .icon-right svg {
   animation: 1s linear 0s infinite normal none running rotate;
 }
 

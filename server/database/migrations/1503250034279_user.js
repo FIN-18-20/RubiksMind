@@ -7,11 +7,15 @@ class UserSchema extends Schema {
   up() {
     this.create('users', (table) => {
       table.increments()
-      table.string('username', 80).notNullable()
-      table.string('email', 254).unique()
-      table.string('password', 60).notNullable()
+      table.string('username', 80).notNullable().unique()
+      table.string('email', 254).notNullable()
+      table.string('password', 60)
+      table.string('login_source', 25).notNullable()
+      table.string('country_code', 2).notNullable().defaultTo('WR')
       table.timestamps()
+      table.unique('id')
     })
+    .raw('ALTER TABLE `users` DROP PRIMARY KEY, ADD PRIMARY KEY(`email`,`login_source`);')
   }
 
   down() {

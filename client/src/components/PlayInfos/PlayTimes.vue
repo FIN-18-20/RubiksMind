@@ -12,34 +12,51 @@
       style="width:220px;height:280px;"
     >
       <div class="overflow-y-scroll box-styles rounded-md" style="width:200px;height:260px;">
-        <div v-if="hasData">
-          <transition-group name="times" tag="div">
+        <div v-if="timers.length > 0">
+          <transition-group name="timers" tag="div">
             <div
-              v-for="(time, index) in times.slice().reverse()"
-              :key="time.try"
+              v-for="(time, index) in timers.slice().reverse()"
+              :key="index"
               class="relative flex items-center justify-between"
-              :class="[(times.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === times.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
+              :class="[(timers.length - index) % 2 ? 'bg-blue-1000' : 'bg-blue-900' , index === 0 ? 'rounded-t-md' : '', index === timers.length - 1 ? 'rounded-b-md' : '' , 'w-full h-8']"
             >
-              <div class="flex">
-                <span class="w-6 ml-1 text-xs font-medium text-right text-blue-200">{{ time.try }}.</span>
-                <img
-                  v-if="time.personalBest"
-                  src="@/assets/img/trophy.svg"
-                  class="ml-3"
-                  alt="trophy"
-                />
+              <div v-if="removeMessage && time.id === idToDelete"
+                   class=" bg-blue-900 delete-gradient w-full h-full flex justify-center items-center absolute z-20"
+              >
+                <div @click="removeTimer(time.id), removeMessage = false, idToDelete = null"
+                     class="flex justify-center items-center cursor-pointer transform hover:scale-105"
+                >
+                  <span class="text-xs font-medium">Delete</span>
+                  <svg class="w-3 h-3 ml-1 text-white">
+                    <use xlink:href="#trash" />
+                  </svg>
+                </div>
+                <div @click="removeMessage = false, idToDelete = null"
+                     class="ml-8 flex justify-center items-center cursor-pointer transform hover:scale-105"
+                >
+                  <span class="text-xs font-medium">Undo</span>
+                  <svg class="w-3 h-3 ml-1 text-white">
+                    <use xlink:href="#cross-delete" />
+                  </svg>
+                </div>
               </div>
-              <span
-                @click="addTime"
-                class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
-              >{{ time.time }}</span>
+              <div class="flex items-center justify-center">
+                <span v-show="time.id !== idToDelete"
+                      class="w-6 ml-1 text-xs font-medium text-right text-blue-200"
+                >{{ timers.length - index }}.</span>
+                <svg v-if="time === bestTime && time.id !== idToDelete" width="13" height="12" class="ml-3 fill-current text-orange-400">
+                  <use xlink:href="#trophy" />
+                </svg>
+              </div>
+              <span v-show="time.id !== idToDelete"
+                    class="text-sm italic font-medium text-center text-blue-300 absoluteElement"
+              >{{ displayTime(time.time, true) }}</span>
               <div
-                @click="removeTime(times.length - 1 - index)"
+                v-show="time.id !== idToDelete"
+                @click="confirmRemove(time.id)"
                 class="flex items-center justify-center w-6 h-6 mr-2 cursor-pointer"
               >
-                <svg
-                  class="w-auto h-3 cursor-pointer text-blue-400 hover:text-blue-300"
-                >
+                <svg class="w-auto h-3 text-blue-400 cursor-pointer hover:text-blue-300">
                   <use xlink:href="#cross-delete" />
                 </svg>
               </div>
@@ -47,7 +64,9 @@
           </transition-group>
         </div>
         <div v-else class="flex flex-col items-center justify-center w-1/5 w-full h-full">
-          <img src="@/assets/img/timer.svg" alt="timer" />
+          <svg width="58" height="71" class="fill-current text-blue-800">
+            <use xlink:href="#timer" />
+          </svg>
           <p class="mx-auto mt-4 text-sm italic text-blue-700">No times to display</p>
         </div>
       </div>
@@ -59,6 +78,10 @@
   background: linear-gradient(181.21deg, #2a4365 0.81%, #1f3451 89.6%);
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   scrollbar-width: none;
+}
+
+.delete-gradient {
+  background: linear-gradient(90deg, rgba(221,0,0,0.44861694677871145) 0%, rgba(255,0,0,0) 60%);
 }
 
 ::-webkit-scrollbar {
@@ -93,30 +116,32 @@
 </style>
 
 <script>
+import { formatTimer } from '@/mixins/formatTimer'
+import { mapState, mapActions } from 'vuex'
+
 export default {
+  mixins: [
+    formatTimer,
+  ],
   data() {
     return {
-      hasData: true,
-      times: [
-        { try: 1, time: '00:58.24', personalBest: false },
-        { try: 2, time: '00:58.24', personalBest: false },
-        { try: 3, time: '00:58.24', personalBest: false },
-        { try: 4, time: '00:58.24', personalBest: false },
-        { try: 8, time: '00:03.47', personalBest: true },
-        { try: 9, time: '00:58.24', personalBest: false },
-        { try: 10, time: '59:59.10', personalBest: false },
-        { try: 30, time: '00:58.24', personalBest: false },
-        { try: 101, time: '01:17.24', personalBest: false },
-      ]
+      idToDelete: null,
+      removeMessage: false
+    }
+  },
+  computed: {
+    ...mapState('timer', ['timers']),
+    bestTime() {
+      const timesSorted = [...this.timers].sort((first, next) => first.time - next.time)
+      return timesSorted[0]
     }
   },
   methods: {
-    addTime() {
-      this.times.push({ try: this.times.length + 20, time: '00:00.00', personalBest: false })
+    ...mapActions('timer', ['removeTimer']),
+    confirmRemove(id) {
+      this.idToDelete = id
+      this.removeMessage = true
     },
-    removeTime(index) {
-      this.times.splice(index, 1)
-    }
-  }
+  },
 }
 </script>

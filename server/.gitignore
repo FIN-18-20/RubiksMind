@@ -5,7 +5,12 @@ node_modules
 tmp
 
 # Environment variables are in the docker-compose file but Adonis still need an .env file to startup. We can commit it and keep it blank.
-#.env
+.env
+
+Dockerfile.prod
 
 # The development sqlite file
 database/*.sqlite
+
+# CSV files containing the scrambles
+*.csv
