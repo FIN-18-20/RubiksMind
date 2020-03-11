@@ -147,15 +147,23 @@ export default {
     }
   },
 
-  async created() {
-    this.fetched = false
-    const res = await this.$axios.get(`/profile/${this.$route.params.username}`)
-    this.profile = res.status === 200 ? res.data : {}
-    console.log(res.data)
-    this.fetched = true
+  watch: {
+    $route() {
+      this.apiCall()
+    }
+  },
+
+  created() {
+    this.apiCall()
   },
 
   methods: {
+    async apiCall() {
+      this.fetched = false
+      const res = await this.$axios.get(`/profile/${this.$route.params.username}`).catch(() => { })
+      this.profile = res.status === 200 ? res.data : {}
+      this.fetched = true
+    },
     getTimeColor(time) {
       switch (time) {
         case this.bestTime:
