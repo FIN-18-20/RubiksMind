@@ -17,11 +17,11 @@
         <div class="flex items-center justify-center">
           <hr class="w-12 sm:w-32" />
           <div class="mx-4 flex items-center">
-            <span class="text-lg sm:text-xl">P</span>
-            <p class="text-base uppercase sm:text-lg">
-              rofile of
-              <span class="text-lg sm:text-xl">{{ profile.user.username }}</span>
-            </p>
+            <div class="whitespace-no-wrap">
+              <span class="text-lg sm:text-xl">P</span>
+              <span class="text-base uppercase sm:text-lg">rofile of</span>
+            </div>
+            <span class="ml-1 text-lg uppercase sm:text-xl">{{ profile.user.username }}</span>
           </div>
           <hr class="w-12 sm:w-32" />
         </div>

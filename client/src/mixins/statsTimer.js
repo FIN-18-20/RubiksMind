@@ -4,10 +4,10 @@ export const statsTimer = {
       return this.displayTime(this.timesSorted[0].time, true)
     },
     worstTime() {
-      return this.displayTime(this.timesSorted[0].time, true)
+      return this.displayTime(this.timesSorted.reverse()[0].time, true)
     },
     lastTime() {
-      return this.displayTime(this.timers[this.timers.length - 1].time, true)
+      return this.displayTime(this.timers[0].time, true)
     },
     averageTime() {
       const average = this.timers.reduce((accumulator, time) => accumulator + time.time, 0) / this.timers.length

@@ -1,21 +1,21 @@
 {
-  "name": "Rubiksmind",
-  "short_name": "Rubiksmind",
-  "icons": [
-    {
-      "src": "./img/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./img/icons/android-chrome-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    }
-  ],
-  "orientation": "portrait",
-  "theme_color": "#1f3451",
-  "background_color": "#1f3451",
-  "start_url": "./index.html",
-  "display": "standalone"
+    "name": "Rubiksmind",
+    "short_name": "Rubiksmind",
+    "icons": [
+        {
+            "src": "./img/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": ".img/icons/android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "orientation": "portrait",
+    "theme_color": "#1f3451",
+    "background_color": "#1f3451",
+    "start_url": "https://rubiksmind.com",
+    "display": "standalone"
 }
