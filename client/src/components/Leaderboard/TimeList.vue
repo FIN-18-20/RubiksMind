@@ -26,7 +26,7 @@
                   <use xlink:href="#rubiks-icon" />
                 </svg>
               </div>
-              <div class="flex items-center justify-center">
+              <div class="relative flex items-center justify-center">
                 <span
                   :class="[isLoggedUser(time.username) ? 'text-blue-100' : 'text-blue-600', 'inline-block w-4 ml-4 mr-2 text-xs sm:text-sm font-medium text-right leading-none']"
                 >{{ index + 1 }}</span>
@@ -253,6 +253,4 @@ export default {
     ),
     #1f3451;
 }
-
-
 </style>
