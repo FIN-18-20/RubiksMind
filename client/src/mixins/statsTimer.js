@@ -4,7 +4,7 @@ export const statsTimer = {
       return this.displayTime(this.timesSorted[0].time, true)
     },
     worstTime() {
-      return this.displayTime(this.timesSorted.reverse()[0].time, true)
+      return this.displayTime(this.timesSorted[this.timesSorted.length - 1].time, true)
     },
     lastTime() {
       return this.displayTime(this.timers[0].time, true)
