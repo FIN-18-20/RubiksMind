@@ -3,3 +3,8 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "https://rubiksmind.netlify.com/*"
+  to = "https://rubiksmind.com/:splat"
+  status = 301
