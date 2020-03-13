@@ -15,8 +15,6 @@
         @click="stopTimer"
         class="mt-1 fixed z-50 inset-0 flex flex-col items-center justify-center"
       >
-        <Timer class="-mt-32" :time="resolutionTime" />
-
         <div class="rounded-lg transform transition-all sm:max-w-sm sm:w-full">
           <div class="mt-24">
             <span class="flex w-full rounded-md shadow-sm">
@@ -37,20 +35,9 @@
 </template>
 
 <script>
-import Timer from '@/components/Play/Timer.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: {
-    Timer,
-  },
-
-  props: {
-    resolutionTime: {
-      type: Number,
-      required: true
-    }
-  },
 
   computed: {
     timerStarted() {
