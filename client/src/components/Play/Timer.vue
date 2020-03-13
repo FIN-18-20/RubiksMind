@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-baseline justify-center text-6xl text-center text-blue-100 italic font-extrabold leading-none select-none sm:text-10xl"
+    class="relative z-50 flex items-baseline justify-center text-6xl text-center text-blue-100 italic font-extrabold leading-none select-none sm:text-10xl"
   >
     <div class="w-12 sm:w-20">{{ timeObject.min[0] }}</div>
     <div class="w-12 sm:w-20">{{ timeObject.min[1] }}</div>
