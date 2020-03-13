@@ -21,6 +21,10 @@ module.exports = {
 
     if (origin.includes('https://rubiksmind.com')) return true
 
+    if (origin.includes('https://rubiksmind.netlify.com')) return true
+
+    if (origin.includes('https://staging--rubiksmind.netlify.com')) return true
+
     return false
   },
 
