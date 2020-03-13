@@ -1,5 +1,9 @@
 <template>
   <div class="relative w-full text-center pb-32 sm:pb-0">
+    <template v-if="windowWidth < breakpoints.md ">
+      <EndTimerModal @stopTimer="stopTimer" :timer-started="resolutionTime !== 0" />
+    </template>
+
     <div v-if="lostFocus" class="fixed z-40 inset-0" style="background-color: rgba(0, 0, 0, 0.7);"></div>
     <transition
       enter-active-class="transition ease-out duration-100"
@@ -127,6 +131,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { formatTimer } from '@/mixins/formatTimer'
+import EndTimerModal from '@/components/Play/EndTimerModal.vue'
 import PlayButton from '@/components/Play/PlayButton.vue'
 import PlayButtonMobile from '@/components/Play/PlayButtonMobile.vue'
 import ScrambleTooltip from '@/components/Play/ScrambleTooltip.vue'
@@ -137,6 +142,7 @@ import ExplanationMessage from '@/components/Play/ExplanationMessage.vue'
 
 export default {
   components: {
+    EndTimerModal,
     ExplanationMessage,
     PlayButton,
     PlayButtonMobile,
