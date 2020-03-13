@@ -8,3 +8,4 @@
   from = "https://rubiksmind.netlify.com/*"
   to = "https://rubiksmind.com/:splat"
   status = 301
+  force = true
