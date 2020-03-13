@@ -7,7 +7,7 @@ export const playButton = {
       timer: null,
     }
   },
-  
+
   computed: {
     btnClasses() {
       switch (this.state) {
@@ -26,31 +26,39 @@ export const playButton = {
   },
 
   mounted() {
-    window.addEventListener('mouseup', () => {
-      if (this.state === 'started') {
+    window.addEventListener('mouseup', this.mouseUp)
+    window.addEventListener('keydown', this.keyDown)
+    window.addEventListener('keyup', this.keyUp)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('mouseup', this.mouseUp)
+    window.removeEventListener('keydown', this.keyDown)
+    window.removeEventListener('keyup', this.keyUp)
+  },
+
+  methods: {
+    keyUp(e) {
+      if (e.keyCode !== 32) {
         return
       }
       this.stopWaiting()
-    })
-    window.addEventListener('keydown', (e) => {
+    },
+    keyDown(e) {
       if (e.keyCode !== 32) {
         return
       }
       // Prevent space from scrolling the page
       e.preventDefault()
       this.startWaiting()
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
+    },
+    mouseUp() {
+      if (this.state === 'started') {
         return
       }
       this.stopWaiting()
-    })
-  },
-
-  methods: {
+    },
     startWaiting() {
-      console.log('startWaiting', this.state)
       if (this.state === 'pressed' || this.state === 'ready') {
         return
       }
@@ -70,7 +78,6 @@ export const playButton = {
       }, 100)
     },
     stopWaiting() {
-      console.log('--> stop waiting')
       // Start timer
       if (this.state === 'ready') {
         this.updateState('started')

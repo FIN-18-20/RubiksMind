@@ -63,7 +63,6 @@ export default {
 
   methods: {
     stopTimer() {
-      console.log('STOP TIMER MODAL')
       this.updateState('none')
       this.$emit('stopTimer')
     },
