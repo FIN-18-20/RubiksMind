@@ -61,11 +61,11 @@
               </div>
               <div class="mt-2">
                 <p class="text-xs text-left text-blue-100">Avg 5</p>
-                <p class="text-sm italic font-medium text-left text-blue-300">{{ average5Time }}</p>
+                <p class="text-sm italic font-medium text-left text-blue-300">{{ averageXTime(5) }}</p>
               </div>
               <div class="mt-2">
                 <p class="text-xs text-left text-blue-100">Avg 12</p>
-                <p class="text-sm italic font-medium text-left text-blue-300">{{ average12Time }}</p>
+                <p class="text-sm italic font-medium text-left text-blue-300">{{ averageXTime(12) }}</p>
               </div>
               <div class="mt-2">
                 <p class="text-xs text-left text-blue-100">Rank</p>
