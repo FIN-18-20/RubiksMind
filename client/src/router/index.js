@@ -12,7 +12,11 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    meta: {
+      guest: true,
+      hasConnection: true
+    }
   },
   {
     path: '/',
@@ -22,12 +26,19 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    meta: {
+      guest: true,
+      hasConnection: true
+    }
   },
   {
     path: '/leaderboard',
     name: 'leaderboard',
-    component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue')
+    component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue'),
+    meta: {
+      hasConnection: true
+    }
   },
   // {
   //   path: '/oauth-connection-successfull/:provider?',
@@ -38,7 +49,14 @@ const routes = [
   {
     path: '/profile/:username',
     name: 'profile',
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    meta: {
+      hasConnection: true
+    }
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
@@ -46,6 +64,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.guest)) {
+    if (localStorage.getItem('jwtToken') === null && localStorage.getItem('refreshToken') === null) {
+      next()
+    } else {
+      next('/')
+    }
+    // TODO check connection to redirect
+  } else {
+    next()
+  }
 })
 
 export default router
