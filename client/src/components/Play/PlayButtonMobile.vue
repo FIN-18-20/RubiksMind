@@ -18,11 +18,19 @@
 
 <script>
 import { playButton } from '@/mixins/playButton'
+import NoSleep from '@/lib/NoSleep.js'
 
 export default {
   mixins: [
     playButton,
   ],
+
+  data() {
+    return {
+      noSleep: null,
+      noSleepActive: false,
+    }
+  },
 
   computed: {
     btnStyle() {
@@ -47,11 +55,17 @@ export default {
     }
   },
 
+  created() {
+    this.noSleep = new NoSleep()
+  },
+
   mounted() {
     this.$refs['play-btn'].addEventListener('touchstart', () => {
       this.startWaiting()
     })
     this.$refs['play-btn'].addEventListener('touchend', () => {
+      this.noSleepActive = !this.noSleepActive
+      this.noSleepActive ? this.noSleep.enable() : this.noSleep.disable()
       this.stopWaiting()
     })
   }
