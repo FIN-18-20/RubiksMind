@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-container fixed z-20 bottom-0 mb-6">
+  <div class="mb-6 btn-container fixed z-20 bottom-0">
     <button
       ref="play-btn"
       @mousedown="startWaiting"
@@ -60,15 +60,22 @@ export default {
   },
 
   mounted() {
-    this.$refs['play-btn'].addEventListener('touchstart', () => {
-      this.startWaiting()
-    })
-    this.$refs['play-btn'].addEventListener('touchend', () => {
+    this.$refs['play-btn'].addEventListener('touchstart', this.startWaiting)
+    this.$refs['play-btn'].addEventListener('touchend', this.touchEnd)
+  },
+
+  beforeDestroy() {
+    this.$refs['play-btn'].removeEventListener('touchstart', this.startWaiting)
+    this.$refs['play-btn'].removeEventListener('touchend', this.touchEnd)
+  },
+
+  methods: {
+    touchEnd() {
       console.log('touchend')
       this.noSleepActive = !this.noSleepActive
       this.noSleepActive ? this.noSleep.enable() : this.noSleep.disable()
       this.stopWaiting()
-    })
+    }
   }
 }
 </script>
@@ -81,6 +88,7 @@ export default {
 
 .play {
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+  -webkit-tap-highlight-color: transparent;
   border-radius: 15px;
   width: 90px;
   height: 90px;

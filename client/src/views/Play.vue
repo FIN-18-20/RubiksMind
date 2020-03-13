@@ -1,5 +1,8 @@
 <template>
-  <div class="relative w-full text-center pb-32 sm:pb-0">
+  <div
+    :class="{'select-none': windowWidth <= breakpoints.sm}"
+    class="relative w-full text-center pb-32 sm:pb-0"
+  >
     <img
       src="@/assets/img/leaderboard-cube.svg"
       alt="Left Cube decoration"
