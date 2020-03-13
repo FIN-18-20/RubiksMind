@@ -64,6 +64,7 @@ export default {
       this.startWaiting()
     })
     this.$refs['play-btn'].addEventListener('touchend', () => {
+      console.log('touchend')
       this.noSleepActive = !this.noSleepActive
       this.noSleepActive ? this.noSleep.enable() : this.noSleep.disable()
       this.stopWaiting()

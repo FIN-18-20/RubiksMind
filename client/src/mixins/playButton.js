@@ -1,11 +1,13 @@
+import { mapActions, mapState } from 'vuex'
+
 export const playButton = {
   data() {
     return {
-      state: 'none',
       timeDown: 0,
       timer: null,
     }
   },
+
   computed: {
     btnClasses() {
       switch (this.state) {
@@ -18,61 +20,74 @@ export const playButton = {
           return ''
       }
     },
+    ...mapState({
+      state: state => state.timer.state,
+    }),
   },
 
   mounted() {
-    window.addEventListener('mouseup', () => {
-      if (this.state === 'started') {
+    window.addEventListener('mouseup', this.mouseUp)
+    window.addEventListener('keydown', this.keyDown)
+    window.addEventListener('keyup', this.keyUp)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('mouseup', this.mouseUp)
+    window.removeEventListener('keydown', this.keyDown)
+    window.removeEventListener('keyup', this.keyUp)
+  },
+
+  methods: {
+    keyUp(e) {
+      if (e.keyCode !== 32) {
         return
       }
       this.stopWaiting()
-    })
-    window.addEventListener('keydown', (e) => {
+    },
+    keyDown(e) {
       if (e.keyCode !== 32) {
         return
       }
       // Prevent space from scrolling the page
       e.preventDefault()
       this.startWaiting()
-    })
-    window.addEventListener('keyup', (e) => {
-      if (e.keyCode !== 32) {
+    },
+    mouseUp() {
+      if (this.state === 'started') {
         return
       }
       this.stopWaiting()
-    })
-  },
-
-  methods: {
+    },
     startWaiting() {
       if (this.state === 'pressed' || this.state === 'ready') {
         return
       }
       // Stop timer if started
       if (this.state === 'started') {
-        this.state = 'none'
+        this.updateState('none')
         this.$emit('stopTimer')
         return
       }
-      this.state = 'pressed'
+      this.updateState('pressed')
       this.timeDown = 100
       this.timer = setInterval(() => {
         this.timeDown += 100
         if (this.timeDown >= 1000) {
-          this.state = 'ready'
+          this.updateState('ready')
         }
       }, 100)
     },
     stopWaiting() {
       // Start timer
       if (this.state === 'ready') {
-        this.state = 'started'
+        this.updateState('started')
         this.$emit('startTimer')
       } else {
-        this.state = 'none'
+        this.updateState('none')
       }
       this.timeDown = 0
       clearInterval(this.timer)
     },
+    ...mapActions('timer', ['updateState']),
   },
 }

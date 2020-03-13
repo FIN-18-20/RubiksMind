@@ -30,3 +30,7 @@ input:-webkit-autofill {
 .button-gradient:hover {
   background: linear-gradient(105.11deg, #64a0c5 -6.07%, #105697 93.36%);
 }
+
+.button-gradient-red {
+  background: linear-gradient(90deg, #96275C 0%, #480048 100%);
+}
