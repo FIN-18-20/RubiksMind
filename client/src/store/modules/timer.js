@@ -1,6 +1,7 @@
 import { axios } from '@/plugins/axios'
 
 const state = {
+  state: 'none',
   timers: [],
 }
 
@@ -13,6 +14,9 @@ const mutations = {
   },
   REMOVE_TIMER(state, timerId) {
     state.timers = state.timers.filter(timer => timer.id !== timerId)
+  },
+  UPDATE_STATE(state, newState) {
+    state.state = newState
   }
 }
 
@@ -54,6 +58,9 @@ const actions = {
     console.log('API CALL REMOVE TIMER')
     await axios(({ url: `/times/delete/${timerId}`, method: 'DELETE' })).catch((err) => { console.log(err) })
   },
+  updateState({commit}, newState) {
+    commit('UPDATE_STATE', newState)
+  }
 }
 
 const getters = {

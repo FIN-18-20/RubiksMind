@@ -1,11 +1,13 @@
+import { mapActions, mapState } from 'vuex'
+
 export const playButton = {
   data() {
     return {
-      state: 'none',
       timeDown: 0,
       timer: null,
     }
   },
+  
   computed: {
     btnClasses() {
       switch (this.state) {
@@ -18,6 +20,9 @@ export const playButton = {
           return ''
       }
     },
+    ...mapState({
+      state: state => state.timer.state,
+    }),
   },
 
   mounted() {
@@ -45,34 +50,37 @@ export const playButton = {
 
   methods: {
     startWaiting() {
+      console.log('startWaiting', this.state)
       if (this.state === 'pressed' || this.state === 'ready') {
         return
       }
       // Stop timer if started
       if (this.state === 'started') {
-        this.state = 'none'
+        this.updateState('none')
         this.$emit('stopTimer')
         return
       }
-      this.state = 'pressed'
+      this.updateState('pressed')
       this.timeDown = 100
       this.timer = setInterval(() => {
         this.timeDown += 100
         if (this.timeDown >= 1000) {
-          this.state = 'ready'
+          this.updateState('ready')
         }
       }, 100)
     },
     stopWaiting() {
+      console.log('--> stop waiting')
       // Start timer
       if (this.state === 'ready') {
-        this.state = 'started'
+        this.updateState('started')
         this.$emit('startTimer')
       } else {
-        this.state = 'none'
+        this.updateState('none')
       }
       this.timeDown = 0
       clearInterval(this.timer)
     },
+    ...mapActions('timer', ['updateState']),
   },
 }
