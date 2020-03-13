@@ -13,19 +13,18 @@
       <div
         v-if="timerStarted"
         @click="stopTimer"
-        class="mt-1 fixed z-50 inset-0 flex flex-col items-center justify-center"
+        class="mt-1 fixed z-50 inset-0 flex flex-col items-center justify-center select-none"
       >
         <div class="rounded-lg transform transition-all sm:max-w-sm sm:w-full">
           <div class="mt-24">
             <span class="flex w-full rounded-md shadow-sm">
-              <button
-                type="button"
-                class="button-gradient-red mx-auto inline-flex justify-center rounded-md px-12 py-8 bg-red-600 text-lg leading-tight font-bold text-blue-100 uppercase italic shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+              <div
+                class="button-gradient-red mx-auto inline-flex justify-center rounded-md px-12 py-8 bg-red-600 text-lg leading-tight font-bold text-blue-100 uppercase italic shadow-sm select-none focus:outline-none sm:text-sm sm:leading-5"
               >
                 Tap anywhere
                 <br />to
                 <br />stop timer
-              </button>
+              </div>
             </span>
           </div>
         </div>
@@ -48,8 +47,18 @@ export default {
     }),
   },
 
+  mounted() {
+    window.addEventListener('touchstart', this.stopTimer)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('touchstart', this.stopTimer)
+  },
+
   methods: {
     stopTimer() {
+      if (!this.timerStarted) return
+
       this.updateState('none')
       this.$emit('stopTimer')
     },
