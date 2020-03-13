@@ -26,7 +26,7 @@
                 <div @click="removeTimer(time.id), removeMessage = false, idToDelete = null"
                      class="flex justify-center items-center cursor-pointer transform hover:scale-105"
                 >
-                  <span class="text-xs font-medium">Delete</span>
+                  <span class="text-xs font-medium select-none">Delete</span>
                   <svg class="w-3 h-3 ml-1 text-white">
                     <use xlink:href="#trash" />
                   </svg>
@@ -34,7 +34,7 @@
                 <div @click="removeMessage = false, idToDelete = null"
                      class="ml-8 flex justify-center items-center cursor-pointer transform hover:scale-105"
                 >
-                  <span class="text-xs font-medium">Undo</span>
+                  <span class="text-xs font-medium select-none">Undo</span>
                   <svg class="w-3 h-3 ml-1 text-white">
                     <use xlink:href="#cross-delete" />
                   </svg>
