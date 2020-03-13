@@ -3,7 +3,7 @@
     <div class="flex items-center mt-2">
       <hr style="width:59px;" class="border-blue-200" />
       <h4 class="mx-2 text-base italic font-semibold text-blue-200">
-        <span class="text-xl">G</span>RAPH
+        <span class="text-xl">C</span>HART
       </h4>
       <hr style="width:59px;" class="border-blue-200" />
     </div>
