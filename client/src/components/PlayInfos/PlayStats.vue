@@ -49,14 +49,14 @@
               <p
                 class="mb-1 text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ average5Time }}</p>
+              >{{ averageXTime(5) }}</p>
             </div>
             <div class="avg12">
               <p class="text-xs text-left text-blue-100">Avg 12</p>
               <p
                 class="text-sm italic font-medium leading-none text-left text-blue-300"
                 style="margin-top:-0.15rem;"
-              >{{ average12Time }}</p>
+              >{{ averageXTime(12) }}</p>
             </div>
           </div>
         </div>
