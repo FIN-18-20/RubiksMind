@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center py-4 text-xl">
-    <div v-if="!isLogged()" class="flex items-center">
+    <div class="flex items-center">
       <svg class="w-4 h-4 text-blue-400">
         <use xlink:href="#bolt" />
       </svg>
@@ -9,18 +9,9 @@
         <use xlink:href="#bolt" />
       </svg>
     </div>
-    <div v-else class="flex items-center">
-      <svg width="11" height="11">
-        <use xlink:href="#online" />
-      </svg>
-      <h3 class="mx-1 font-semibold text-blue-200">ONLINE MODE</h3>
-      <svg width="11" height="11">
-        <use xlink:href="#online" />
-      </svg>
-    </div>
     <div class="flex">
       <play-times></play-times>
-      <div class="hidden sm:block sm:ml-4">
+      <div class="sm:block sm:ml-4 hidden">
         <play-stats></play-stats>
         <play-graph></play-graph>
       </div>
@@ -32,7 +23,6 @@
 import PlayTimes from '../PlayInfos/PlayTimes.vue'
 import PlayStats from '../PlayInfos/PlayStats.vue'
 import PlayGraph from '../PlayInfos/PlayGraph.vue'
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -40,8 +30,5 @@ export default {
     PlayStats,
     PlayGraph
   },
-  methods: {
-    ...mapGetters('auth', ['isLogged'])
-  }
 }
 </script>

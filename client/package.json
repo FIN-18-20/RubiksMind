@@ -3,12 +3,12 @@
   "version": "0.1.2",
   "private": true,
   "scripts": {
+    "dev": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "core-js": "^3.8.1",
     "country-list": "^2.2.0",
