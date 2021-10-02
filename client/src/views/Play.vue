@@ -1,17 +1,17 @@
 <template>
   <div
     :class="{'select-none': windowWidth <= breakpoints.sm}"
-    class="relative w-full text-center pb-32 sm:pb-0"
+    class="sm:pb-0 relative w-full pb-32 text-center"
   >
     <img
       src="@/assets/img/leaderboard-cube.svg"
       alt="Left Cube decoration"
-      class="absolute leftCube w-64 select-none hidden md:block"
+      class="leftCube md:block absolute hidden w-64 select-none"
     />
     <img
       src="@/assets/img/leaderboard-cube.svg"
       alt="Right Cube decoration"
-      class="absolute rightCube w-64 select-none hidden md:block"
+      class="rightCube md:block absolute hidden w-64 select-none"
     />
 
     <template v-if="windowWidth > breakpoints.md && status === 'Personal best'">
@@ -32,16 +32,16 @@
     <div class="relative">
       <div
         :class="statusColor"
-        class="flex items-center justify-center h-10 text-sm font-semibold italic uppercase md:text-base"
+        class="md:text-base flex items-center justify-center h-10 text-sm italic font-semibold uppercase"
       >{{ status }}</div>
-      <div class="w-full min-h-10">
+      <div class="min-h-10 w-full">
         <Scramble class="group">
           <ScrambleTooltip class="group-hover:inline-block" />
         </Scramble>
       </div>
       <div
         :class="statusColor"
-        class="flex items-start justify-center h-6 text-base font-semibold italic md:text-xl"
+        class="md:text-xl flex items-start justify-center h-6 text-base italic font-semibold"
       >{{ statusTime }}</div>
       <Timer :time="resolutionTime" />
       <template v-if="breakpoint !== 'mobile'">
@@ -52,21 +52,21 @@
       <template v-else>
         <play-infos></play-infos>
         <nav class="fixed bottom-0 left-0 right-0 z-10 select-none">
-          <div class="nav-mobile flex justify-between bg-blue-1000 px-12 py-2 leading-normal">
+          <div class="nav-mobile bg-blue-1000 flex justify-between px-12 py-2 leading-normal">
             <router-link :to="{ name: 'play' }" class="flex flex-col items-center justify-between">
               <svg class="w-8 h-8 text-blue-700">
                 <use xlink:href="#home" />
               </svg>
-              <span class="text-blue-100 text-xxs uppercase">Home</span>
+              <span class="text-xxs text-blue-100 uppercase">Home</span>
             </router-link>
             <router-link
-              :to="{ name: 'leaderboard' }"
+              :to="{ name: 'profile' }"
               class="flex flex-col items-center justify-between"
             >
               <svg class="w-8 h-8 text-blue-700">
                 <use xlink:href="#trophy" />
               </svg>
-              <span class="text-blue-100 text-xxs uppercase">Scores</span>
+              <span class="text-xxs text-blue-100 uppercase">Profile</span>
             </router-link>
           </div>
         </nav>
@@ -203,12 +203,6 @@ export default {
       this.lostFocus = false
 
       this.updateScramble()
-
-      // Impossible time
-      if (this.resolutionTime < 2000) {
-        this.statusColor = 'text-red-500'
-        return this.status = 'Did not count - Impossible time'
-      }
 
       await this.addTimer({ date: Date.now(), time: this.resolutionTime })
 

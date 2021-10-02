@@ -5,36 +5,26 @@ Best Rubik's cube website to track your pbs
 
 ---
 
+| :warning: This is a local only version of the website. |
+| ------------------------------------------------------ |
+
 ## Getting started
 
 ### Tools needed on your machine
 
-* Docker Engine Community
-* Docker Compose
 * Git
+* Node
 
 ### Initial configuration
 
 ```bash
 > git clone https://github.com/FIN-18-20/RubiksMind.git
-> cd RubiksMind
-> docker-compose up
+> cd RubiksMind/client
+> npm i
+> npm run dev
 ```
 
 ### Test the setup
 
 Try to reach:
-* The Vue SPA on [localhost](http://localhost)
-* The API on [localhost/api](http://localhost/api)
-* The Traefik Dashboard on [dashboard.localhost](http://dashboard.localhost)
-* The MariaDB database on your favorite database management tool with the host as **localhost** and the port as **3306**
-
-Feel free to change any environment variable in the *docker-compose.yml* file to fully access your setup. 
-
-### Shutdown the containers
-```bash
-> cd RubiksMind
-> docker-compose down
-or
-> docker-compose down -v (if you also want to remove the volumes)
-```
+* The Vue SPA on [localhost:8080](http://localhost:8080)
