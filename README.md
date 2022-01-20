@@ -7,7 +7,7 @@ Best Rubik's cube website to track your pbs
 
 | :warning: This version is not the one hosted on [rubiksmind.com](https://rubiksmind.com). |
 | :------------------------------------------------------ |
-| It's a more advanced one with accounts management and leaderboard. <br/><br/> Go to the [local_version branch](https://github.com/FIN-18-20/RubiksMind/tree/local_version) if you want the check other one. |
+| It's a more advanced one with accounts management and leaderboard. <br/><br/> Go to the [local_version branch](https://github.com/FIN-18-20/RubiksMind/tree/local_version) if you want to check the other one. |
 
 ## Getting started
 
