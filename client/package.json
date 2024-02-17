@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm"
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
