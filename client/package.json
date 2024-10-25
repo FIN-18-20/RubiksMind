@@ -15,7 +15,7 @@
     "country-list": "^2.3.0",
     "dotenv": "^8.6.0",
     "register-service-worker": "^1.7.2",
-    "vue": "^2.7.16",
+    "vue": "^3.0.0",
     "vue-chartjs": "^3.5.1",
     "vue-flag-icon": "^1.0.6",
     "vue-router": "^3.6.5",
